@@ -24,13 +24,27 @@ export class MessageService {
 
         return project
     }
-    public async getMessage(messages:string): Promise<Messages[]> {
-        const searchMessages =  await this.messageRepository.findBy({
-            messages
-        });
-
-        return searchMessages
+    public async getNewMessages(): Promise<Messages[]> {
+        
+        const subQuery = await this.messageRepository
+          .createQueryBuilder('m')
+          .select('m.projectId', 'projectId')
+          .addSelect('MAX(m.createdAt)', 'latestCreatedAt')
+          .groupBy('m.projectId');
+    
+        const result = await this.messageRepository
+          .createQueryBuilder('m')
+          .innerJoin(
+            `(${subQuery.getQuery()})`,
+            'sub',
+            'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
+          )
+          .select(['m.projectId', 'm.createdAt'])
+          .getRawMany();
+    
+        return result;
     }
+
     public async createMessage(message:MessageDTO): Promise<Messages> {
         const {messageType,messages,orige,projectId,socketId,userType} = message
         

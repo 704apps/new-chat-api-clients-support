@@ -1,0 +1,57 @@
+
+Charmar todas as menssagens:
+
+http://localhost:4000/chat/newmessages/
+
+
+Chamar uma menssagem:
+
+http://localhost:4000/chat/messages/:{projectId}
+
+
+.......................................................
+
+SOCKET:
+
+Ao carregar tela do chat do monitor tem que colocar o seguinte comando:
+
+    socket.emit('joinRoom', { room: 'client',projectId: 'projectID'});// exemplo ---- > projectId: '20buscar'});
+
+
+Como o monitor escuta a menssagem do support:
+
+ socket.on('clientMessage', (data) => {
+
+      setMessages((prevMessages) => [...prevMessages, `Support: ${data.messages}`]); //exemplo variavel para aparecer a mensagem do suport
+ });
+
+
+como o monitor envia a menssagem:
+
+      socket.emit('clientMessage', {
+        userType: 'client', //quem tá enviando
+        socketId: projectId,  //quem tá enviando
+        projectId:p rojectId,  
+        messageType: 'message',//texto ou imagem
+        messages: message, // A mensagem
+        orige: 'monitor' // de onde vem a mensagem
+      }
+
+
+ );
+
+------------
+Tela de Suporte:
+
+Ao carregar tela do chat do supoert tem que colocar o seguinte comando:
+    socket.emit('joinRoom', { room: 'support' });
+
+Como o suport escuta a mensagem do cliente:
+     socket.on('supportMessage', (data) => {
+	// Carregar sidebar com as mensagem ou somente atualizar mensagem	
+      setClients((prevClients) => [...prevClients, data]);// evento ao escutar a mensagem para carregar na tela
+    });
+
+
+    
+

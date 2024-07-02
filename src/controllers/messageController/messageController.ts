@@ -17,7 +17,7 @@ export class MessageController{
     
     public async getMessages(req:Request, res: Response):Promise<void>{
         try{
-            const message = await messageService.getAllMessages();
+            const message = await messageService.getNewMessages();
 
             res.json(message)
         }catch(error){

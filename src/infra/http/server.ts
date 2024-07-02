@@ -36,11 +36,12 @@ let messages = [];
 
 io.on('connection', (socket) => {
   //Cliente envia mensagem
-  socket.on('clientMessage', async (data:MessageDTO) => {
+  socket.on('clientMessage', async (data) => {
     
     await messageController.saveMessage(data)
-    
-    io.to('support').emit('supportMessage', data);
+    const socketUser = data.supportId;
+    console.log(data.supportId)
+    io.to(socketUser).emit('supportMessage', data);
 
   });
 
@@ -48,7 +49,7 @@ io.on('connection', (socket) => {
 
   //Suporte envia mensagem
   socket.on('supportMessage', async(data:MessageDTO) => {
-    console.log(data.projectId)
+ 
     const socketProject = data.projectId;
 
     await messageController.saveMessage(data)
@@ -58,12 +59,13 @@ io.on('connection', (socket) => {
 
   //Adiciona o cliente à sala especifica
   socket.on('joinRoom', (data) => {
-    console.log(data.projectId)
+
     if (data.room === 'support') {
       socket.join('support');
 
     } else {
       const socketProject = data.projectId;
+
       socket.join(socketProject);
 
     }
