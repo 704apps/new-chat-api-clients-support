@@ -8,7 +8,7 @@ import {MessageController} from '../../controllers/messageController/messageCont
 import router from '../../routes/messageRoutes';
 import {MessageDTO} from '../../DTOs/messageDTO'
 import swaggerUi from 'swagger-ui-express';
-
+import cors from 'cors'
 
 import swaggerDocs from './swagger.json'
 
@@ -26,14 +26,14 @@ app.get("/terms", (request, response)=>{
     message: "Termos de Serviço"
   });
 })
-// app.use(
-//   cors({
-//     origin: "*", // Permite qualquer origem
-//     methods: ["GET", "PUT", "POST"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: "*", // Permite qualquer origem
+    methods: ["GET", "PUT", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
  
 const messageController = new MessageController();
 
