@@ -9,9 +9,10 @@
       "experimentalDecorators": true,
       "strictPropertyInitialization": false,
       "emitDecoratorMetadata": true,
+      "resolveJsonModule": true,
       "skipLibCheck": true
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "swagger.ts"],
     "exclude": ["node_modules"]
 }
   

@@ -1,22 +1,31 @@
 import 'reflect-metadata';
 
-
 import { Server as SocketIOServer } from 'socket.io';
-import express, { Application } from 'express';
+import express, { Application, response } from 'express';
 import http, { Server as HTTPServer } from 'http';
 import messageRoutes from '../../routes/messageRoutes';
 import {MessageController} from '../../controllers/messageController/messageController'
 import router from '../../routes/messageRoutes';
 import {MessageDTO} from '../../DTOs/messageDTO'
+import swaggerUi from 'swagger-ui-express';
+
+
+import swaggerDocs from './swagger.json'
 
 
 const app: Application = express();
 const server: HTTPServer = http.createServer(app);
-
+app.use(express.json())
 app.use(router)
 app.use('/chat', messageRoutes);
 
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 
+app.get("/terms", (request, response)=>{
+  return response.json({
+    message: "Termos de Serviço"
+  });
+})
 
  
 const messageController = new MessageController();
@@ -40,8 +49,14 @@ io.on('connection', (socket) => {
     
     await messageController.saveMessage(data)
     const socketUser = data.supportId;
-    console.log(data.supportId)
-    io.to(socketUser).emit('supportMessage', data);
+    
+    if(!socketUser){
+      io.to('support').emit('supportMessage', data);
+
+    }else{
+      io.to(socketUser).emit('supportMessage', data);
+
+    }
 
   });
 
@@ -49,10 +64,10 @@ io.on('connection', (socket) => {
 
   //Suporte envia mensagem
   socket.on('supportMessage', async(data:MessageDTO) => {
- 
-    const socketProject = data.projectId;
+     const socketProject = data.projectId;
 
     await messageController.saveMessage(data)
+    console.log(data);
     io.to(socketProject).emit('clientMessage', data);
     
   })
@@ -65,10 +80,10 @@ io.on('connection', (socket) => {
 
     } else {
       const socketProject = data.projectId;
-
       socket.join(socketProject);
 
     }
+
   })
 
   socket.on('disconnect', () => {
