@@ -67,8 +67,8 @@ io.on('connection', (socket) => {
      const socketProject = data.projectId;
 
     await messageController.saveMessage(data)
-    console.log(data);
-    io.to(socketProject).emit('clientMessage', data);
+
+    await io.to(socketProject).emit('clientMessage', data);
     
   })
 

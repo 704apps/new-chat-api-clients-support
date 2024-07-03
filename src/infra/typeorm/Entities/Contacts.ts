@@ -8,7 +8,7 @@ export class Contacts {
     id: number;
 
     @Column('varchar')
-    name: string;
+    projectId: string;
 
     @CreateDateColumn()
     createdAt: Date;

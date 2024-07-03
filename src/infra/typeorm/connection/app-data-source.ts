@@ -3,8 +3,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
  
-import { Contacts } from '../Entities/Contacts.entity';
-import { Users } from '../Entities/Users.entity';
+import { Contacts } from '../Entities/Contacts';
+import { Users } from '../Entities/Users';
 import { Messages } from '../Entities/Messages';
 
 export const myDataSource = new DataSource({
@@ -14,7 +14,7 @@ export const myDataSource = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    entities: [Messages], // Ajuste o caminho conforme necessário
+    entities: [Messages,Contacts,Users], // Ajuste o caminho conforme necessário
     migrations: ["src/infra/typeorm/migrations/*.ts"],
     synchronize: true
 });
