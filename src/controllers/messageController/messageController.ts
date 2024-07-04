@@ -38,6 +38,20 @@ export class MessageController{
 
         }
     }
+    public async getUpdateMessage(req:Request, res: Response ):Promise<void>{
+        try{
+            const projectId:number = parseInt(req.params.id)
+            const {messages} = req.body
+            const updateMessage = await messageService.getUpdateMessage(projectId,messages);
+
+             res.status(200).json(updateMessage)
+
+        }catch(error){
+            res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+
     public async saveMessage( message:MessageDTO):Promise<MessageDTO | Object> {
         try{
             const newMessage = await messageService.createMessage(message);

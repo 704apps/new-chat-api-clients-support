@@ -61,15 +61,18 @@ export class MessageService {
                 'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
             )
 
-            .select(['m.projectId', 'm.createdAt', 'm.messages'])
+            .select(['m.projectId', 'm.createdAt', 'm.messages','m.id'])
             .orderBy('m.createdAt','DESC')
             .getRawMany();
 
         console.log(result)   
         const newMessagens = result.map(item => ({
+            id: item.m_id,
             projectId: item.m_projectId,
             messages: item.m_messages,
             createdAt: item.m_createdAt
+            
+
 
         }));;
 
