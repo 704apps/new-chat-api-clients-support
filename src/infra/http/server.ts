@@ -4,9 +4,9 @@ import { Server as SocketIOServer } from 'socket.io';
 import express, { Application, response } from 'express';
 import http, { Server as HTTPServer } from 'http';
 import messageRoutes from '../../routes/messageRoutes';
-import {MessageController} from '../../controllers/messageController/messageController'
+import { MessageController } from '../../controllers/messageController/messageController'
 import router from '../../routes/messageRoutes';
-import {MessageDTO} from '../../DTOs/messageDTO'
+import { MessageDTO } from '../../DTOs/messageDTO'
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors'
 
@@ -19,9 +19,9 @@ app.use(express.json())
 app.use(router)
 app.use('/chat', messageRoutes);
 
-app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-app.get("/terms", (request, response)=>{
+app.get("/terms", (request, response) => {
   return response.json({
     message: "Termos de Serviço"
   });
@@ -34,7 +34,7 @@ app.use(
     credentials: true,
   })
 );
- 
+
 const messageController = new MessageController();
 
 const io: SocketIOServer = new SocketIOServer(server, {
@@ -53,14 +53,25 @@ let messages = [];
 io.on('connection', (socket) => {
   //Cliente envia mensagem
   socket.on('clientMessage', async (data) => {
-    
-    await messageController.saveMessage(data)
-    const socketUser = data.supportId;
-    
-    if(!socketUser){
-      io.to('support').emit('supportMessage', data);
 
-    }else{
+    const msg: MessageDTO = await messageController.saveMessage(data) as MessageDTO
+
+    
+    const socketUser = data.supportId;
+    const dataClient = {
+      id: msg.id,
+      userType: data.userType,
+      socketId: data.socketId,
+      projectId: data.projectId,
+      supportId: data.supportId,
+      messageType: data.messageType,
+      messages: data.messages,
+      orige: data.orige
+    }  
+    if (!socketUser) {
+      io.to('support').emit('supportMessage', dataClient);
+
+    } else {
       io.to(socketUser).emit('supportMessage', data);
 
     }
@@ -70,13 +81,25 @@ io.on('connection', (socket) => {
 
 
   //Suporte envia mensagem
-  socket.on('supportMessage', async(data:MessageDTO) => {
-     const socketProject = data.projectId;
+  socket.on('supportMessage', async (data: MessageDTO) => {
+    const socketProject = data.projectId;
 
-    await messageController.saveMessage(data)
+    const msg: MessageDTO = await messageController.saveMessage(data) as MessageDTO
 
-    await io.to(socketProject).emit('clientMessage', data);
-    
+    const dataClient = {
+      id: msg.id,
+      userType: data.userType,
+      socketId: data.socketId,
+      projectId: data.projectId,
+      supportId: data.supportId,
+      messageType: data.messageType,
+      messages: data.messages,
+      orige: data.orige
+    }  
+   
+
+    await io.to(socketProject).emit('clientMessage', dataClient);
+
   })
 
   //Adiciona o cliente à sala especifica

@@ -31,18 +31,19 @@ export class MessageController{
             const projectId = req.params.id
             const message = await messageService.getOneMessage(projectId);
 
-            res.status(200).json(message)
+             res.status(200).json(message)
 
         }catch(error){
             res.status(400).json({message: 'Message not found '})
 
         }
     }
-    public async saveMessage( message:MessageDTO){
+    public async saveMessage( message:MessageDTO):Promise<MessageDTO | Object> {
         try{
             const newMessage = await messageService.createMessage(message);
             
-            
+            console.log(newMessage);
+
             return newMessage;
 
 

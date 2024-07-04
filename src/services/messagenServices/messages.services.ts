@@ -15,12 +15,14 @@ export class MessageService {
             }).catch(error => console.error("Error ao incializar a conexão:", error))
         }
     }
+
     private messageRepository = myDataSource.getRepository(Messages);
     private contactsepository = myDataSource.getRepository(Contacts);
 
     public async getAllMessages(): Promise<Messages[]> {
         return await this.messageRepository.find();
     }
+
     public async getOneMessage(projectId: string): Promise<Messages[]> {
         const project = await this.messageRepository.findBy({
             projectId
@@ -28,6 +30,20 @@ export class MessageService {
 
         return project
     }
+
+    public async getUpdateMessage(id: number,messages:string) {
+        const project = await this.messageRepository.findOneBy({
+            id
+        });
+
+        if(project){
+            project.messages = messages
+            await this.messageRepository.save(project)
+        }
+
+        return project
+    }
+
     public async getNewMessages() {
 
 
@@ -45,11 +61,11 @@ export class MessageService {
                 'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
             )
 
-            .select(['m.projectId', 'm.createdAt', '(m.messages)'])
+            .select(['m.projectId', 'm.createdAt', 'm.messages'])
             .orderBy('m.createdAt','DESC')
             .getRawMany();
 
-
+        console.log(result)   
         const newMessagens = result.map(item => ({
             projectId: item.m_projectId,
             messages: item.m_messages,
