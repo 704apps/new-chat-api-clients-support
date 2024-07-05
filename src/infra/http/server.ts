@@ -10,7 +10,7 @@ import { MessageDTO } from '../../DTOs/messageDTO'
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors'
 
-import swaggerDocs from './swagger.json'
+import swaggerDocs from '../../api-doc/swagger.json'
 
 
 const app: Application = express();

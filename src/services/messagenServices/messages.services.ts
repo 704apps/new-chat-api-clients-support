@@ -44,6 +44,27 @@ export class MessageService {
         return project
     }
 
+    public async getDeleteMessage(id: number) {
+   
+        try {
+            const project = await this.messageRepository.findOneBy({
+                id
+            });
+            if(project){
+                await this.messageRepository.delete({id})
+            }
+
+            return {message:"Message deleted successfully"} 
+
+            
+        } catch (error) {
+            return {error:"Error when deleting"}
+        }
+       
+
+        
+    }
+
     public async getNewMessages() {
 
 
@@ -93,7 +114,7 @@ export class MessageService {
                 this.contactsepository.create({ projectId });
 
             } catch (error) {
-                console.log(`erro foi esse: ${error}`)
+                console.log(`Error: ${error}`)
             }
 
         }
