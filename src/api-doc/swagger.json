@@ -1,0 +1,201 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API chat cliente X suporte",
+        "description": "API com RESTs necessários para os chats",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "discord": "danilovieira5183"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "API de test"
+        }
+    ],
+    "paths": {
+        "/newmessages": {
+            "get": {
+                "summary": "Lista todos clientes que enviaram mensagem",
+                "description": "Essa rota carrega a lista que de clientes que enviaram mensagens",
+                "tags": [
+                    "ListClients"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Messages not founds."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ListClients"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/{projetcId}": {
+            "patch": {
+                "summary": "Lista toda as menssagens de um projectId",
+                "description": "Essa rota carrega todas as menssagens de um projectId",
+                "parameters": [
+                    {
+                        "name": "projetcId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The user ID"
+                    }
+                ],
+                "tags": [
+                    "Messages"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "ProjectId not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Messages"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/updatemessages/{id}": {
+            "get": {
+                "summary": "Lista toda as menssagens de um projectId",
+                "description": "Essa rota carrega todas as menssagens de um projectId",
+                "parameters": [
+                    {                       
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "schema":{
+                            "type": "integer"                            
+                        },
+                        "description": "ID primoryKey da coluna da tabela"
+                    }
+                ],
+                "tags": [
+                    "Messages"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "ProjectId not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Messages"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/delete_message/{id}": {
+            "get": {
+                "summary": "Lista toda as menssagens de um projectId",
+                "description": "Essa rota carrega todas as menssagens de um projectId",
+                "parameters": [
+                    {                       
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "schema":{
+                            "type": "integer"                            
+                        },
+                        "description": "ID primoryKey da coluna da tabela"
+                    }
+                ],
+                
+                "responses": {
+                    "400": {
+                        "description": "Message not found."
+                    },
+                    "200": {
+                        "description": "Message deleted successfully"
+                       
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ListClients": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "messages": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Messages": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "userType": {
+                        "type": "string"
+                    },
+                    "socketId": {
+                        "type": "string"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "supportId": {
+                        "type": "string"
+                    },
+                    "messageType": {
+                        "type": "string"
+                    },
+                    "messages": {
+                        "type": "string"
+                    },
+                    "orige": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
+
