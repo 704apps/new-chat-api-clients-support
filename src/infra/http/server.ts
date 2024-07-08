@@ -17,7 +17,7 @@ const server: HTTPServer = http.createServer(app);
 app.use(
   cors({
     origin: "*", // Permite qualquer origem
-    methods: ["GET", "PUT", "POST"],
+    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
