@@ -39,7 +39,14 @@ export class MessageService {
         if(project){
             project.messages = messages
             await this.messageRepository.save(project)
+<<<<<<< HEAD
         }
+=======
+        }else{
+            return {message: "ProjectId not found"}
+        }
+       
+>>>>>>> 7da09229f85a724767277c4a9df3fb570d59823a
 
         return project
     }
@@ -47,6 +54,7 @@ export class MessageService {
     public async getDeleteMessage(id: number) {
    
         try {
+<<<<<<< HEAD
             const project = await this.messageRepository.findOneBy({
                 id
             });
@@ -54,6 +62,19 @@ export class MessageService {
                 await this.messageRepository.delete({id})
             }
 
+=======
+            const message = await this.messageRepository.findOneBy({
+                id
+            });
+            if(!message){
+                return {message:"Message not found"} 
+
+            }
+
+            await this.messageRepository.delete({id})
+
+
+>>>>>>> 7da09229f85a724767277c4a9df3fb570d59823a
             return {message:"Message deleted successfully"} 
 
             
