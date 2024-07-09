@@ -6,11 +6,7 @@ export class Messages1719582222042 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table(
-<<<<<<< HEAD
                 {
-=======
-            {
->>>>>>> 7da09229f85a724767277c4a9df3fb570d59823a
                     name: "messages",
                     columns: [
                         {

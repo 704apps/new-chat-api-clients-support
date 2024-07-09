@@ -83,8 +83,6 @@ io.on("connection", (socket) => {
 
 
 
-  //Suporte envia mensagem
-
 
   //Suporte envia mensagem
   socket.on("supportMessage", async (data: MessageDTO) => {
@@ -108,6 +106,30 @@ io.on("connection", (socket) => {
    
 
     await io.to(socketProject).emit('clientMessage', dataClient);
+
+  })
+
+  socket.on("supportMsgUpdate", async (data: MessageDTO) => {
+
+    const socketProject = data.projectId;
+
+    const msg: MessageDTO = (await messageController.saveMessage(
+      data
+    )) as MessageDTO;
+
+    const dataClient = {
+      id: msg.id,
+      userType: data.userType,
+      socketId: data.socketId,
+      projectId: data.projectId,
+      supportId: data.supportId,
+      messageType: data.messageType,
+      messages: data.messages,
+      orige: data.orige
+    }  
+   
+
+    await io.to(socketProject).emit('supportMsgUpdate', dataClient);
 
   })
 
