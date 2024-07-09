@@ -39,7 +39,7 @@ export class MessageController{
         }
     }
     public async getOneMessage(msgId:number ){
-        const res= new MockResponse
+        const res= new MockResponse()
 
         try{
             
@@ -67,7 +67,7 @@ export class MessageController{
         }
     }
     public async getUpdateSocketAction(msgId:number ):Promise<void>{
-        const res= new MockResponse
+        const res= new MockResponse()
         try{
             await messageService.getUpdateSocketAction(msgId);
             res.status(200).json({update: 'ok'})
@@ -81,7 +81,7 @@ export class MessageController{
     public async getDeleteMessage(req:Request, res: Response ):Promise<void>{
         try{
             const projectId:number = parseInt(req.params.id)
-            const {messages} = req.body
+            
             const updateMessage = await messageService.getDeleteMessage(projectId);
 
              res.status(200).json(updateMessage)
