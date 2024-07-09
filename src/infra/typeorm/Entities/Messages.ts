@@ -20,6 +20,9 @@ export class Messages {
     @Column('varchar')
     messages: string;
 
+    @Column('boolean')
+    msgEdt: boolean;
+
     @Column('varchar')
     orige: string;
 

@@ -7,7 +7,9 @@ import http, { Server as HTTPServer } from "http";
 import messageRoutes from "../../routes/messageRoutes";
 import { MessageController } from "../../controllers/messageController/messageController";
 import router from "../../routes/messageRoutes";
-import { MessageDTO } from "../../DTOs/messageDTO";
+import { MessageDTO } from "../../DTOs/message/messageDTO";
+import { MessageUpdateDTO } from "../../DTOs/message/messageUpdateDTO";
+
 import swaggerUi from "swagger-ui-express";
 import cors from "cors";
 
@@ -70,7 +72,7 @@ io.on("connection", (socket) => {
       messageType: data.messageType,
       messages: data.messages,
       orige: data.orige
-    }  
+    }
     if (!socketUser) {
       io.to('support').emit('supportMessage', dataClient);
 
@@ -102,34 +104,27 @@ io.on("connection", (socket) => {
       messageType: data.messageType,
       messages: data.messages,
       orige: data.orige
-    }  
-   
+    }
+
 
     await io.to(socketProject).emit('clientMessage', dataClient);
 
   })
 
-  socket.on("supportMsgUpdate", async (data: MessageDTO) => {
-
+  socket.on("supportMsgUpdate", async (data: MessageUpdateDTO) => {
     const socketProject = data.projectId;
+    const idMsg:number = data.id as number
 
-    const msg: MessageDTO = (await messageController.saveMessage(
-      data
-    )) as MessageDTO;
+    if (idMsg) {
+      const message: MessageDTO = await messageController.getOneMessage(idMsg)  as MessageDTO
+      if(message.msgEdt===true){
+        await io.to(socketProject).emit('supportMsgUpdate', data);
+        await messageController.getUpdateSocketAction(idMsg)
+      }
+     
+    }
 
-    const dataClient = {
-      id: msg.id,
-      userType: data.userType,
-      socketId: data.socketId,
-      projectId: data.projectId,
-      supportId: data.supportId,
-      messageType: data.messageType,
-      messages: data.messages,
-      orige: data.orige
-    }  
-   
 
-    await io.to(socketProject).emit('supportMsgUpdate', dataClient);
 
   })
 

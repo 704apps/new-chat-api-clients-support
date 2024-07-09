@@ -2,8 +2,7 @@ import { myDataSource } from '../../infra/typeorm/connection/app-data-source';
 import { Messages } from '../../infra/typeorm/Entities/Messages';
 import { Contacts } from '../../infra/typeorm/Entities/Contacts';
 import { Users } from '../../infra/typeorm/Entities/Users';
-
-import { MessageDTO } from '../../DTOs/messageDTO'
+import { MessageDTO } from '../../DTOs/message/messageDTO'
 
 export class MessageService {
 
@@ -23,12 +22,24 @@ export class MessageService {
         return await this.messageRepository.find();
     }
 
-    public async getOneMessage(projectId: string): Promise<Messages[]> {
+    public async getOneMessagesClient(projectId: string): Promise<Messages[]> {
         const project = await this.messageRepository.findBy({
             projectId
         });
 
         return project
+    }
+
+    public async getOneMessage(id: number): Promise<MessageDTO> {
+        
+        const project = await this.messageRepository.findOneBy({
+            id
+        })
+
+        const projetcResult: MessageDTO = project as unknown as MessageDTO
+
+        return projetcResult
+
     }
 
     public async getUpdateMessage(id: number,messages:string) {
@@ -38,6 +49,7 @@ export class MessageService {
 
         if(project){
             project.messages = messages
+            project.msgEdt = true
             await this.messageRepository.save(project)
         
         }else{
@@ -47,6 +59,24 @@ export class MessageService {
 
         return project
     }
+
+    public async getUpdateSocketAction(id: number) {
+        const project = await this.messageRepository.findOneBy({
+            id
+        });
+
+        if(project){
+            project.msgEdt = false
+            await this.messageRepository.save(project)
+        
+        }else{
+            return {message: "ProjectId not found"}
+        }
+       
+
+        return project
+    }
+
 
     public async getDeleteMessage(id: number) {
    
@@ -94,7 +124,6 @@ export class MessageService {
             .orderBy('m.createdAt','DESC')
             .getRawMany();
 
-        console.log(result)   
         const newMessagens = result.map(item => ({
             id: item.m_id,
             projectId: item.m_projectId,

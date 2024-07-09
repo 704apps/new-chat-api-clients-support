@@ -6,6 +6,7 @@ export interface MessageDTO {
     projectId: string,
     supportId: string;
     messageType: string,
+    msgEdt?: boolean,
     messages: string,
     orige: string
 }

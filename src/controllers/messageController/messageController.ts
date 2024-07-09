@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { MessageService } from '../../services/messagenServices/messages.services';
-import { MessageDTO} from '../../DTOs/messageDTO'
-
+import { MessageDTO} from '../../DTOs/message/messageDTO'
+import {MockResponse} from '../util/statusfunction'
 const messageService =  new MessageService() 
 
 interface dataSocket {
@@ -26,12 +26,27 @@ export class MessageController{
         }
     }
 
-    public async getOneMessage(req:Request, res: Response ):Promise<void>{
+    public async getOneMessagesClient(req:Request, res: Response ):Promise<void>{
         try{
             const projectId = req.params.id
-            const message = await messageService.getOneMessage(projectId);
+            const message = await messageService.getOneMessagesClient(projectId);
 
              res.status(200).json(message)
+
+        }catch(error){
+            res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+    public async getOneMessage(msgId:number ){
+        const res= new MockResponse
+
+        try{
+            
+            const message:MessageDTO = await messageService.getOneMessage(msgId);
+
+             return message
+             
 
         }catch(error){
             res.status(400).json({message: 'Message not found '})
@@ -48,6 +63,17 @@ export class MessageController{
 
         }catch(error){
             res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+    public async getUpdateSocketAction(msgId:number ):Promise<void>{
+        const res= new MockResponse
+        try{
+            await messageService.getUpdateSocketAction(msgId);
+            res.status(200).json({update: 'ok'})
+
+        }catch(error){
+            res.status(400).json({error})
 
         }
     }
