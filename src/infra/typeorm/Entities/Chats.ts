@@ -9,7 +9,7 @@ export class Chats {
     supportId: string;
     
     @Column('varchar')
-    contactId: string;
+    projectId: string;
 
     @Column('varchar',{ nullable: true })
     statusAttention: string;

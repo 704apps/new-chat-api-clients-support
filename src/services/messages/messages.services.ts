@@ -1,7 +1,7 @@
 import { myDataSource } from '../../infra/typeorm/connection/app-data-source';
 import { Messages } from '../../infra/typeorm/Entities/Messages';
 import { Contacts } from '../../infra/typeorm/Entities/Contacts';
-import { Users } from '../../infra/typeorm/Entities/Users';
+import { Chats } from '../../infra/typeorm/Entities/Chats';
 import { MessageDTO } from '../../DTOs/message/messageDTO'
 
 export class MessageService {
@@ -31,7 +31,7 @@ export class MessageService {
     }
 
     public async getOneMessage(id: number): Promise<MessageDTO> {
-        
+
         const project = await this.messageRepository.findOneBy({
             id
         })
@@ -42,20 +42,20 @@ export class MessageService {
 
     }
 
-    public async getUpdateMessage(id: number,messages:string) {
+    public async getUpdateMessage(id: number, messages: string) {
         const project = await this.messageRepository.findOneBy({
             id
         });
 
-        if(project){
+        if (project) {
             project.messages = messages
             project.msgEdt = true
             await this.messageRepository.save(project)
-        
-        }else{
-            return {message: "ProjectId not found"}
+
+        } else {
+            return { message: "ProjectId not found" }
         }
-       
+
 
         return project
     }
@@ -65,76 +65,91 @@ export class MessageService {
             id
         });
 
-        if(project){
+        if (project) {
             project.msgEdt = false
             await this.messageRepository.save(project)
-        
-        }else{
-            return {message: "ProjectId not found"}
+
+        } else {
+            return { message: "ProjectId not found" }
         }
-       
+
 
         return project
     }
 
 
     public async getDeleteMessage(id: number) {
-   
+
         try {
             const message = await this.messageRepository.findOneBy({
                 id
             });
-            if(!message){
-                return {message:"Message not found"} 
+            if (!message) {
+                return { message: "Message not found" }
 
             }
 
-            await this.messageRepository.delete({id})
+            await this.messageRepository.delete({ id })
 
 
-            return {message:"Message deleted successfully"} 
+            return { message: "Message deleted successfully" }
 
-            
+
         } catch (error) {
-            return {error:"Error when deleting"}
+            return { error: "Error when deleting" }
         }
-       
 
-        
+
+
     }
 
     public async getNewMessages() {
+        try {
 
 
-        const selectIdClients = await this.messageRepository
-            .createQueryBuilder('m')
-            .select('m.projectId', 'projectId')
-            .addSelect('MAX(m.createdAt)', 'latestCreatedAt')
-            .groupBy('m.projectId')
 
-        const result = await this.messageRepository
-            .createQueryBuilder('m')
-            .innerJoin(
-                `(${selectIdClients.getQuery()})`,
-                'sub',
-                'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
-            )
+            const selectIdClients = await this.messageRepository
+                .createQueryBuilder('m')
+                .select('m.projectId', 'projectId')
+                .addSelect('MAX(m.createdAt)', 'latestCreatedAt')
+                .groupBy('m.projectId')
 
-            .select(['m.projectId', 'm.createdAt', 'm.messages','m.id'])
-            .orderBy('m.createdAt','DESC')
-            .getRawMany();
+            const result = await this.messageRepository
+                .createQueryBuilder('m')
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    'sub',
+                    'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
+                )
+                .leftJoin(
+                    'chats',
+                    'c',
+                    'm.projectId = c.projectId AND m.supportId = c.supportId'
+                )
+                .select(['m.projectId',
+                    'm.createdAt', 
+                    'm.messages', 
+                    'm.id', 
+                    'c.supportId', 
+                    `CASE WHEN c.statusAttention IS NULL THEN 'Aberto' ELSE c.statusAttention END AS statusAttention`
+                ])
+                
+                .orderBy('m.createdAt', 'DESC')
+                .getRawMany();
 
-        const newMessagens = result.map(item => ({
-            id: item.m_id,
-            projectId: item.m_projectId,
-            messages: item.m_messages,
-            createdAt: item.m_createdAt
-            
+            const newMessagens = result.map(item => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                createdAt: item.m_createdAt
+            }));
 
-
-        }));;
-
-        return newMessagens
+            return newMessagens
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     public async createMessage(message: MessageDTO): Promise<Messages> {

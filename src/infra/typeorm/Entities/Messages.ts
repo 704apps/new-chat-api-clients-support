@@ -13,6 +13,9 @@ export class Messages {
 
     @Column('varchar',{ nullable: true })
     projectId: string;
+    
+    @Column('varchar',{ nullable: true })
+    supportId: string;
 
     @Column('varchar')
     messageType: string;
@@ -20,7 +23,7 @@ export class Messages {
     @Column('varchar')
     messages: string;
 
-    @Column('boolean')
+    @Column('boolean',{ nullable: true })
     msgEdt: boolean;
 
     @Column('varchar')

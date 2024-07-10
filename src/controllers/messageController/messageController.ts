@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MessageService } from '../../services/messagenServices/messages.services';
+import { MessageService } from '../../services/messages/messages.services';
 import { MessageDTO} from '../../DTOs/message/messageDTO'
 import {MockResponse} from '../util/statusfunction'
 const messageService =  new MessageService() 
