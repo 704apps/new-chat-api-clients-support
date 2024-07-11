@@ -4,14 +4,7 @@ import { MessageDTO} from '../../DTOs/message/messageDTO'
 import {MockResponse} from '../util/statusfunction'
 const messageService =  new MessageService() 
 
-interface dataSocket {
-    userType: string,
-    socketId: string,
-    projectId: string,
-    messageType: string,
-    messages: string,
-    orige: string
-}
+
 
 export class MessageController{
     

@@ -5,7 +5,7 @@ import { Server as SocketIOServer } from "socket.io";
 import express, { Application, response } from "express";
 import http, { Server as HTTPServer } from "http";
 import messageRoutes from "../../routes/messageRoutes";
-import { MessageController } from "../../controllers/messageController/messageController";
+import { MessageController } from "../../controllers/message/messageController";
 import router from "../../routes/messageRoutes";
 import { MessageDTO } from "../../DTOs/message/messageDTO";
 import { MessageUpdateDTO } from "../../DTOs/message/messageUpdateDTO";
@@ -46,14 +46,6 @@ const io: SocketIOServer = new SocketIOServer(server, {
   }
 });
 
-
-
-
-
-
-
-let users = [];
-let messages = [];
 
 io.on("connection", (socket) => {
   //Cliente envia mensagem
@@ -116,17 +108,17 @@ io.on("connection", (socket) => {
     const idMsg:number = data.id as number
 
     if (idMsg) {
-      const message: MessageDTO = await messageController.getOneMessage(idMsg)  as MessageDTO
-      if(message.msgEdt===true){
-        await io.to(socketProject).emit('supportMsgUpdate', data);
-        await messageController.getUpdateSocketAction(idMsg)
-      }
+      await io.to(socketProject).emit('supportMsgUpdate', data);
+      await messageController.getUpdateSocketAction(idMsg)
      
     }
 
-
-
   })
+
+  socket.on("statusAttentionUpdate", async () => {
+    io.to('support').emit('supportMessage');
+  })
+
 
   //Adiciona o cliente à sala especifica
   socket.on('joinRoom', (data) => {

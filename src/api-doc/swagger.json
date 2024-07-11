@@ -25,15 +25,39 @@
                 ],
                 "responses": {
                     "400": {
-                        "description": "Messages not founds."
+                        "description": "Messages not found."
                     },
                     "200": {
                         "description": "Ok",
                         "content": {
                             "application/json": {
                                 "schemas": {
-                                    "type": "object",
                                     "$ref": "#/components/schemas/ListClients"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": 1,
+                                                "projectId": "proj123",
+                                                "supportId": "sup456",
+                                                "statusAttention": "OPEN",
+                                                "messages": "Hello, how can I help you?",
+                                                "chatId": 789,
+                                                "createdAt": "2024-07-10T10:00:00Z"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "projectId": "proj124",
+                                                "supportId": "sup457",
+                                                "statusAttention": "OPEN",
+                                                "messages": "Hello, how can I help you, please?",
+                                                "chatId": 790,
+                                                "createdAt": "2024-07-10T10:00:00Z"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -41,24 +65,42 @@
                 }
             }
         },
-        "/messages/{projetcId}": {
+        "/update_message/{id}": {
             "patch": {
                 "summary": "Lista toda as menssagens de um projectId",
                 "description": "Essa rota carrega todas as menssagens de um projectId",
                 "parameters": [
                     {
-                        "name": "projetcId",
+                        "name": "id",
                         "in": "path",
-                        "required": true,
+                        "required": "true",
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         },
-                        "description": "The user ID"
+                        "description": "ID primoryKey da coluna da tabela"
                     }
                 ],
                 "tags": [
                     "Messages"
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "messages": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "messages"
+                                ]
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "400": {
                         "description": "ProjectId not found."
@@ -67,7 +109,7 @@
                         "description": "Ok",
                         "content": {
                             "application/json": {
-                                "schema": {
+                                "schemas": {
                                     "type": "object",
                                     "$ref": "#/components/schemas/Messages"
                                 }
@@ -77,30 +119,71 @@
                 }
             }
         },
-        "/updatemessages/{id}": {
-            "get": {
-                "summary": "Lista toda as menssagens de um projectId",
-                "description": "Essa rota carrega todas as menssagens de um projectId",
+        "/delete_message/{id}": {
+            "delete": {
+                "summary": "Deletar mensagem",
+                "description": "Essa rota uma mensagem de um projectId",
                 "parameters": [
-                    {                       
+                    {
                         "name": "id",
                         "in": "path",
                         "required": "true",
-                        "schema":{
-                            "type": "integer"                            
+                        "schema": {
+                            "type": "integer"
                         },
                         "description": "ID primoryKey da coluna da tabela"
                     }
-                ],
-                "tags": [
-                    "Messages"
                 ],
                 "responses": {
                     "400": {
                         "description": "ProjectId not found."
                     },
                     "200": {
-                        "description": "Ok",
+                        "description": "Message deleted successfully"
+                       
+                    }
+                }
+            }
+        },
+        "/update_statusAttention/{id}": {
+            "patch": {
+                "summary": "Deletar mensagem",
+                "description": "Essa rota uma mensagem de um projectId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID primoryKey da coluna da tabela"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "statusAttention": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "statusAttention"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "ProjectId not found."
+                    },
+                    "200": {
+                        "description": "Status updated successfully.",
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -125,8 +208,17 @@
                     "projectId": {
                         "type": "string"
                     },
+                    "supportId": {
+                        "type": "string"
+                    },
+                    "statusAttention": {
+                        "type": "string"
+                    },
                     "messages": {
                         "type": "string"
+                    },
+                    "chatId": {
+                        "type": "integer"
                     },
                     "createdAt": {
                         "type": "string"
@@ -171,4 +263,3 @@
         }
     }
 }
-

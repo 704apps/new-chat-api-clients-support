@@ -10,12 +10,12 @@ export class Chats {
     
     @Column('varchar')
     projectId: string;
-
+     // supportId projectId statusAttention dateIndex
     @Column('varchar',{ nullable: true })
     statusAttention: string;
 
-    @Column('varchar')
-    dateIndex: string;
+    @Column('date')
+    dateIndex: Date;
 
     @CreateDateColumn()
     createdAt: Date;
