@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { MessageService } from '../../services/messages/messages.services';
 import { MessageDTO} from '../../DTOs/message/messageDTO'
 import {MockResponse} from '../util/statusfunction'
+import {QuerySearchGeneral,QuerySearchProject,QuerySearchWordPhrase} from './DTO/querysparams'
 const messageService =  new MessageService() 
 
 
@@ -76,6 +77,62 @@ export class MessageController{
             const projectId:number = parseInt(req.params.id)
             
             const updateMessage = await messageService.getDeleteMessage(projectId);
+
+             res.status(200).json(updateMessage)
+
+        }catch(error){
+            res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+
+    public async getSearchProject(req:Request, res: Response ):Promise<void>{
+        try{
+            const {project,supportId} = req.query as unknown as QuerySearchProject
+        
+            const updateMessage = await messageService.getSearchProject(project,supportId);
+
+             res.status(200).json(updateMessage)
+
+        }catch(error){
+            res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+
+    public async getSearchByWordOrPhrase(req:Request, res: Response ):Promise<void>{
+        try{
+            const {word_phrase,supportId} = req.query as unknown as QuerySearchWordPhrase
+            console.log(word_phrase,supportId)
+
+            const updateMessage = await messageService.getSearchByWordOrPhrase(word_phrase,supportId);
+
+             res.status(200).json(updateMessage)
+
+        }catch(error){
+            res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+    public async getSearchGenerationToSupport(req:Request, res: Response ):Promise<void>{
+        try{
+            const {general,supportId} = req.query as unknown as QuerySearchGeneral
+            console.log(general,supportId)
+            const updateMessage = await messageService.getSearchGenerationToSupport(general,supportId);
+
+             res.status(200).json(updateMessage)
+
+        }catch(error){
+            res.status(400).json({message: 'Message not found '})
+
+        }
+    }
+
+    public async getSearchGenerationToAdmin(req:Request, res: Response ):Promise<void>{
+        try{
+            const {word_phrase,supportId} = req.query as unknown as QuerySearchWordPhrase
+            
+            const updateMessage = await messageService.getSearchGenerationToAdmin(word_phrase,supportId);
 
              res.status(200).json(updateMessage)
 

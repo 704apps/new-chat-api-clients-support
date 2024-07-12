@@ -8,8 +8,6 @@ export class Messages {
     @Column('varchar')
     userType: string;
     
-    @Column('varchar')
-    socketId: string;
 
     @Column('varchar',{ nullable: true })
     projectId: string;
@@ -27,7 +25,7 @@ export class Messages {
     msgEdt: boolean;
 
     @Column('varchar')
-    orige: string;
+    origin: string;
 
     @CreateDateColumn()
     createdAt: Date;

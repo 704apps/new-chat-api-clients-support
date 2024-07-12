@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:4000",
+            "url": "http://localhost:4000/chat",
             "description": "API de test"
         }
     ],
@@ -65,8 +65,8 @@
                 }
             }
         },
-        "/update_message/{id}": {
-            "patch": {
+        "/messages/{projectId}": {
+            "get": {
                 "summary": "Lista toda as menssagens de um projectId",
                 "description": "Essa rota carrega todas as menssagens de um projectId",
                 "parameters": [
@@ -77,7 +77,75 @@
                         "schema": {
                             "type": "integer"
                         },
-                        "description": "ID primoryKey da coluna da tabela"
+                        "description": "ID nome do Projeto"
+                    }
+                ],
+                "tags": [
+                    "Messages"
+                ],
+        
+                "responses": {
+                    "400": {
+                        "description": "ProjectId not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":[
+                                            {
+                                                "id": 168,
+                                                "userType": "contacts",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "",
+                                                "msgEdt": false,
+                                                "origin": "",
+                                                "createdAt": "2024-07-03T19:31:24.870Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            },
+                                            {
+                                                "id": 169,
+                                                "userType": "contacts",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "",
+                                                "msgEdt": false,
+                                                "origin": "",
+                                                "createdAt": "2024-07-03T19:31:27.108Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/update_message/{id}": {
+            "patch": {
+                "summary": "Atualiza uma message",
+                "description": "Essa rota é para atualizar uma mensagem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID primoryKey da coluna"
                     }
                 ],
                 "tags": [
@@ -112,6 +180,23 @@
                                 "schemas": {
                                     "type": "object",
                                     "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":{
+                                            "id": 449,
+                                            "userType": "support",
+                                            "projectId": "20buscar",
+                                            "supportId": "Joao",
+                                            "messageType": "message",
+                                            "messages": "mensagem atualizada",
+                                            "msgEdt": true,
+                                            "origin": "support",
+                                            "createdAt": "2024-07-08T16:06:52.966Z",
+                                            "updatedAt": "2024-07-12T18:23:57.000Z"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -145,19 +230,22 @@
                 }
             }
         },
-        "/update_statusAttention/{id}": {
+        "/update_statusAttention/{chatId}": {
             "patch": {
-                "summary": "Deletar mensagem",
-                "description": "Essa rota uma mensagem de um projectId",
+                "summary": "Atualização do status do atendimento quando clicar",
+                "description": "Essa rota atualiza o status do atendimento para RESPONDING",
+                "tags": [
+                    "ResponseUpdateStatusChats"
+                ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "chatId",
                         "in": "path",
                         "required": "true",
                         "schema": {
                             "type": "integer"
                         },
-                        "description": "ID primoryKey da coluna da tabela"
+                        "description": "ID primoryKey da coluna da tabela Chat"
                     }
                 ],
                 "requestBody": {
@@ -167,12 +255,12 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "statusAttention": {
+                                    "supportId": {
                                         "type": "string"
                                     }
                                 },
                                 "required": [
-                                    "statusAttention"
+                                    "supportId"
                                 ]
                             }
                         }
@@ -188,7 +276,276 @@
                             "application/json": {
                                 "schemas": {
                                     "type": "object",
+                                    "$ref": "#/components/schemas/ResponseUpdateStatusChats"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/update_statusFinished/{chatId}": {
+            "patch": {
+                "summary": "Atualização do status quando Finalizado",
+                "description": "Essa rota atualiza o status do atendimento para FINISHED",
+                "tags": [
+                    "ResponseUpdateStatusChats"
+                ],
+                "parameters": [
+                    {
+                        "name": "chatId",
+                        "in": "path",
+                        "required": "true",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID primoryKey da coluna da tabela Chat"
+                    }
+                ],
+               
+                "responses": {
+                    "400": {
+                        "description": "ProjectId not found."
+                    },
+                    "200": {
+                        "description": "Status updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ResponseUpdateStatusChats"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search_project/": {
+            "get": {
+                "summary": "Pesquisa de mensagens de um cliente",
+                "description": "Essa rota tras como resultado todas as mensagem de um cliente",
+                "tags":[
+                    "Messages"
+                ],
+                "parameters": [
+                    {
+                        "name": "supportId",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID socket do suporte"
+                    },
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/Messages"
+
+                        },
+                        "description": "Nome do Projeto"
+                    }
+                ],
+               
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                     
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": 26,
+                                                "userType": "contacts",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "",
+                                                "msgEdt": false,
+                                                "origin": "monitor",
+                                                "createdAt": "2024-07-01T21:26:09.590Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            },
+                                            {
+                                                "id": 450,
+                                                "userType": "support",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "po",
+                                                "msgEdt": false,
+                                                "origin": "suporte",
+                                                "createdAt": "2024-07-08T16:07:52.632Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search_word_phrase/": {
+            "get": {
+                "summary": "Pesquisa de palavra e/ou frase",
+                "description": "Essa rota traz as mensagens com as palavras e/ou frase conforme colocada na pesquisa",
+                "tags":[
+                    "Messages"
+                ],
+                "parameters": [
+                    {
+                        "name": "supportId",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID socket do suporte"
+                    },
+                    {
+                        "name": "word_phrase",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Palavra, Frase"
+                    }
+                ],
+               
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                     
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
                                     "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": 26,
+                                                "userType": "contacts",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "",
+                                                "msgEdt": false,
+                                                "origin": "monitor",
+                                                "createdAt": "2024-07-01T21:26:09.590Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            },
+                                            {
+                                                "id": 450,
+                                                "userType": "support",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "po",
+                                                "msgEdt": false,
+                                                "origin": "suporte",
+                                                "createdAt": "2024-07-08T16:07:52.632Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search_generaltosupport/": {
+            "get": {
+                "summary": "Pesquisa de palavra e/ou frase e/ou projeto",
+                "description": "Essa rota traz as mensagens com as palavras e/ou frase e/ou projeto conforme colocada na pesquisa",
+                "tags":[
+                    "Messages"
+                ],
+                "parameters": [
+                    {
+                        "name": "supportId",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID socket do suporte"
+                    },
+                    {
+                        "name": "general",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Palavra, Frase ou Nome do Projeto"
+                    }
+                ],
+               
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                     
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": 26,
+                                                "userType": "contacts",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "",
+                                                "msgEdt": false,
+                                                "origin": "monitor",
+                                                "createdAt": "2024-07-01T21:26:09.590Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            },
+                                            {
+                                                "id": 450,
+                                                "userType": "support",
+                                                "projectId": "20buscar",
+                                                "supportId": "Joao",
+                                                "messageType": "message",
+                                                "messages": "po",
+                                                "msgEdt": false,
+                                                "origin": "suporte",
+                                                "createdAt": "2024-07-08T16:07:52.632Z",
+                                                "updatedAt": "2024-07-11T22:29:18.073Z"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -225,6 +582,32 @@
                     }
                 }
             },
+            "ResponseUpdateStatusChats": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "supportId": {
+                        "type": "string"
+                    },
+                    "statusAttention": {
+                        "type": "string"
+                    },
+                    "dateIndex": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
             "Messages": {
                 "type": "object",
                 "properties": {
@@ -232,9 +615,6 @@
                         "type": "integer"
                     },
                     "userType": {
-                        "type": "string"
-                    },
-                    "socketId": {
                         "type": "string"
                     },
                     "projectId": {
@@ -249,7 +629,7 @@
                     "messages": {
                         "type": "string"
                     },
-                    "orige": {
+                    "origin": {
                         "type": "string"
                     },
                     "createdAt": {

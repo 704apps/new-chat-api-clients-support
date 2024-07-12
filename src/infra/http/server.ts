@@ -4,9 +4,8 @@ import "reflect-metadata";
 import { Server as SocketIOServer } from "socket.io";
 import express, { Application, response } from "express";
 import http, { Server as HTTPServer } from "http";
-import messageRoutes from "../../routes/messageRoutes";
-import { MessageController } from "../../controllers/message/messageController";
-import router from "../../routes/messageRoutes";
+import { MessageController } from "../../controllers/message/message.controller";
+import {router} from './routes'
 import { MessageDTO } from "../../DTOs/message/messageDTO";
 import { MessageUpdateDTO } from "../../DTOs/message/messageUpdateDTO";
 
@@ -27,7 +26,6 @@ app.use(
 );
 app.use(express.json());
 app.use(router);
-app.use("/chat", messageRoutes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
@@ -58,12 +56,11 @@ io.on("connection", (socket) => {
     const dataClient = {
       id: msg.id,
       userType: data.userType,
-      socketId: data.socketId,
       projectId: data.projectId,
       supportId: data.supportId,
       messageType: data.messageType,
       messages: data.messages,
-      orige: data.orige
+      origin: data.origin
     }
     if (!socketUser) {
       io.to('support').emit('supportMessage', dataClient);
@@ -90,12 +87,11 @@ io.on("connection", (socket) => {
     const dataClient = {
       id: msg.id,
       userType: data.userType,
-      socketId: data.socketId,
       projectId: data.projectId,
       supportId: data.supportId,
       messageType: data.messageType,
       messages: data.messages,
-      orige: data.orige
+      origin: data.origin
     }
 
 

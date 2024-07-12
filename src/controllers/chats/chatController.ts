@@ -13,9 +13,22 @@ export class ChatController{
 
             const chatId:number = Number(req.params.id)
 
-            const {statusAttention} = req.body
+            const {supportId} = req.body
 
-            const chat = await chatService.getStatusAttention(chatId,statusAttention);
+            const chat = await chatService.getStatusAttention(chatId,supportId);
+            res.status(200).json(chat)
+
+        }catch(error){
+            res.status(400).json({error})
+
+        }
+    } 
+    public async getStatusFinished(req:Request, res: Response ):Promise<void>{
+        try{
+
+            const chatId:number = Number(req.params.id)
+            const chat = await chatService.getStatusFinished(chatId);
+
             res.status(200).json(chat)
 
         }catch(error){

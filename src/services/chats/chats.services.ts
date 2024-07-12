@@ -15,36 +15,54 @@ export class ChatService {
     }
 
    
-    public async getStatusAttention(id: number,statusAttention:string) {
+    public async getStatusAttention(id: number,supportId:string) {
         const chat = await this.chatsRepository.findOneBy({
             id
         });
 
         if(chat){
-            chat.statusAttention = statusAttention
+            chat.statusAttention = "RESPONDING"
+            chat.supportId = supportId
             await this.chatsRepository.save(chat)
-            return {message: "Status updated successfully."}
+            return chat
         
         }else{
             return {message: "Chat not found"}
         }
        
-        return chat
+       
+    }
+    public async getStatusFinished(id: number) {
+        const chat = await this.chatsRepository.findOneBy({
+            id
+        });
+
+        if(chat){
+            chat.statusAttention = 'FINISHED'
+            await this.chatsRepository.save(chat)
+            return chat
+        
+        }else{
+            return {message: "Chat not found"}
+        }
+       
+       
     }
 
     public async getCreateChat(infochat:ChatDTO) {
-        
+        try{
         const {supportId,projectId,statusAttention} = await infochat
-        
+        console.log()
         const chat = await this.chatsRepository.create({
             supportId,
             projectId,
             statusAttention,
             dateIndex: new Date()
         });
+        console.log(chat)
 
         if(chat){
-            chat.statusAttention = statusAttention
+            
             await this.chatsRepository.save(chat)
         
         }else{
@@ -52,7 +70,11 @@ export class ChatService {
         }
        
         return chat
+    }catch(error){
+        console.log(error)
     }
+    }
+
 
 
     
