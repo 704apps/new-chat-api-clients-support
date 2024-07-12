@@ -238,7 +238,7 @@
                 "summary": "Atualização do status do atendimento quando clicar",
                 "description": "Essa rota atualiza o status do atendimento para RESPONDING",
                 "tags": [
-                    "Rotas para Atualizar Status do Chats"
+                    "Rotas para Atualizar Status dos Chats"
                 ],
                 "parameters": [
                     {
@@ -292,7 +292,7 @@
                 "summary": "Atualização do status quando Finalizado",
                 "description": "Essa rota atualiza o status do atendimento para FINISHED",
                 "tags": [
-                    "Rotas para Atualizar Status do Chats"
+                    "Rotas para Atualizar Status dos Chats"
                 ],
                 "parameters": [
                     {
