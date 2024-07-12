@@ -21,7 +21,7 @@
                 "summary": "Lista todos clientes que enviaram mensagem",
                 "description": "Essa rota carrega a lista que de clientes que enviaram mensagens",
                 "tags": [
-                    "ListClients"
+                    "Rota do Sidebar"
                 ],
                 "responses": {
                     "400": {
@@ -81,7 +81,7 @@
                     }
                 ],
                 "tags": [
-                    "Messages"
+                    "Rotas referente as Mensagens"
                 ],
         
                 "responses": {
@@ -149,7 +149,7 @@
                     }
                 ],
                 "tags": [
-                    "Messages"
+                    "Rotas referente as Mensagens"
                 ],
                 "requestBody": {
                     "required": true,
@@ -208,6 +208,9 @@
             "delete": {
                 "summary": "Deletar mensagem",
                 "description": "Essa rota uma mensagem de um projectId",
+                "tags":[
+                    "Rotas referente as Mensagens"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -235,7 +238,7 @@
                 "summary": "Atualização do status do atendimento quando clicar",
                 "description": "Essa rota atualiza o status do atendimento para RESPONDING",
                 "tags": [
-                    "ResponseUpdateStatusChats"
+                    "Rotas para Atualizas Status do Chats"
                 ],
                 "parameters": [
                     {
@@ -289,7 +292,7 @@
                 "summary": "Atualização do status quando Finalizado",
                 "description": "Essa rota atualiza o status do atendimento para FINISHED",
                 "tags": [
-                    "ResponseUpdateStatusChats"
+                    "Rotas para Atualizas Status do Chats"
                 ],
                 "parameters": [
                     {
@@ -326,7 +329,7 @@
                 "summary": "Pesquisa de mensagens de um cliente",
                 "description": "Essa rota tras como resultado todas as mensagem de um cliente",
                 "tags":[
-                    "Messages"
+                    "Rotas referente as Mensagens"
                 ],
                 "parameters": [
                     {
@@ -343,9 +346,7 @@
                         "in": "query",
                         "required": "true",
                         "schema": {
-                            "type": "string",
-                            "$ref": "#/components/schemas/Messages"
-
+                            "type": "string"
                         },
                         "description": "Nome do Projeto"
                     }
@@ -404,7 +405,7 @@
                 "summary": "Pesquisa de palavra e/ou frase",
                 "description": "Essa rota traz as mensagens com as palavras e/ou frase conforme colocada na pesquisa",
                 "tags":[
-                    "Messages"
+                    "Rotas referente as Mensagens"
                 ],
                 "parameters": [
                     {
@@ -481,7 +482,7 @@
                 "summary": "Pesquisa de palavra e/ou frase e/ou projeto",
                 "description": "Essa rota traz as mensagens com as palavras e/ou frase e/ou projeto conforme colocada na pesquisa",
                 "tags":[
-                    "Messages"
+                    "Rotas referente as Mensagens"
                 ],
                 "parameters": [
                     {
