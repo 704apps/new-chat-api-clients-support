@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ChatService } from '../../services/chats/chats.services';
+import { ChatService } from './chats.services';
 // import {MockResponse} from '../util/statusfunction'
 import { ChatDTO } from '../../DTOs/chat/chatDTO';
 const chatService =  new ChatService() 

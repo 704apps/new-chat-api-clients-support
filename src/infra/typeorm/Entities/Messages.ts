@@ -8,7 +8,9 @@ export class Messages {
     @Column('varchar')
     userType: string;
     
-
+    @Column('int',{ nullable: true })
+    chatId: number;
+    
     @Column('varchar',{ nullable: true })
     projectId: string;
     

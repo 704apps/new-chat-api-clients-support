@@ -1,6 +1,5 @@
 import {Router} from 'express'
-import {MessageController} from '../../../controllers/message/message.controller'
-import {ChatController} from '../../../controllers/chats/chatController'
+import {MessageController} from '../../../modules/messages/message.controller'
 
 
 const messageRoutes = Router()

@@ -4,13 +4,19 @@
       "module": "CommonJS",
       "outDir": "./dist",
       "rootDir": "./src",
+      "baseUrl": "./src",
       "strict": true,
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "strictPropertyInitialization": false,
       "emitDecoratorMetadata": true,
       "resolveJsonModule": true,
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "paths": {
+        "@infra/*":["infra/*"],
+        "@modules/*":["modules/*"],
+        "@DTOs/*":["DTOs/*"]
+      }
     },
     "include": ["src/**/*", "swagger.ts"],
     "exclude": ["node_modules"]

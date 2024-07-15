@@ -65,10 +65,10 @@
                 }
             }
         },
-        "/messages/{projectId}": {
+        "/messages/{chatId}": {
             "get": {
-                "summary": "Lista toda as menssagens de um projectId",
-                "description": "Essa rota carrega todas as menssagens de um projectId",
+                "summary": "Lista todsa as mensagens de um bate papo de um cliente e o suporte",
+                "description": "Essa rota carrega todas as mensagens de um bate papo de um cliente e o suporte",
                 "parameters": [
                     {
                         "name": "id",

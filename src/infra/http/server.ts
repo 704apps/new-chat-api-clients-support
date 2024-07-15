@@ -4,7 +4,7 @@ import "reflect-metadata";
 import { Server as SocketIOServer } from "socket.io";
 import express, { Application, response } from "express";
 import http, { Server as HTTPServer } from "http";
-import { MessageController } from "../../controllers/message/message.controller";
+import { MessageController } from "../../modules/messages/message.controller";
 import {router} from './routes'
 import { MessageDTO } from "../../DTOs/message/messageDTO";
 import { MessageUpdateDTO } from "../../DTOs/message/messageUpdateDTO";
@@ -48,6 +48,7 @@ const io: SocketIOServer = new SocketIOServer(server, {
 io.on("connection", (socket) => {
   //Cliente envia mensagem
   socket.on("clientMessage", async (data) => {
+    console.log(data)
     const msg: MessageDTO = (await messageController.saveMessage(
       data
     )) as MessageDTO;
@@ -55,6 +56,7 @@ io.on("connection", (socket) => {
     const socketUser = data.supportId;
     const dataClient = {
       id: msg.id,
+      chatId:  msg.chatId,
       userType: data.userType,
       projectId: data.projectId,
       supportId: data.supportId,
@@ -86,6 +88,7 @@ io.on("connection", (socket) => {
 
     const dataClient = {
       id: msg.id,
+      chatId:  msg.chatId,
       userType: data.userType,
       projectId: data.projectId,
       supportId: data.supportId,

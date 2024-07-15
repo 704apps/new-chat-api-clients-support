@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MessageService } from '../../services/messages/messages.services';
+import { MessageService } from './messages.services';
 import { MessageDTO} from '../../DTOs/message/messageDTO'
 import {MockResponse} from '../util/statusfunction'
 import {QuerySearchGeneral,QuerySearchProject,QuerySearchWordPhrase} from './DTO/querysparams'
@@ -22,8 +22,8 @@ export class MessageController{
 
     public async getOneMessagesClient(req:Request, res: Response ):Promise<void>{
         try{
-            const projectId = req.params.id
-            const message = await messageService.getOneMessagesClient(projectId);
+            const chatId = req.params.id
+            const message = await messageService.getOneMessagesClient(Number(chatId));
 
              res.status(200).json(message)
 

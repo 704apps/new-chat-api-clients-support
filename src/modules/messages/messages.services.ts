@@ -4,6 +4,7 @@ import { Messages } from '../../infra/typeorm/Entities/Messages';
 import { Contacts } from '../../infra/typeorm/Entities/Contacts';
 import { Chats } from '../../infra/typeorm/Entities/Chats';
 import { MessageDTO } from '../../DTOs/message/messageDTO'
+import { ChatDTO } from '../../DTOs/chat/chatDTO'
 
 export class MessageService {
     private messageRepository = myDataSource.getRepository(Messages);
@@ -24,9 +25,9 @@ export class MessageService {
         return await this.messageRepository.find();
     }
 
-    public async getOneMessagesClient(projectId: string): Promise<Messages[]> {
+    public async getOneMessagesClient(chatId: number): Promise<Messages[]> {
         const project = await this.messageRepository.findBy({
-            projectId
+            chatId
         });
 
         return project
@@ -123,7 +124,7 @@ export class MessageService {
                 .leftJoin(
                     'chats',
                     'c',
-                    'm.projectId = c.projectId AND m.supportId = c.supportId'
+                    'm.chatId = c.id'
                 )
                 .select(['m.projectId',
                     'm.createdAt',
@@ -133,10 +134,10 @@ export class MessageService {
                     'c.id as chatId',
                     `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`
                 ])
-
+                .where("m.origin!='support'")
                 .orderBy('m.createdAt', 'DESC')
                 .getRawMany();
-            console.log(result)
+
             const newMessagens = result.map(item => ({
                 id: item.m_id,
                 projectId: item.m_projectId,
@@ -243,7 +244,6 @@ export class MessageService {
     public async createMessage(message: MessageDTO): Promise<Messages> {
         const { messageType, messages, origin, projectId, supportId, userType } = message
 
-
         const nameProject = await this.messageRepository.findOneBy({
             projectId
         })
@@ -261,22 +261,38 @@ export class MessageService {
 
         const sID = supportId === null || supportId === '' || supportId === undefined ? '' : supportId
 
-        const chatId = await this.chatRepository.createQueryBuilder('chat')
+        const chat = await this.chatRepository.createQueryBuilder('chat')
             .where('chat.statusAttention = :statusOpen', { statusOpen: 'OPEN' })
             .orWhere('chat.statusAttention = :statusResponding', { statusResponding: 'RESPONDING' })
             .andWhere('chat.projectId = :projectId', { projectId })
             .getOne();
 
+        let chatId = chat?.id
 
-        if (!chatId) {
-            await this.chatRepository.create({
+        if (!chat) {
+            console.log('veio aqui com a mensagem')
+            const newChat = await this.chatRepository.create({
                 supportId: sID, projectId, statusAttention: 'OPEN', dateIndex: new Date()
             })
+
+            const chat2 = await this.chatRepository.save(newChat)
+            chatId = chat2.id
+
+        } else{
+            console.log('veio aqui dfdfdfdf')
+            console.log(origin)
+            console.log(chat.supportId)
+            console.log(supportId)
+
+            console.log('veio aqui aaaaaaaaaaa')
+
+            if (origin == 'support' && !chat.supportId ) {
+                chat.supportId = supportId
+                await this.chatRepository.save(chat)
+
+            }
         }
-
-        const newMessage = this.messageRepository.create({ messageType, messages, origin, projectId, supportId: sID, userType });
-
-
+        const newMessage = this.messageRepository.create({ messageType, chatId, messages, origin, projectId, supportId: sID, userType });
 
         return await this.messageRepository.save(newMessage);
 
