@@ -52,14 +52,12 @@ export class ChatService {
     public async getCreateChat(infochat:ChatDTO) {
         try{
         const {supportId,projectId,statusAttention} = await infochat
-        console.log()
         const chat = await this.chatsRepository.create({
             supportId,
             projectId,
             statusAttention,
             dateIndex: new Date()
         });
-        console.log(chat)
 
         if(chat){
             

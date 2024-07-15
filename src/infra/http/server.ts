@@ -48,7 +48,6 @@ const io: SocketIOServer = new SocketIOServer(server, {
 io.on("connection", (socket) => {
   //Cliente envia mensagem
   socket.on("clientMessage", async (data) => {
-    console.log(data)
     const msg: MessageDTO = (await messageController.saveMessage(
       data
     )) as MessageDTO;
@@ -64,6 +63,10 @@ io.on("connection", (socket) => {
       messages: data.messages,
       origin: data.origin
     }
+    console.log('dataClient')
+    console.log(dataClient)
+    console.log('dataCldsfdfdient')
+
     if (!socketUser) {
       io.to('support').emit('supportMessage', dataClient);
 
@@ -96,6 +99,7 @@ io.on("connection", (socket) => {
       messages: data.messages,
       origin: data.origin
     }
+    console.log(dataClient)
 
 
     await io.to(socketProject).emit('clientMessage', dataClient);

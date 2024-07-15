@@ -11,8 +11,9 @@ export class MessageController{
     
     public async getMessages(req:Request, res: Response):Promise<void>{
         try{
+     
             const messages = await messageService.getNewMessages();
-
+            
             res.status(200).json(messages)
         }catch(error){
             res.status(400).json({message: 'Messages not found '})
@@ -22,10 +23,13 @@ export class MessageController{
 
     public async getOneMessagesClient(req:Request, res: Response ):Promise<void>{
         try{
-            const chatId = req.params.id
-            const message = await messageService.getOneMessagesClient(Number(chatId));
+            const projectId = req.params.id
+            const page = parseInt(req.query.page as string, 10) || 1;
+            const supportId = req.query.supportId 
+            const pageSize = 30;
+            const message = await messageService.getOneMessagesClient(String(projectId),String(supportId),page,pageSize);
 
-             res.status(200).json(message)
+            res.status(200).json(message)
 
         }catch(error){
             res.status(400).json({message: 'Message not found '})

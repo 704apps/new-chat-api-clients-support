@@ -25,10 +25,17 @@ export class MessageService {
         return await this.messageRepository.find();
     }
 
-    public async getOneMessagesClient(chatId: number): Promise<Messages[]> {
-        const project = await this.messageRepository.findBy({
-            chatId
-        });
+    public async getOneMessagesClient(projectId: string, supportId: string, page: number, pageSize: number) {
+        const skip = (page - 1) * pageSize
+
+        const project = await this.messageRepository
+            .createQueryBuilder('m')
+            .where('m.supportId=:supportId', { supportId })
+            .andWhere('m.projectId=:projectId', { projectId })
+            .skip(skip)
+            .take(pageSize)
+            .orderBy('m.createdAt', 'ASC')
+            .getMany()
 
         return project
     }
@@ -262,13 +269,14 @@ export class MessageService {
         const sID = supportId === null || supportId === '' || supportId === undefined ? '' : supportId
 
         const chat = await this.chatRepository.createQueryBuilder('chat')
-            .where('chat.statusAttention = :statusOpen', { statusOpen: 'OPEN' })
-            .orWhere('chat.statusAttention = :statusResponding', { statusResponding: 'RESPONDING' })
-            .andWhere('chat.projectId = :projectId', { projectId })
+            .where('chat.projectId = :projectId', { projectId })
+            .andWhere('chat.statusAttention IN (:...status)', { status: ['OPEN', 'RESPONDING'] }) // Condição para o status
             .getOne();
 
         let chatId = chat?.id
-
+        console.log('dddddddddddd' + projectId)
+        console.log(chat)
+        console.log('tttttttttttttt')
         if (!chat) {
             console.log('veio aqui com a mensagem')
             const newChat = await this.chatRepository.create({
@@ -278,15 +286,8 @@ export class MessageService {
             const chat2 = await this.chatRepository.save(newChat)
             chatId = chat2.id
 
-        } else{
-            console.log('veio aqui dfdfdfdf')
-            console.log(origin)
-            console.log(chat.supportId)
-            console.log(supportId)
-
-            console.log('veio aqui aaaaaaaaaaa')
-
-            if (origin == 'support' && !chat.supportId ) {
+        } else {
+            if (origin == 'support' && !chat.supportId) {
                 chat.supportId = supportId
                 await this.chatRepository.save(chat)
 
