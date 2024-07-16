@@ -115,9 +115,9 @@ export class MessageController{
 
     public async getSearchProject(req:Request, res: Response ):Promise<void>{
         try{
-            const {project,supportId} = req.query as unknown as QuerySearchProject
-        
-            const updateMessage = await messageService.getSearchProject(project,supportId);
+            const project = req.params.id
+            console.log(project)
+            const updateMessage = await messageService.getSearchProject(project);
 
              res.status(200).json(updateMessage)
 

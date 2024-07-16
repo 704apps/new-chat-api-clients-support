@@ -288,32 +288,24 @@
                 }
             }
         },
-        "/search_project/": {
+        "/search_project/{projectId}": {
             "get": {
                 "summary": "Pesquisa de mensagens de um cliente",
-                "description": "Essa rota tras como resultado todas as mensagem de um cliente",
+                "description": "Traz um cliente",
                 "tags":[
                     "Rotas referente as Mensagens"
                 ],
                 "parameters": [
                     {
-                        "name": "supportId",
-                        "in": "query",
+                        "name": "projectId",
+                        "in": "path",
                         "required": "true",
                         "schema": {
                             "type": "string"
                         },
-                        "description": "ID socket do suporte"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": "true",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Nome do Projeto"
+                        "description": "ID do projeto ou nome do projeto"
                     }
+                   
                 ],
                
                 "responses": {
@@ -342,19 +334,8 @@
                                                 "origin": "monitor",
                                                 "createdAt": "2024-07-01T21:26:09.590Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
-                                            },
-                                            {
-                                                "id": 450,
-                                                "userType": "support",
-                                                "projectId": "20buscar",
-                                                "supportId": "Joao",
-                                                "messageType": "message",
-                                                "messages": "po",
-                                                "msgEdt": false,
-                                                "origin": "suporte",
-                                                "createdAt": "2024-07-08T16:07:52.632Z",
-                                                "updatedAt": "2024-07-11T22:29:18.073Z"
                                             }
+                                           
                                         ]
                                     }
                                 }

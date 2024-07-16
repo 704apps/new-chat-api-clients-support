@@ -13,7 +13,7 @@ messageRoutes.get('/messages/:id',(req,res)=>messageController.getOneMessagesCli
 messageRoutes.patch('/update_message/:id',(req,res)=>messageController.getUpdateMessage(req,res))
 messageRoutes.delete('/delete_message/:id',(req,res)=>messageController.getDeleteMessage(req,res))
 
-messageRoutes.get('/search_project/',(req,res)=>messageController.getSearchProject(req,res))
+messageRoutes.get('/search_project/:id',(req,res)=>messageController.getSearchProject(req,res))
 messageRoutes.get('/search_word_phrase/',(req,res)=>messageController.getSearchByWordOrPhrase(req,res))
 messageRoutes.get('/search_generaltosupport/',(req,res)=>messageController.getSearchGenerationToSupport(req,res))
 

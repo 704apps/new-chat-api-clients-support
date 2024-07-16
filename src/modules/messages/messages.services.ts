@@ -162,6 +162,54 @@ export class MessageService {
             console.log(error)
         }
     }
+    public async getNes() {
+        try {
+            const selectIdClients = await this.messageRepository
+                .createQueryBuilder('m')
+                .select('m.projectId', 'projectId')
+                .addSelect('MAX(m.createdAt)', 'latestCreatedAt')
+                .groupBy('m.projectId')
+
+            const result = await this.messageRepository
+                .createQueryBuilder('m')
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    'sub',
+                    'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
+                )
+                .leftJoin(
+                    'chats',
+                    'c',
+                    'm.chatId = c.id'
+                )
+                .select(['m.projectId',
+                    'm.createdAt',
+                    'm.messages',
+                    'm.id',
+                    'c.supportId',
+                    'c.id as chatId',
+                    `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`
+                ])
+                .where("m.origin!='support'")
+                .orderBy('m.createdAt', 'DESC')
+                .getRawMany();
+
+            const newMessagens = result.map(item => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.c_supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                chatId: item.chatId,
+                createdAt: item.m_createdAt
+            }));
+
+            return newMessagens
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
     public async getChatsRespondingToSupport(supportId: string) {
         try {
             const selectIdClients = await this.messageRepository
@@ -211,16 +259,52 @@ export class MessageService {
             console.log(error)
         }
     }
-    public async getSearchProject(projectId: string, supportId: string) {
+    public async getSearchProject(projectId: string) {
         try {
+            const selectIdClients = await this.messageRepository
+                .createQueryBuilder('m')
+                .select('m.projectId', 'projectId')
+                .addSelect('MAX(m.createdAt)', 'latestCreatedAt')
+                .groupBy('m.projectId')
+        
 
-            const resultSearch = await this.messageRepository.createQueryBuilder('m')
-                .where('m.supportId=:supportId', { supportId })
-                .andWhere('m.projectId = :projectId', { projectId })
-                .orderBy('m.createdAt', 'ASC')
-                .getMany();
+            const result = await this.messageRepository
+                .createQueryBuilder('m')
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    'sub',
+                    'm.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt',
+                )
+                .leftJoin(
+                    'chats',
+                    'c',
+                    'm.chatId = c.id'
+                )
+                .select(['m.projectId',
+                    'm.createdAt',
+                    'm.messages',
+                    'm.id',
+                    'c.supportId',
+                    'c.id as chatId',
+                    `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`
+                ])
+                .where("m.origin!='support'")
+                .andWhere("m.projectId=:projectId",{projectId})
+                .orderBy('m.createdAt', 'DESC')
+                .getRawMany();
+                console.log('selectIdClients')
+                console.log(result)
+            const newMessagens = result.map(item => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.c_supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                chatId: item.chatId,
+                createdAt: item.m_createdAt
+            }));
 
-            return resultSearch
+            return newMessagens
 
         } catch (error) {
             console.log(error)
