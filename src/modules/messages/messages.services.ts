@@ -5,6 +5,7 @@ import { Contacts } from '../../infra/typeorm/Entities/Contacts';
 import { Chats } from '../../infra/typeorm/Entities/Chats';
 import { MessageDTO } from '../../DTOs/message/messageDTO'
 import { ChatDTO } from '../../DTOs/chat/chatDTO'
+import { io } from '../../infra/http/server';
 
 export class MessageService {
     private messageRepository = myDataSource.getRepository(Messages);
@@ -97,8 +98,10 @@ export class MessageService {
 
             }
 
+
             await this.messageRepository.delete({ id })
 
+            io.to(message.projectId).emit('deletedMessage',{id:message.id})
 
             return { message: "Message deleted successfully" }
 
@@ -286,6 +289,7 @@ export class MessageService {
         } else {
             if (origin == 'support' && !chat.supportId) {
                 chat.supportId = supportId
+                chat.statusAttention = 'RESPONDING'
                 await this.chatRepository.save(chat)
 
             }

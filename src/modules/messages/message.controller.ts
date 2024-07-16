@@ -59,11 +59,10 @@ export class MessageController{
     
           
             if(updateMessage.origin==='support')
-                 await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
+                 await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,updatedMessage:updateMessage.messages});
             else{
-                await io.to(updateMessage.supportId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
+                await io.to(updateMessage.supportId).emit('supportMsgUpdate', {id:updateMessage.id,updatedMessage:updateMessage.messages});
             }
-            //.emit('supportMsgUpdate',{id:updateMessage.id,messages:updateMessage.messages})
 
             res.status(200).json(updateMessage)
 

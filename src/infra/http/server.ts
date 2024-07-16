@@ -108,15 +108,7 @@ io.on("connection", (socket) => {
 
   socket.on("supportMsgUpdate", async (data: MessageDTO) => {
 
-    alert(data.messages)
-    const socketProject = data.projectId;
-    const idMsg:number = data.id as number
-
-    if (idMsg) {
-      await io.to(socketProject).emit('supportMsgUpdate', data);
-      await messageController.getUpdateSocketAction(idMsg)
-     
-    }
+  
 
   })
 

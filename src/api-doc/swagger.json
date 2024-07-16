@@ -571,6 +571,78 @@
                     }
                 }
             }
+        },
+        "socket: update messagens":{
+            "get":{
+               "summary": "SOCKET PARA ATUALIZAR MENSAGENS EDITADAS",
+                "description": "Use esse socket no frontend para capturar as mensagens EDITADAS. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.on('supportMsgUpdate', async (data) => {  \n\n      setMessages(prevMessages =>  prevMessages.map(mensagem => mensagem.id === data.id \n      ? { ...mensagem, messages: data.updatedMessage } \n      : mensagem\n      ))\n      })",
+                
+                "tags":[
+                    "SOCKETS"
+                ],
+             
+                "responses":{
+                    "data":{
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                   
+                                    "example-1": {
+                                        "summary": "Como fica a resposta no data",
+                                        "value": 
+                                            {
+                                                "id": 26,
+                                                "updatedMessage": "Messagem atualizada"
+                                              
+                                            }
+                                            
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        },
+        "socket: delete messagens":{
+            "get":{
+               "summary": "SOCKET PARA ATUALIZAR MENSAGENS DELETAS",
+                "description": "Use esse socket no frontend para capturar as mensagens DELETADAS. Exemplo de como colocar no frontend para escutar as mensagens deletadas: \n\n\n\n    socket.on('deletedMessage', async (data) => {  \n\n          setMessages(prevMessages => prevMessages.filter(mensagem => mensagem.id !== data.id));\n      })",
+                
+                "tags":[
+                    "SOCKETS"
+                ],
+             
+                "responses":{
+                    "data":{
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                   
+                                    "example-1": {
+                                        "summary": "Como fica a resposta no data",
+                                        "value": 
+                                            {
+                                                "id": 26,
+                                                "updatedMessage": "Messagem atualizada"
+                                              
+                                            }
+                                            
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     },
     "components": {
@@ -660,5 +732,6 @@
                 }
             }
         }
+      
     }
 }
