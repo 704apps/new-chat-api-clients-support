@@ -52,7 +52,7 @@ export class MessageService {
 
     }
 
-    public async getUpdateMessage(id: number, messages: string) {
+    public async getUpdateMessage(id: number, messages: string):Promise<MessageDTO> {
         const project = await this.messageRepository.findOneBy({
             id
         });
@@ -61,13 +61,11 @@ export class MessageService {
             project.messages = messages
             project.msgEdt = true
             await this.messageRepository.save(project)
+            
+        } 
 
-        } else {
-            return { message: "ProjectId not found" }
-        }
-
-
-        return project
+        return project  as MessageDTO
+        
     }
 
     public async getUpdateSocketAction(id: number) {
@@ -249,6 +247,7 @@ export class MessageService {
     }
 
     public async createMessage(message: MessageDTO): Promise<Messages> {
+
         const { messageType, messages, origin, projectId, supportId, userType } = message
 
         const nameProject = await this.messageRepository.findOneBy({
@@ -274,9 +273,7 @@ export class MessageService {
             .getOne();
 
         let chatId = chat?.id
-        console.log('dddddddddddd' + projectId)
-        console.log(chat)
-        console.log('tttttttttttttt')
+
         if (!chat) {
             console.log('veio aqui com a mensagem')
             const newChat = await this.chatRepository.create({
@@ -293,6 +290,7 @@ export class MessageService {
 
             }
         }
+
         const newMessage = this.messageRepository.create({ messageType, chatId, messages, origin, projectId, supportId: sID, userType });
 
         return await this.messageRepository.save(newMessage);

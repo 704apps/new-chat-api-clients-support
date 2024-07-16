@@ -37,7 +37,7 @@ app.get("/terms", (request, response) => {
 
 const messageController = new MessageController();
 
-const io: SocketIOServer = new SocketIOServer(server, {
+export const io: SocketIOServer = new SocketIOServer(server, {
   cors: {
     origin: "*",
     methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
     const msg: MessageDTO = (await messageController.saveMessage(
       data
     )) as MessageDTO;
-
+    console.log(data)
     const socketUser = data.supportId;
     const dataClient = {
       id: msg.id,
@@ -106,7 +106,9 @@ io.on("connection", (socket) => {
 
   })
 
-  socket.on("supportMsgUpdate", async (data: MessageUpdateDTO) => {
+  socket.on("supportMsgUpdate", async (data: MessageDTO) => {
+
+    alert(data.messages)
     const socketProject = data.projectId;
     const idMsg:number = data.id as number
 

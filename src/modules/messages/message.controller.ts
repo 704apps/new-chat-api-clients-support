@@ -5,7 +5,7 @@ import {MockResponse} from '../util/statusfunction'
 import {QuerySearchGeneral,QuerySearchProject,QuerySearchWordPhrase} from './DTO/querysparams'
 const messageService =  new MessageService() 
 
-
+import {io} from '../../infra/http/server'
 
 export class MessageController{
     
@@ -55,9 +55,20 @@ export class MessageController{
         try{
             const projectId:number = parseInt(req.params.id)
             const {messages} = req.body
-            const updateMessage = await messageService.getUpdateMessage(projectId,messages);
+            const updateMessage:MessageDTO  = await messageService.getUpdateMessage(projectId,messages);
+    
 
-             res.status(200).json(updateMessage)
+            console.log(updateMessage)
+            await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
+
+            if(updateMessage.origin==='support')
+                 await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
+            else{
+                await io.to(updateMessage.supportId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
+            }
+            //.emit('supportMsgUpdate',{id:updateMessage.id,messages:updateMessage.messages})
+
+            res.status(200).json(updateMessage)
 
         }catch(error){
             res.status(400).json({message: 'Message not found '})

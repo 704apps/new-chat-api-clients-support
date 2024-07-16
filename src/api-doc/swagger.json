@@ -65,7 +65,7 @@
                 }
             }
         },
-        "/messages/{chatId}": {
+        "/messages/{projectId}": {
             "get": {
                 "summary": "Lista todsa as mensagens de um bate papo de um cliente e o suporte",
                 "description": "Essa rota carrega todas as mensagens de um bate papo de um cliente e o suporte",
@@ -78,6 +78,24 @@
                             "type": "integer"
                         },
                         "description": "ID nome do Projeto"
+                    },
+                    {
+                        "name": "supportId",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID socket do suporte"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "pagina"
                     }
                 ],
                 "tags": [
@@ -106,7 +124,7 @@
                                                 "projectId": "20buscar",
                                                 "supportId": "Joao",
                                                 "messageType": "message",
-                                                "messages": "",
+                                                "messages": "Olá estou com um problema",
                                                 "msgEdt": false,
                                                 "origin": "",
                                                 "createdAt": "2024-07-03T19:31:24.870Z",
@@ -118,7 +136,7 @@
                                                 "projectId": "20buscar",
                                                 "supportId": "Joao",
                                                 "messageType": "message",
-                                                "messages": "",
+                                                "messages": "Boa tarde meu nome é João, em que posso ajudar",
                                                 "msgEdt": false,
                                                 "origin": "",
                                                 "createdAt": "2024-07-03T19:31:27.108Z",
