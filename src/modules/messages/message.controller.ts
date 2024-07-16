@@ -57,10 +57,7 @@ export class MessageController{
             const {messages} = req.body
             const updateMessage:MessageDTO  = await messageService.getUpdateMessage(projectId,messages);
     
-
-            console.log(updateMessage)
-            await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
-
+          
             if(updateMessage.origin==='support')
                  await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,messages:updateMessage.messages});
             else{
