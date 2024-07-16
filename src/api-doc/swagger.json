@@ -251,60 +251,6 @@
                 }
             }
         },
-        "/update_statusAttention/{chatId}": {
-            "patch": {
-                "summary": "Atualização do status do atendimento quando clicar",
-                "description": "Essa rota atualiza o status do atendimento para RESPONDING",
-                "tags": [
-                    "Rotas para Atualizar Status dos Chats"
-                ],
-                "parameters": [
-                    {
-                        "name": "chatId",
-                        "in": "path",
-                        "required": "true",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "description": "ID primoryKey da coluna da tabela Chat"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "supportId": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "supportId"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {
-                        "description": "ProjectId not found."
-                    },
-                    "200": {
-                        "description": "Status updated successfully.",
-                        "content": {
-                            "application/json": {
-                                "schemas": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/ResponseUpdateStatusChats"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/update_statusFinished/{chatId}": {
             "patch": {
                 "summary": "Atualização do status quando Finalizado",

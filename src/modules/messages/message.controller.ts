@@ -20,6 +20,21 @@ export class MessageController{
 
         }
     }
+   
+    public async getChatsRespondingToSupport(req:Request, res: Response):Promise<void>{
+        try{
+
+            const supportId = req.params.id
+            console.log(supportId)
+        
+            const messages = await messageService.getChatsRespondingToSupport(supportId);
+            
+            res.status(200).json(messages)
+        }catch(error){
+            res.status(400).json({message: 'Messages not found '})
+
+        }
+    }
 
     public async getOneMessagesClient(req:Request, res: Response ):Promise<void>{
         try{
@@ -58,9 +73,10 @@ export class MessageController{
             const updateMessage:MessageDTO  = await messageService.getUpdateMessage(projectId,messages);
     
           
-            if(updateMessage.origin==='support')
+            if(updateMessage.origin==='support'){
+                console.log('veio aqui')
                  await io.to(updateMessage.projectId).emit('supportMsgUpdate', {id:updateMessage.id,updatedMessage:updateMessage.messages});
-            else{
+            }else{
                 await io.to(updateMessage.supportId).emit('supportMsgUpdate', {id:updateMessage.id,updatedMessage:updateMessage.messages});
             }
 
