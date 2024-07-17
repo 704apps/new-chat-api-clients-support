@@ -35,7 +35,7 @@ export class MessageService {
             .andWhere('m.projectId=:projectId', { projectId })
             // .skip(skip)
             // .take(pageSize)
-            .orderBy('m.createdAt', 'DESC')
+            .orderBy('m.createdAt', 'ASC')
             .getMany()
 
         return project
