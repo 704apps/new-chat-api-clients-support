@@ -62,7 +62,8 @@ io.on("connection", (socket) => {
       supportId: data.supportId,
       messageType: data.messageType,
       messages: data.messages,
-      origin: data.origin
+      origin: data.origin,
+      createdAt: msg.createdAt
     }
     console.log('dataClient')
     console.log(dataClient)
@@ -90,6 +91,7 @@ io.on("connection", (socket) => {
       data
     )) as MessageDTO;
 
+
     const dataClient = {
       id: msg.id,
       chatId:  msg.chatId,
@@ -99,23 +101,20 @@ io.on("connection", (socket) => {
       supportId: data.supportId,
       messageType: data.messageType,
       messages: data.messages,
-      origin: data.origin
+      origin: data.origin,
+      createdAt: msg.createdAt
     }
 
     console.log(dataClient)
 
 
     await io.to(socketProject).emit('clientMessage', dataClient);
-    // await io.to('support').emit('supportMessage', dataClient);
+    //await io.to('support').emit('supportMessage', dataClient);
     await io.to('support').emit('supportResponse', dataClient);
 
   })
 
-  socket.on("supportMsgUpdate", async (data: MessageDTO) => {
-
-  
-
-  })
+ 
 
   socket.on("statusAttentionUpdate", async () => {
     io.to('support').emit('supportMessage');

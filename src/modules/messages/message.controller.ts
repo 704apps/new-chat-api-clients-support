@@ -40,9 +40,9 @@ export class MessageController{
         try{
             const projectId = req.params.id
             const page = parseInt(req.query.page as string, 10) || 1;
-            const supportId = req.query.supportId 
+            //const supportId = req.query.supportId 
             const pageSize = 30;
-            const message = await messageService.getOneMessagesClient(String(projectId),String(supportId),page,pageSize);
+            const message = await messageService.getOneMessagesClient(String(projectId),page,pageSize);
 
             res.status(200).json(message)
 

@@ -26,13 +26,13 @@ export class MessageService {
         return await this.messageRepository.find();
     }
 
-    public async getOneMessagesClient(projectId: string, supportId: string, page: number, pageSize: number) {
+    public async getOneMessagesClient(projectId: string, page: number, pageSize: number) {
         const skip = (page - 1) * pageSize
 
         const project = await this.messageRepository
             .createQueryBuilder('m')
-            .where('m.supportId=:supportId', { supportId })
-            .andWhere('m.projectId=:projectId', { projectId })
+           // .where('m.supportId=:supportId', { supportId })
+            .where('m.projectId=:projectId', { projectId })
             // .skip(skip)
             // .take(pageSize)
             .orderBy('m.createdAt', 'ASC')
@@ -423,8 +423,8 @@ export class MessageService {
                 chat.supportId = supportId
                 chat.statusAttention = 'RESPONDING'
                 await this.chatRepository.save(chat)
-                console.log('aaaaaaaaaaaa')
-                await io.to('support').emit('statusChat', {statusAttention : 'RESPONDING'});
+
+                await io.to('support').emit('statusChat', {chatId:chat.id,statusAttention:chat.statusAttention});
 
                 //Atualiza na tabela de mensagem qual suporte está atendendo
                 await this.messageRepository.createQueryBuilder()

@@ -1,21 +1,23 @@
-// import express, {Request} from 'express'
-// import AWS from 'aws-sdk'
-// import multer from 'multer'
-// import multers3 from 'multer-s3'
+import AWS from 'aws-sdk'
 
-// const s3 = new AWS.S3({
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//     region: process.env.AWS_REGION,
-// })
 
-// const storage = {
-//     s3,
-//     bucket: process.env.BUCKET_NAME,
-//     ac1: 'public-read',
-//     metadata: function(req:Request,file:multer.file,cb){
-        
-//     }
+export async function uploadToAws(fileName:string,fileContent:Buffer){
+    const s3 = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION,
+    })
 
-// }
-// export  {}
+    
+    const params = {
+        Bucket: String(process.env.AWS_S3_BUCKET),
+        Key: fileName,
+        Body: fileContent,
+        //ContentType: mimeType//geralmente se acha sozinho
+    };
+
+    const data = await s3.upload(params).promise();
+
+    return data.Location
+
+}   
