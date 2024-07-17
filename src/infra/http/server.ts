@@ -101,12 +101,13 @@ io.on("connection", (socket) => {
       messages: data.messages,
       origin: data.origin
     }
-    
+
     console.log(dataClient)
 
 
     await io.to(socketProject).emit('clientMessage', dataClient);
-    await io.to('support').emit('supportMessage', dataClient);
+    // await io.to('support').emit('supportMessage', dataClient);
+    await io.to('supportReponse').emit('supportMessage', dataClient);
 
   })
 
