@@ -33,8 +33,8 @@ export class MessageService {
             .createQueryBuilder('m')
             .where('m.supportId=:supportId', { supportId })
             .andWhere('m.projectId=:projectId', { projectId })
-            .skip(skip)
-            .take(pageSize)
+            // .skip(skip)
+            // .take(pageSize)
             .orderBy('m.createdAt', 'DESC')
             .getMany()
 
