@@ -142,7 +142,6 @@ export class MessageService {
                     'c.id as chatId',
                     `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`
                 ])
-                .where("m.origin!='support'")
                 .orderBy('m.createdAt', 'DESC')
                 .getRawMany();
 
@@ -425,6 +424,7 @@ export class MessageService {
                 chat.statusAttention = 'RESPONDING'
                 await this.chatRepository.save(chat)
                 console.log('aaaaaaaaaaaa')
+                await io.to('support').emit('statusChat', {statusAttention : 'RESPONDING'});
 
                 //Atualiza na tabela de mensagem qual suporte está atendendo
                 await this.messageRepository.createQueryBuilder()

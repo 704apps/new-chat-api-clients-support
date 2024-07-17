@@ -107,7 +107,7 @@ io.on("connection", (socket) => {
 
     await io.to(socketProject).emit('clientMessage', dataClient);
     // await io.to('support').emit('supportMessage', dataClient);
-    await io.emit('supportReponse', dataClient);
+    await io.to('support').emit('supportResponse', dataClient);
 
   })
 
