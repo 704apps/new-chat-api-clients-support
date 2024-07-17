@@ -424,7 +424,7 @@ export class MessageService {
                 chat.statusAttention = 'RESPONDING'
                 await this.chatRepository.save(chat)
 
-                await io.to('support').emit('statusChat', {chatId:chat.id,statusAttention:chat.statusAttention});
+                await io.to('support').emit('statusChat', {chatId:chat.id,statusChat:chat.statusAttention});
 
                 //Atualiza na tabela de mensagem qual suporte está atendendo
                 await this.messageRepository.createQueryBuilder()
