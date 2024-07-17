@@ -432,7 +432,6 @@ export class MessageService {
                     .set({ supportId: supportId })
                     .where("chatId = :chatId", { chatId: chat.id })
                     .execute()
-                console.log('bbbbbbbbbbbbb')
 
             } else if (origin == 'support' && chat.supportId) {
                 if (chat.supportId != supportId) {
