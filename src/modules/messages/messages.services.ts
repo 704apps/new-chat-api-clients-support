@@ -6,7 +6,7 @@ import { Chats } from '../../infra/typeorm/Entities/Chats';
 import { MessageDTO } from '../../DTOs/message/messageDTO'
 import { ChatDTO } from '../../DTOs/chat/chatDTO'
 import { io } from '../../infra/http/server';
-
+import {uploadToAws} from '../../infra/upload/aws'
 export class MessageService {
     private messageRepository = myDataSource.getRepository(Messages);
 
@@ -379,6 +379,21 @@ export class MessageService {
         } catch (error) {
             console.log(error)
         }
+        
+    }
+    public async uploadMedia(filename:string,filecontent:Buffer):Promise<String>{
+        console.log('filecontent')
+        try {
+            const url_media = await uploadToAws(filename,filecontent)
+            return url_media
+
+        } catch (error) {
+            console.log(error)
+            
+            return String(error)
+        }
+        
+
     }
 
     public async createMessage(message: MessageDTO): Promise<Messages> {
