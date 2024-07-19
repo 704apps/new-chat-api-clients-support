@@ -291,7 +291,7 @@
         "/update_statusOpen/{chatId}": {
             "patch": {
                 "summary": "Atualização do status quando Finalizado",
-                "description": "Essa rota atualiza o status do atendimento para FINISHED",
+                "description": "Essa rota atualiza o status do atendimento para OPEN",
                 "tags": [
                     "Rotas para Atualizar Status dos Chats"
                 ],
@@ -383,6 +383,69 @@
                                             }
                                            
                                         ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/filter_status_attention/": {
+            "get": {
+                "summary": "Filtro de Status de Atendimento",
+                "description": "Essa rota faz o filtro de status de atendimento",
+                "tags":[
+                    "Rotas referente as Mensagens"
+                ],
+                "parameters": [
+                    {
+                        "name": "statusAttention",
+                        "in": "query",
+                        "required": "true",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Status do atendimento: OPEN | RESPONDING | FINISHED"
+                    }
+                   
+                ],
+               
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                     
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": 1,
+                                                "projectId": "proj123",
+                                                "supportId": "sup456",
+                                                "statusAttention": "RESPONDING",
+                                                "messages": "Hello, how can I help you?",
+                                                "chatId": 789,
+                                                "createdAt": "2024-07-10T10:00:00Z"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "projectId": "proj124",
+                                                "supportId": "sup457",
+                                                "statusAttention": "RESPONDING",
+                                                "messages": "Hello, how can I help you, please?",
+                                                "chatId": 790,
+                                                "createdAt": "2024-07-10T10:00:00Z"
+                                            }
+                                        ]
+                                     
                                     }
                                 }
                             }

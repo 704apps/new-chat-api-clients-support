@@ -113,6 +113,18 @@ export class MessageController {
         }
     }
 
+    public async getFilterToStatusSidebar(req: Request, res: Response): Promise<void> {
+        try {
+            const {statusAttention} = req.query
+            const updateMessage = await messageService.getFilterToStatusSidebar(String(statusAttention));
+
+            res.status(200).json(updateMessage)
+
+        } catch (error) {
+            res.status(400).json({ message: 'Message not found ' })
+
+        }
+    }
     public async getSearchProject(req: Request, res: Response): Promise<void> {
         try {
             const project = req.params.id
@@ -126,7 +138,6 @@ export class MessageController {
 
         }
     }
-
     public async getSearchByWordOrPhrase(req: Request, res: Response): Promise<void> {
         try {
             const { word_phrase, supportId } = req.query as unknown as QuerySearchWordPhrase

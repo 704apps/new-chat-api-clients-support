@@ -19,6 +19,8 @@ messageRoutes.get('/search_project/:id',(req,res)=>messageController.getSearchPr
 messageRoutes.get('/search_word_phrase/',(req,res)=>messageController.getSearchByWordOrPhrase(req,res))
 messageRoutes.get('/search_generaltosupport/',(req,res)=>messageController.getSearchGenerationToSupport(req,res))
 
+messageRoutes.get('/filter_status_attention/',(req,res)=>messageController.getFilterToStatusSidebar(req,res))
+
 
 messageRoutes.post('/media_in_message/',upload.single('file'),(req,res)=>messageController.uploadFile(req,res))
 
