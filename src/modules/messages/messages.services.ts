@@ -455,6 +455,12 @@ export class MessageService {
                     await this.chatRepository.save(chat)
 
                 }
+
+                if(chat.statusAttention=='OPEN'){
+                    chat.statusAttention = 'RESPONDING'
+
+                }
+
             }
         }
 
