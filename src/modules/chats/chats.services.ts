@@ -14,68 +14,99 @@ export class ChatService {
         }
     }
 
-   
-    public async getStatusAttention(id: number,supportId:string) {
-        const chat = await this.chatsRepository.findOneBy({
-            id
-        });
 
-        if(chat){
-            chat.statusAttention = "RESPONDING"
-            chat.supportId = supportId
-            await this.chatsRepository.save(chat)
+    public async getStatusAttention(id: number, supportId: string) {
+        try {
+            const chat = await this.chatsRepository.findOneBy({
+                id
+            });
+
+            if (chat) {
+                chat.statusAttention = "RESPONDING"
+                chat.supportId = supportId
+                await this.chatsRepository.save(chat)
+                return chat
+
+            }
+        } catch (error) {
+            return { message: "Chat not found" }
+
+        }
+
+    }
+    public async updateStatusFinished(id: number) {
+
+        try {
+            const chat = await this.chatsRepository.findOneBy({
+                id
+            });
+
+            if (chat) {
+                chat.statusAttention = 'FINISHED'
+                await this.chatsRepository.save(chat)
+            }
             return chat
-        
-        }else{
-            return {message: "Chat not found"}
+        } catch (error) {
+            return { error }
+
         }
-       
-       
+
+
+
+
     }
-    public async getStatusFinished(id: number) {
-        const chat = await this.chatsRepository.findOneBy({
-            id
-        });
+    public async updateStatusOpen(id: number, supportId: string) {
 
-        if(chat){
-            chat.statusAttention = 'FINISHED'
-            await this.chatsRepository.save(chat)
-            return chat
-        
-        }else{
-            return {message: "Chat not found"}
-        }
-       
-       
-    }
-
-    public async getCreateChat(infochat:ChatDTO) {
-        try{
-        const {supportId,projectId,statusAttention} = await infochat
-        const chat = await this.chatsRepository.create({
-            supportId,
-            projectId,
-            statusAttention,
-            dateIndex: new Date()
-        });
-
-        if(chat){
-            
-            await this.chatsRepository.save(chat)
-        
-        }else{
-            return {message: "Chat not creation"}
-        }
-       
-        return chat
-    }catch(error){
-        console.log(error)
-    }
-    }
-
-
-
+        try {
+            const chat = await this.chatsRepository.findOneBy({
+                id
+            })
     
+            if (chat) {
+                chat.statusAttention = 'OPEN'
+                chat.supportId = supportId
+                await this.chatsRepository.save(chat)
+    
+            }
+
+            return chat
+        } catch (error) {
+            return { error }
+
+        }
+     
+
+
+
+    }
+
+    public async getCreateChat(infochat: ChatDTO) {
+        try {
+            const { supportId, projectId, statusAttention } = await infochat
+            const chat = await this.chatsRepository.create({
+                supportId,
+                projectId,
+                statusAttention,
+                dateIndex: new Date()
+            });
+
+            if (chat) {
+
+                await this.chatsRepository.save(chat)
+
+            } else {
+                return { message: "Chat not creation" }
+            }
+
+            return chat
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+
 
 
 }

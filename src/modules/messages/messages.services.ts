@@ -396,7 +396,7 @@ export class MessageService {
         
 
     }
-
+  
     public async createMessage(message: MessageDTO): Promise<Messages> {
 
         const { messageType, messages, origin, projectId, supportId, userType } = message
