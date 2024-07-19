@@ -1,5 +1,5 @@
 import multer from 'multer'
-// import {storage} from './multerConfig'
+//import {storage} from './multerConfig'
 export async function upload2(){
 
     const upload = multer({ dest: 'uploads/' })

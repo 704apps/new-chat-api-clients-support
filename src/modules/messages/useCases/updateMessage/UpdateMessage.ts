@@ -14,6 +14,7 @@ export class MessageService {
                 this.messageRepository = myDataSource.getRepository(Messages);
             }).catch(error => console.error("Error ao incializar a conexão:", error))
         }
+        
     }
 
     public async getOneMessagesClient(chatId: number): Promise<Messages[]> {

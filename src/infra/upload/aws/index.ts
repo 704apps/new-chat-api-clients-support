@@ -1,46 +1,48 @@
-import AWS from 'aws-sdk';
-const { S3Client, PutObjectCommand, S3 } = require("@aws-sdk/client-s3");
+import { S3Client, PutObjectCommand, GetObjectCommand, GetObjectRequest } from "@aws-sdk/client-s3"
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import path from 'path'
+import { uuidGeneration } from '../util/uuid.generation'
 
-export async function uploadToAws(fileName: string, fileContent: Buffer) {
+export async function uploadToAws(Key: string, Body: Buffer) {
     const region = process.env.AWS_REGION;
+    const Bucket = String(process.env.AWS_BUCKET_NAME)
 
-    console.log('veio1')
-    const s3Client = new S3Client({
-        region: process.env.AWS_REGION,
+    const s3Client = new S3Client([{
+        region,
         credentials: {
             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-
         },
-         endpoint: "https://s3.amazonaws.com"
-    });
-    console.log('veio2')
+    }]);
 
-    const params ={
-        Bucket: String(process.env.AWS_S3_BUCKET),
-        Key: fileName,
-        Body: fileContent,
-        // ContentType: mimeType // opcional, dependendo do caso
-    };
-    
-    // const data = await s3Client.send(new PutObjectCommand(params))
-    // .then((data:any) => {
-    //   console.log("Object uploaded successfully:", data);
-    // })
-    // .catch((error:Error) => {
-    //   console.error("Error uploading object:", error);
-    // });
-    // console.log('veio3')
-    // return data.Location
-   
-   
+
+    const fileExtesnsion = path.extname(Key)
+    const name_uuid = uuidGeneration()
+
+    Key = `${name_uuid}${fileExtesnsion}`;
+
     try {
         const data = await s3Client.send(
-            new PutObjectCommand(params)
-          );;
+            new PutObjectCommand({
+                Bucket,
+                Key,
+                Body,
+                ACL: 'public-read'
+            })
+        );
 
-        console.log('Arquivo enviado com sucesso para o S3:', data.Location);
-        return 'deu certo';
+        const command = new GetObjectCommand({
+            Bucket,
+            Key,
+        });
+
+        //await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // URL expira em 1 hora
+        const url = `https://${Bucket}.s3.${region}.amazonaws.com/${Key}`
+
+        
+        return url;
+
+
     } catch (err) {
         console.error('Erro ao fazer upload para o S3:', err);
         throw err; // Lança o erro para ser tratado pelo código que chama a função

@@ -385,6 +385,7 @@ export class MessageService {
         console.log('filecontent')
         try {
             const url_media = await uploadToAws(filename,filecontent)
+                
             return url_media
 
         } catch (error) {

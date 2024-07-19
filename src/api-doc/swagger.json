@@ -499,6 +499,53 @@
                 }
             }
         },
+
+        "/media_in_message/":{
+            "post":{
+                "summary": "Upload de arquivo",
+                "description": "Use essa rota para gravar arquivo de mídia na mensagem",
+                "tags":[
+                    "Rotas referente as Mensagens"
+                ],
+                "parameters": [{
+                        "name": "file",
+                        "in": "formData",
+                        "required": "true",
+                        "schema": {
+                            "type": "file"
+                        },
+                        "description": "upload de arquivo"}
+                 ],
+                 "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                     
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": 
+                                            {
+                                                "url_media": "https://printimage.s3.amazonaws/printimage.png"
+                                               
+                                            }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        },
         "socket: update messagens":{
             "get":{
                "summary": "SOCKET PARA ATUALIZAR MENSAGENS EDITADAS",

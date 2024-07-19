@@ -170,16 +170,19 @@ export class MessageController {
 
     }
 
-    public async upload(req: Request, res: Response):Promise<void> {
+    
+    public async uploadFile(req: Request, res: Response):Promise<void> {
         try {
-            const file = req.file
+            const file = await req.file
             let url_media
             if (file) {
+                
                 url_media = await messageService.uploadMedia(String(file?.originalname), (file?.buffer))
 
             }
-
-            res.status(200).json(url_media)
+            const response = {url_media}
+            
+            res.status(200).json(response)
 
         } catch (error) {
             res.status(400).json({ error: error })

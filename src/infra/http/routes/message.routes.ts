@@ -20,7 +20,7 @@ messageRoutes.get('/search_word_phrase/',(req,res)=>messageController.getSearchB
 messageRoutes.get('/search_generaltosupport/',(req,res)=>messageController.getSearchGenerationToSupport(req,res))
 
 
-messageRoutes.post('/media_in_message/',upload.single('file'),(req,res)=>messageController.upload(req,res))
+messageRoutes.post('/media_in_message/',upload.single('file'),(req,res)=>messageController.uploadFile(req,res))
 
 
 export  {messageRoutes};
