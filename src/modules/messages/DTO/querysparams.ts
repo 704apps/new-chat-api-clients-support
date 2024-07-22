@@ -15,3 +15,8 @@ export interface QuerySearchGeneral{
     supportId:string;
     general:string;
 }
+
+export interface QueryMessage{
+    supportId:string;
+    general:string;
+}

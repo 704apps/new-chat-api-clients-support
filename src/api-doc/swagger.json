@@ -344,12 +344,12 @@
                 "parameters": [
                     {
                         "name": "projectId",
-                        "in": "path",
+                        "in": "QUERY",
                         "required": "true",
                         "schema": {
                             "type": "string"
                         },
-                        "description": "ID do projeto ou nome do projeto"
+                        "description": "Nome do projeto"
                     }
                    
                 ],

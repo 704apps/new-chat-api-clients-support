@@ -8,6 +8,8 @@ export interface MessageDTO {
     supportId: string;
     messageType: string;
     msgEdt?: boolean;
+    urImage?: string;
+    statusAttention?: string;
     messages: string;
     origin: string;
     createdAt?: Date;

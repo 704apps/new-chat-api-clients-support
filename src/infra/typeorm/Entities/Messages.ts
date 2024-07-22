@@ -20,6 +20,9 @@ export class Messages {
     @Column('varchar')
     messageType: string;
 
+    @Column('varchar',{ nullable: true })    
+    urImage: string;
+
     @Column('varchar')
     messages: string;
 

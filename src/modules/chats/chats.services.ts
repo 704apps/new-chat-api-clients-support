@@ -1,6 +1,7 @@
 import { ChatDTO } from '../../DTOs/chat/chatDTO';
 import { myDataSource } from '../../infra/typeorm/connection/app-data-source';
 import { Chats } from '../../infra/typeorm/Entities/Chats';
+import {io} from '../../infra/http/server'
 
 export class ChatService {
     private chatsRepository = myDataSource.getRepository(Chats);
@@ -44,7 +45,11 @@ export class ChatService {
             if (chat) {
                 chat.statusAttention = 'FINISHED'
                 await this.chatsRepository.save(chat)
+
+                await io.to('support').emit('statusChat', {chatId:chat.id,statusChat:chat.statusAttention});
+
             }
+
             return chat
         } catch (error) {
             return { error }
@@ -66,7 +71,8 @@ export class ChatService {
                 chat.statusAttention = 'OPEN'
                 chat.supportId = supportId
                 await this.chatsRepository.save(chat)
-    
+                await io.to('support').emit('statusChat', {chatId:chat.id,statusChat:chat.statusAttention});
+
             }
 
             return chat
