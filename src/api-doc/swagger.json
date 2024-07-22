@@ -634,30 +634,78 @@
                         "schema": {
                             "type": "file"
                         },
-                        "description": "upload de arquivo"}
+                        "description": "upload de arquivo"
+                    },
+                    {
+                        "name": "messages",
+                        "in": "formData",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "menssagem do chat"
+                    },
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Nome Cliente ou Id Cliente"
+                    },
+                  
+                    {
+                        "name": "messageType",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Tipo de Messagem: message | image | audio | video | image/texto etc"
+                    },
+                    {
+                        "name": "userType",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Quem enviou: contacts ou support"
+                    },
+                    {
+                        "name": "origin",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "De onde veio a message"
+                    },
+                    {
+                        "name": "chatId",
+                        "in": "formData",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Id do chat"
+                    }
+
                  ],
                  "responses": {
                     "400": {
                         "description": "Bad Request"
                     },
                     "200": {
-                     
+                        "description": "Upload completed successfully.",
+
                         "content": {
                             "application/json": {
                                 "schemas": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "example-1": {
-                                        "summary": "Example response",
-                                        "value": 
-                                            {
-                                                "url_media": "https://printimage.s3.amazonaws/printimage.png"
-                                               
-                                            }
-                                        
-                                    }
+                                    "type": "string"
                                 }
+                               
                             }
                         }
                     }
