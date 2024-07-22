@@ -488,7 +488,7 @@ export class MessageService {
           .where("chatId = :chatId", { chatId: chat.id })
           .execute();
       } else if (origin == "support" && chat.supportId) {
-        console.log("ENTROU IF 2");
+        console.log("ENTROU IF ");
 
         if (chat.supportId != supportId) {
           chat.supportId = supportId;
@@ -498,13 +498,6 @@ export class MessageService {
         if (chat.statusAttention == "OPEN") {
           chat.statusAttention = "RESPONDING";
         }
-
-        await this.chatRepository.save(chat);
-
-        await io.to("support").emit("statusChat", {
-          chatId: chat.id,
-          statusChat: chat.statusAttention,
-        });
       }
     }
 
