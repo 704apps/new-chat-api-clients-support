@@ -11,10 +11,19 @@ export class MessageController {
 
     public async getMessages(req: Request, res: Response): Promise<void> {
         try {
+            const { statusAttention } = req.query
 
+            if(statusAttention){
+
+                const messages = await messageService.getFilterToStatusSidebar(String(statusAttention));
+
+                res.status(200).json(messages)
+
+            }else{
             const messages = await messageService.getNewMessages();
-
-            res.status(200).json(messages)
+                res.status(200).json(messages)
+            }
+            
         } catch (error) {
             res.status(400).json({ message: 'Messages not found ' })
 

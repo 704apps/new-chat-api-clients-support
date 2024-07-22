@@ -18,10 +18,21 @@
     "paths": {
         "/newmessages": {
             "get": {
-                "summary": "Lista todos clientes que enviaram mensagem",
+                "summary": "Lista todos clientes que enviaram mensagem ou Fitrar por status do chat",
                 "description": "Essa rota carrega a lista que de clientes que enviaram mensagens",
                 "tags": [
                     "Rota do Sidebar"
+                ],
+                "parameters":[
+                    {
+                        "name": "statusAttention",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Status do atendimento: OPEN | RESPONDING | FINISHED"
+                    }
                 ],
                 "responses": {
                     "400": {
@@ -73,7 +84,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         },
@@ -82,7 +93,7 @@
                     {
                         "name": "supportId",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -91,7 +102,7 @@
                     {
                         "name": "page",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -159,7 +170,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         },
@@ -233,7 +244,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         },
@@ -262,7 +273,7 @@
                     {
                         "name": "chatId",
                         "in": "path",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         },
@@ -299,7 +310,7 @@
                     {
                         "name": "chatId",
                         "in": "path",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         },
@@ -308,7 +319,7 @@
                     {
                         "name": "supportId",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -345,7 +356,7 @@
                     {
                         "name": "projectId",
                         "in": "QUERY",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -402,7 +413,7 @@
                     {
                         "name": "statusAttention",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -465,7 +476,7 @@
                     {
                         "name": "supportId",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -474,7 +485,7 @@
                     {
                         "name": "word_phrase",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -542,7 +553,7 @@
                     {
                         "name": "supportId",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -551,7 +562,7 @@
                     {
                         "name": "general",
                         "in": "query",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "string"
                         },
@@ -619,7 +630,7 @@
                 "parameters": [{
                         "name": "file",
                         "in": "formData",
-                        "required": "true",
+                        "required": true,
                         "schema": {
                             "type": "file"
                         },
