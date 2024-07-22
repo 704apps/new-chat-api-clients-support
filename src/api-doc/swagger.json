@@ -751,6 +751,7 @@
 
         },
         "socket: delete messagens":{
+            
             "get":{
                "summary": "SOCKET PARA ATUALIZAR MENSAGENS DELETAS",
                 "description": "Use esse socket no frontend para capturar as mensagens DELETADAS. Exemplo de como colocar no frontend para escutar as mensagens deletadas: \n\n\n\n    socket.on('deletedMessage', async (data) => {  \n\n          setMessages(prevMessages => prevMessages.filter(mensagem => mensagem.id !== data.id));\n      })",

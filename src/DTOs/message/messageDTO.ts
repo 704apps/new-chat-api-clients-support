@@ -13,4 +13,6 @@ export interface MessageDTO {
     messages: string;
     origin: string;
     createdAt?: Date;
+
+    
 }
