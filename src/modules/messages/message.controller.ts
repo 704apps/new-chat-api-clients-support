@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { MessageService } from './messages.services';
 import { MessageDTO } from '../../DTOs/message/messageDTO'
 import { MockResponse } from '../util/statusfunction'
-import { QuerySearchGeneral, QuerySearchProject, QuerySearchWordPhrase } from './DTO/querysparams'
+import { QuerySearchGeneral, QuerySearchProject, QuerySearchWordPhrase, UploadDataDTO } from './DTO/querysparams'
 const messageService = new MessageService()
 
 import { io } from '../../infra/http/server'
@@ -13,17 +13,17 @@ export class MessageController {
         try {
             const { statusAttention } = req.query
 
-            if(statusAttention){
+            if (statusAttention) {
 
                 const messages = await messageService.getFilterToStatusSidebar(String(statusAttention));
 
                 res.status(200).json(messages)
 
-            }else{
-            const messages = await messageService.getNewMessages();
+            } else {
+                const messages = await messageService.getNewMessages();
                 res.status(200).json(messages)
             }
-            
+
         } catch (error) {
             res.status(400).json({ message: 'Messages not found ' })
 
@@ -124,7 +124,7 @@ export class MessageController {
 
     public async getFilterToStatusSidebar(req: Request, res: Response): Promise<void> {
         try {
-            const {statusAttention} = req.query
+            const { statusAttention } = req.query
             const updateMessage = await messageService.getFilterToStatusSidebar(String(statusAttention));
 
             res.status(200).json(updateMessage)
@@ -136,7 +136,7 @@ export class MessageController {
     }
     public async getSearchProject(req: Request, res: Response): Promise<void> {
         try {
-            const {project} = req.query
+            const { project } = req.query
             console.log(project)
             const updateMessage = await messageService.getSearchProject(String(project));
 
@@ -190,21 +190,22 @@ export class MessageController {
 
     }
 
-    
-    public async uploadFile(req: Request, res: Response):Promise<void> {
+
+    public async uploadFile(req: Request, res: Response): Promise<void> {
         try {
-  
+
             const file = await req.file
-            const {messages,key,userType,projectId,supportId,messageType,origin}     =      await req.body
-            let url_media
+            const dataBody: UploadDataDTO = await req.body
+
             if (file) {
-                
-                url_media = await messageService.uploadMedia(String(file?.originalname), (file?.buffer),messages,key,userType,projectId,supportId,messageType,origin)
+                dataBody.filecontent = file.buffer
+                dataBody.filename = file.originalname
+                await messageService.uploadMedia(dataBody)
 
             }
-            const response = {url_media}
-            
-            res.status(200).json(response)
+
+
+            res.status(200).json('Ok')
 
         } catch (error) {
             res.status(400).json({ error: error })
@@ -222,7 +223,7 @@ export class MessageController {
             console.log(newMessage);
 
             return newMessage;
-          
+
 
         } catch (error) {
             const errorMessage = { message: `Error ${error}` };

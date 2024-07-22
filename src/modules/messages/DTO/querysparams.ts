@@ -20,3 +20,15 @@ export interface QueryMessage{
     supportId:string;
     general:string;
 }
+export interface UploadDataDTO{
+    filename:string;
+    filecontent:Buffer;
+    messages:string;
+    key:string;
+    userType:string;
+    projectId:string;
+    supportId:string;
+    origin:string;
+    messageType:string;
+
+}

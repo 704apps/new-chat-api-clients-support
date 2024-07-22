@@ -7,6 +7,7 @@ import { Chats } from "../../infra/typeorm/Entities/Chats";
 import { MessageDTO } from "../../DTOs/message/messageDTO";
 import { io } from "../../infra/http/server";
 import { uploadToAws } from "../../infra/upload/aws";
+import { UploadDataDTO } from "./DTO/querysparams";
 export class MessageService {
     private messageRepository = myDataSource.getRepository(Messages);
 
@@ -386,38 +387,40 @@ export class MessageService {
         }
 
     }
-    public async uploadMedia(filename: string, filecontent: Buffer, messages: string, key: string, userType: string, projectId: string, supportId: string, messageType: string, origin: string) {
+    public async uploadMedia(data:UploadDataDTO) {
         try {
-            const imageUrl = await uploadToAws(filename, filecontent)
+            console.log(data)
+            const {filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin} = data
+            const urlImage = await uploadToAws(filename, filecontent)
 
-            // const message = {
-            //     userType,
-            //     projectId,
-            //     supportId,
-            //     messageType,
-            //     imageUrl,
-            //     messages,
-            //     origin,
-            // }
-            // const msg = await this.createMessage(message)
+            const message = {
+                userType,
+                projectId,
+                supportId,
+                messageType,
+                urlImage,
+                messages,
+                origin,
+            }
+            const msg = await this.createMessage(message)
 
-            // const dataClient = {
-            //     id: msg.id,
-            //     chatId: msg.chatId,
-            //     key,
-            //     userType,
-            //     projectId,
-            //     supportId,
-            //     messageType,
-            //     messages,
-            //     imageUrl,
-            //     origin,
-            //     createdAt: msg.createdAt
-            // }
+            const dataClient = {
+                id: msg.id,
+                chatId: msg.chatId,
+                key,
+                userType,
+                projectId,
+                supportId,
+                messageType,
+                messages,
+                urlImage,
+                origin,
+                createdAt: msg.createdAt
+            }
 
 
 
-            // await io.to(projectId).emit('clientMessage', dataClient);
+            await io.to(projectId).emit('clientMessage', dataClient);
 
             return
 
@@ -434,7 +437,7 @@ export class MessageService {
 
 
     public async createMessage(message: MessageDTO): Promise<Messages> {
-        const { messageType, messages, origin, projectId, supportId, userType, urImage } =
+        const { messageType, messages, origin, projectId, supportId, userType, urlImage } =
             message;
 
         const nameProject = await this.messageRepository.findOneBy({
@@ -518,7 +521,7 @@ export class MessageService {
             projectId,
             supportId,
             userType,
-            urImage
+            urlImage
         });
 
         return await this.messageRepository.save(newMessage);

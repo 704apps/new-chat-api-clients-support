@@ -21,7 +21,7 @@ export class Messages {
     messageType: string;
 
     @Column('varchar',{ nullable: true })    
-    urImage: string;
+    urlImage: string;
 
     @Column('varchar')
     messages: string;

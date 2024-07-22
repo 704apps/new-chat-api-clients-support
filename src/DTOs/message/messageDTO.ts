@@ -8,7 +8,7 @@ export interface MessageDTO {
     supportId: string;
     messageType: string;
     msgEdt?: boolean;
-    urImage?: string;
+    urlImage?: string;
     statusAttention?: string;
     messages: string;
     origin: string;
