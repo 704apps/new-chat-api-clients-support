@@ -433,10 +433,13 @@ export class MessageService {
             if (origin == "support") {
                 await io.to(projectId).emit('clientMessage', dataClient);
 
-            }else{
-                
-                await io.to(supportId).emit('supportMessage', dataClient);
+            } else {
+                if (supportId) {
+                    await io.to(supportId).emit('supportMessage', dataClient);
+                }else{
+                    await io.to('support').emit('supportMessage', dataClient);
 
+                }
             }
 
             return
