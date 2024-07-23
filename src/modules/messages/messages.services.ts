@@ -416,7 +416,7 @@ export class MessageService {
             }
             const msg = await this.createMessage(message)
 
-            const dataClient = {
+            const datatoSocket = {
                 id: msg.id,
                 chatId: msg.chatId,
                 key,
@@ -431,13 +431,15 @@ export class MessageService {
             }
 
             if (origin == "support") {
-                await io.to(projectId).emit('clientMessage', dataClient);
+                await io.to(projectId).emit('clientMessage', datatoSocket);
+                await io.to('support').emit('supportResponse', datatoSocket);
+
 
             } else {
                 if (supportId) {
-                    await io.to(supportId).emit('supportMessage', dataClient);
+                    await io.to(supportId).emit('supportMessage', datatoSocket);
                 }else{
-                    await io.to('support').emit('supportMessage', dataClient);
+                    await io.to('support').emit('supportMessage', datatoSocket);
 
                 }
             }
