@@ -7,10 +7,13 @@ module.exports = function(api) {
       plugins: [
         "module-resolver", {
           root: ["./src/"],
-          alias: {
+          alias: {     
+
            '@utils': './src/infra/*',
-           '@database': './src/modules/*',
-           '@database': './src/DTOs/*'
+           '@modules': './src/modules/*',
+           '@error': './src/error/*',
+           '@main': './src/main/*'
+
           }
         }
       ]

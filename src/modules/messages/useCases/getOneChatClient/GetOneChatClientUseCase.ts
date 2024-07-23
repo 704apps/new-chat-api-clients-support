@@ -1,6 +1,6 @@
 import { Brackets } from 'typeorm'
-import { myDataSource } from 'infra/typeorm/connection/app-data-source';
-import { Messages } from 'infra/typeorm/Entities/Messages';
+import { myDataSource } from 'main/infra/typeorm/connection/app-data-source';
+import { Messages } from '@modules/messages/infra/typeorm/Entities/Messages';
 
 export class MessageService {
     private messageRepository = myDataSource.getRepository(Messages);

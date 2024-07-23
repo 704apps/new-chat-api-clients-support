@@ -1,7 +1,7 @@
 import { ChatDTO } from '../../DTOs/chat/chatDTO';
-import { myDataSource } from '../../infra/typeorm/connection/app-data-source';
-import { Chats } from '../../infra/typeorm/Entities/Chats';
-import {io} from '../../infra/http/server'
+import { myDataSource } from '../../main/infra/typeorm/connection/app-data-source';
+import { Chats } from './infra/typeorm/Entities/Chats';
+import {io} from '../../main/infra/http/server'
 
 export class ChatService {
     private chatsRepository = myDataSource.getRepository(Chats);

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon  src/infra/http/server.ts",
+    "start": "nodemon -r tsconfig-paths/register src/main/infra/http/server.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {

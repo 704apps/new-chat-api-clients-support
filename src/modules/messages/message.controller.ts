@@ -1,28 +1,22 @@
 import { Request, Response } from 'express';
 import { MessageService } from './messages.services';
-import { MessageDTO } from '../../DTOs/message/messageDTO'
+import { MessageDTO } from './DTOs/messageDTO'
 import { MockResponse } from '../util/statusfunction'
-import { QuerySearchGeneral, QuerySearchProject, QuerySearchWordPhrase, UploadDataDTO } from './DTO/querysparams'
+import { QuerySearchGeneral, QuerySearchProject, QuerySearchWordPhrase, UploadDataDTO } from './DTOs/querysparams'
 const messageService = new MessageService()
 
-import { io } from '../../infra/http/server'
+import { io } from '../../main/infra/http/server'
 
 export class MessageController {
 
     public async getMessages(req: Request, res: Response): Promise<void> {
         try {
             const { statusAttention } = req.query
+            const statusChat = statusAttention!=undefined ? statusAttention: ''
 
-            if (statusAttention) {
+            const messages = await messageService.getNewMessages(String(statusChat));
 
-                const messages = await messageService.getFilterToStatusSidebar(String(statusAttention));
-
-                res.status(200).json(messages)
-
-            } else {
-                const messages = await messageService.getNewMessages();
-                res.status(200).json(messages)
-            }
+            res.status(200).json(messages)
 
         } catch (error) {
             res.status(400).json({ message: 'Messages not found ' })
@@ -219,8 +213,6 @@ export class MessageController {
     public async saveMessage(message: MessageDTO): Promise<MessageDTO | Object> {
         try {
             const newMessage = await messageService.createMessage(message);
-
-            console.log(newMessage);
 
             return newMessage;
 

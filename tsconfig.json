@@ -13,9 +13,10 @@
       "resolveJsonModule": true,
       "skipLibCheck": true,
       "paths": {
-        "@infra/*":["infra/*"],
+        "@main/*":["main/*"],
         "@modules/*":["modules/*"],
-        "@DTOs/*":["DTOs/*"]
+        "@DTOs/*":["DTOs/*"],
+        "@error/*":["error/*"]
       }
     },
     "include": ["src/**/*", "swagger.ts"],

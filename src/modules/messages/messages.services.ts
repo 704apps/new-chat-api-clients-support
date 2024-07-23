@@ -1,13 +1,16 @@
 
-import { Brackets, Not } from "typeorm";
-import { myDataSource } from "../../infra/typeorm/connection/app-data-source";
-import { Messages } from "../../infra/typeorm/Entities/Messages";
-import { Contacts } from "../../infra/typeorm/Entities/Contacts";
-import { Chats } from "../../infra/typeorm/Entities/Chats";
-import { MessageDTO } from "../../DTOs/message/messageDTO";
-import { io } from "../../infra/http/server";
-import { uploadToAws } from "../../infra/upload/aws";
-import { UploadDataDTO } from "./DTO/querysparams";
+import { Brackets, IsNull, Not } from "typeorm";
+import { myDataSource } from "../../main/infra/typeorm/connection/app-data-source";
+import { Messages } from "./infra/typeorm/Entities/Messages";
+import { Contacts } from "../contacts/infra/typeorm/Entities/Contacts";
+import { Chats } from "../chats/infra/typeorm/Entities/Chats";
+import { MessageDTO } from "./DTOs/messageDTO";
+import { io } from "../../main/infra/http/server";
+import { uploadToAws } from "../../main/infra/upload/aws";
+import { UploadDataDTO } from "./DTOs/querysparams";
+import { AppError } from "@error/AppError"
+import { DtoNewMessages } from "./DTOs/newMessagesDTO";
+
 export class MessageService {
     private messageRepository = myDataSource.getRepository(Messages);
 
@@ -52,31 +55,34 @@ export class MessageService {
         return project;
     }
 
-    public async getOneMessage(id: number): Promise<MessageDTO> {
+    public async getOneMessage(id: number): Promise<Messages> {
         const project = await this.messageRepository.findOneBy({
             id,
         });
 
-        const projetcResult: MessageDTO = project as unknown as MessageDTO;
+        if (!project) {
+            throw new AppError("Message not found!")
+        }
 
-        return projetcResult;
+        return project;
     }
 
     public async getUpdateMessage(
         id: number,
         messages: string
-    ): Promise<MessageDTO> {
+    ): Promise<Messages> {
         const project = await this.messageRepository.findOneBy({
             id,
         });
 
-        if (project) {
-            project.messages = messages;
-            project.msgEdt = true;
-            await this.messageRepository.save(project);
+        if (!project) {
+            throw new AppError("Project not found!")
         }
 
-        return project as MessageDTO;
+        project.messages = messages;
+        project.msgEdt = true;
+        await this.messageRepository.save(project);
+        return project;
     }
 
     public async getUpdateSocketAction(id: number) {
@@ -113,7 +119,7 @@ export class MessageService {
         }
     }
 
-    public async getNewMessages() {
+    public async getNewMessages(statusAttention: string): Promise<DtoNewMessages> {
         try {
             const selectIdClients = await this.messageRepository
                 .createQueryBuilder("m")
@@ -121,7 +127,16 @@ export class MessageService {
                 .addSelect("MAX(m.createdAt)", "latestCreatedAt")
                 .groupBy("m.projectId");
 
-          
+            let statusChat = statusAttention
+
+            if (statusAttention != '') {
+                statusChat = `c.statusAttention='${statusAttention}'`
+            } else {
+                statusChat = ''
+                console.log('Veio aqui 2')
+
+            }
+
             const result = await this.messageRepository
                 .createQueryBuilder("m")
                 .innerJoin(
@@ -139,13 +154,13 @@ export class MessageService {
                     "c.id as chatId",
                     `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`,
                 ])
-
+                .where(statusChat)
                 .orderBy("m.createdAt", "DESC")
                 .getRawMany();
             // if (statusAttention) {
             //     result.andWhere("m.origin != :origin", { origin: 'support' });
             // }
-            const newMessagens = result.map((item) => ({
+            const newMessagens: DtoNewMessages = result.map((item) => ({
                 id: item.m_id,
                 projectId: item.m_projectId,
                 supportId: item.c_supportId,
@@ -153,16 +168,14 @@ export class MessageService {
                 messages: item.m_messages,
                 chatId: item.chatId,
                 createdAt: item.m_createdAt,
-            }));
+            })) as unknown as DtoNewMessages
 
             return newMessagens
 
         } catch (error) {
-            console.log(error)
+            throw new AppError(`${error}`)
         }
     }
-
-
 
     public async getChatsRespondingToSupport(supportId: string) {
         try {
@@ -258,8 +271,6 @@ export class MessageService {
         }
     }
 
-
-
     public async getFilterToStatusSidebar(statusAttention: string) {
         try {
             const selectIdClients = await this.messageRepository
@@ -307,7 +318,7 @@ export class MessageService {
         }
     }
 
-    public async getSearchByWordOrPhrase(text: string, supportId: string) {
+    public async getSearchByWordOrPhrase(text: string, supportId: string): Promise<Messages[]> {
         try {
             const word = text.split(" ");
 
@@ -332,7 +343,7 @@ export class MessageService {
 
             return resultSearch;
         } catch (error) {
-            console.log(error);
+            throw new AppError("")
         }
     }
 
@@ -387,10 +398,11 @@ export class MessageService {
         }
 
     }
-    public async uploadMedia(data:UploadDataDTO) {
+
+    public async uploadMedia(data: UploadDataDTO) {
         try {
             console.log(data)
-            const {filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin} = data
+            const { filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin } = data
             const urlImage = await uploadToAws(filename, filecontent)
 
             const message = {
@@ -418,23 +430,25 @@ export class MessageService {
                 createdAt: msg.createdAt
             }
 
+            if (origin == "support") {
+                await io.to(projectId).emit('clientMessage', dataClient);
 
+            }else{
+                
+                await io.to(supportId).emit('supportMessage', dataClient);
 
-            await io.to(projectId).emit('clientMessage', dataClient);
+            }
 
             return
 
         } catch (error) {
             console.log(error)
 
-            return String(error)
+            throw new AppError(`${error}`)
         }
 
 
     }
-
-
-
 
     public async createMessage(message: MessageDTO): Promise<Messages> {
         const { messageType, messages, origin, projectId, supportId, userType, urlImage } =
@@ -526,4 +540,5 @@ export class MessageService {
 
         return await this.messageRepository.save(newMessage);
     }
+
 }
