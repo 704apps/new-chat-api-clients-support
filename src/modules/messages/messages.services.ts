@@ -112,7 +112,7 @@ export class MessageService {
             await this.messageRepository.delete({ id });
 
             io.to(message.projectId).emit("deletedMessage", { id: message.id });
-
+            
             return { message: "Message deleted successfully" };
         } catch (error) {
             return { error: "Error when deleting" };
@@ -431,17 +431,25 @@ export class MessageService {
             }
 
             if (origin == "support") {
-                await io.to(projectId).emit('clientMessage', datatoSocket);
-                await io.to('support').emit('supportResponse', datatoSocket);
+                io.to(projectId).emit('clientMessage', datatoSocket);
+                io.to('support').emit('supportResponse', datatoSocket);
 
 
             } else {
-                if (supportId) {
-                    await io.to(supportId).emit('supportMessage', datatoSocket);
-                }else{
-                    await io.to('support').emit('supportMessage', datatoSocket);
+                io.to('support').emit('supportMessage', datatoSocket);
 
-                }
+                // if (supportId) {
+                //     console.log('veio aqui upload')
+                //     console.log(datatoSocket)
+                //     io.to(supportId).emit('supportMessage', datatoSocket);
+                //     io.to('support').emit('supportMessage', datatoSocket);
+
+                // }else{
+                //     console.log('veio aqui upload222222')
+                //     console.log(datatoSocket)
+                //     io.to('support').emit('supportMessage', datatoSocket);
+
+                // }
             }
 
             return

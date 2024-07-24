@@ -68,14 +68,13 @@ io.on("connection", (socket) => {
     console.log('dataClient')
     console.log(dataClient)
     console.log('dataCldsfdfdient')
+    io.to('support').emit('supportMessage', dataClient);
+    // if (!data.supportId) {
+    //   io.to('support').emit('supportMessage', dataClient);
+    // } else {
+    //   io.to(data.supportId).emit('supportMessage', data);
 
-    if (!data.supportId) {
-      io.to('support').emit('supportMessage', dataClient);
-
-    } else {
-      io.to(data.supportId).emit('supportMessage', data);
-
-    }
+    // }
 
   });
 
