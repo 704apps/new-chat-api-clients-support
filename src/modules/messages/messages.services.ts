@@ -7,7 +7,7 @@ import { Chats } from "../chats/infra/typeorm/Entities/Chats";
 import { MessageDTO } from "./DTOs/messageDTO";
 import { io } from "../../main/infra/http/server";
 import { uploadToAws } from "../../main/infra/upload/aws";
-import { UploadDataDTO } from "./DTOs/querysparams";
+import { UploadDataDTO } from "./DTOs/querysparamsDTO";
 import { AppError } from "@error/AppError"
 import { DtoNewMessages } from "./DTOs/newMessagesDTO";
 

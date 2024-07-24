@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { MessageService } from './messages.services';
 import { MessageDTO } from './DTOs/messageDTO'
 import { MockResponse } from '../util/statusfunction'
-import { QuerySearchGeneral, QuerySearchProject, QuerySearchWordPhrase, UploadDataDTO } from './DTOs/querysparams'
+import { QuerySearchGeneral, QuerySearchProject, QuerySearchWordPhrase, UploadDataDTO } from './DTOs/querysparamsDTO'
 const messageService = new MessageService()
 
 import { io } from '../../main/infra/http/server'

@@ -4,7 +4,7 @@ dotenv.config();
 
 import { Contacts } from '../../../../modules/contacts/infra/typeorm/Entities/Contacts';
 import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
-import { Users } from '../../../../modules/urers/infra/typeorm/Entities/Users';
+import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
 import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
 
 export const myDataSource = new DataSource(

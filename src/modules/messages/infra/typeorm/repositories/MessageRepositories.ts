@@ -1,13 +1,15 @@
 import { IMessageRepository } from "@modules/messages/repositories/IMessageRepositories";
-import { getRepository, Repository } from "typeorm";
+import { Brackets, getRepository, Repository } from "typeorm";
 import { Messages } from "../Entities/Messages";
 import { MessageDTO } from "@modules/messages/DTOs/messageDTO";
 import { DtoNewMessages } from "@modules/messages/DTOs/newMessagesDTO";
-import { UploadDataDTO } from "@modules/messages/DTOs/querysparams";
+import { UploadDataDTO } from "@modules/messages/DTOs/querysparamsDTO";
 import { myDataSource } from "@main/infra/typeorm/connection/app-data-source";
 import { Chats } from '@modules/chats/infra/typeorm/Entities/Chats'
 import { Contacts } from '@modules/contacts/infra/typeorm/Entities/Contacts'
 import {io} from '@main/infra/http/server'
+import { AppError } from "@error/AppError";
+import { uploadToAws } from "@main/infra/upload/aws";
 
 class MessageRepository implements IMessageRepository {
     private repositoryMessage: Repository<Messages>
@@ -19,8 +21,9 @@ class MessageRepository implements IMessageRepository {
         this.repositoryChat = myDataSource.getRepository(Chats)
     }
 
+    //Salva as mensagens enviada
     async createMessage(message: MessageDTO): Promise<Messages> {
-        try {
+      
             const { messageType, messages, origin, projectId, supportId, userType, urlImage } =
                 message;
 
@@ -57,8 +60,8 @@ class MessageRepository implements IMessageRepository {
                     dateIndex: new Date(),
                 });
 
-                const chat2 = await this.repositoryChat.save(newChat);
-                chatId = chat2.id;
+                const chatSave = await this.repositoryChat.save(newChat);
+                chatId = chatSave.id;
             } else {
                 if (origin == "support" && !chat.supportId) {
 
@@ -109,37 +112,280 @@ class MessageRepository implements IMessageRepository {
             });
 
             return await this.repositoryMessage.save(newMessage);
-        }catch(error){
-            throw new Error('');
+      
+    }
 
+
+    async update(id: number, message: string): Promise<Messages> {
+        const project = await this.repositoryMessage.findOneBy({
+            id,
+        });
+
+        if (!project) {
+            throw new AppError("Project not found!")
         }
+
+        project.messages = message;
+        project.msgEdt = true;
+        await this.repositoryMessage.save(project);
+        return project;
+      
     }
-    update(id: number, message: string): Promise<Messages> {
-        throw new Error("Method not implemented.");
+
+    async upldateSA(id: number): Promise<Messages> {
+        const project = await this.repositoryMessage.findOneBy({
+            id,
+        });
+
+        if (!project) {
+            throw new AppError ("ProjectId not found");
+        }
+            project.msgEdt = false;
+            await this.repositoryMessage.save(project);
+        return project;
     }
-    upldateSA(id: number): Promise<String> {
-        throw new Error("Method not implemented.");
+    async delete(id: number): Promise<String> {
+       
+            const message = await this.repositoryMessage.findOneBy({
+                id,
+            });
+            if (!message) {
+               throw new AppError ("Message not found")
+            }
+
+            await this.repositoryMessage.delete({ id });
+
+            io.to(message.projectId).emit("deletedMessage", { id: message.id });
+            
+            return  "Message deleted successfully" ;
+       
     }
-    delete(id: number): Promise<String> {
-        throw new Error("Method not implemented.");
+
+    async getNewMessages(statusAttention: string): Promise<DtoNewMessages[]> {
+        
+            const selectIdClients = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .select("m.projectId", "projectId")
+                .addSelect("MAX(m.createdAt)", "latestCreatedAt")
+                .groupBy("m.projectId");
+
+            let statusChat = ''
+
+            if (statusAttention != '') {
+                statusChat = `c.statusAttention='${statusAttention}'`
+            } 
+
+            const result = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    "sub",
+                    "m.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt"
+                )
+                .leftJoin("chats", "c", "m.chatId = c.id")
+                .select([
+                    "m.projectId",
+                    "m.createdAt",
+                    "m.messages",
+                    "m.id",
+                    "c.supportId",
+                    "c.id as chatId",
+                    `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`,
+                ])
+                .where(statusChat)
+                .orderBy("m.createdAt", "DESC")
+                .getRawMany();
+            // if (statusAttention) {
+            //     result.andWhere("m.origin != :origin", { origin: 'support' });
+            // }
+            const newMessagens = result.map((item) => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.c_supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                chatId: item.chatId,
+                createdAt: item.m_createdAt,
+            })) 
+
+            return newMessagens
+
     }
-    getNewMessages(statusAttention: string): Promise<DtoNewMessages> {
-        throw new Error("Method not implemented.");
+
+    async getMessagesRespondingToSupport(supportId: string): Promise<DtoNewMessages[]> {
+            const selectIdClients = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .select("m.projectId", "projectId")
+                .addSelect("MAX(m.createdAt)", "latestCreatedAt")
+                .groupBy("m.projectId");
+
+            const result = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    "sub",
+                    "m.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt"
+                )
+                .leftJoin("chats", "c", "m.chatId = c.id")
+                .select([
+                    "m.projectId",
+                    "m.createdAt",
+                    "m.messages",
+                    "m.id",
+                    "c.supportId",
+                    "c.id as chatId",
+                    `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`,
+                ])
+                .where("m.origin!='support'")
+                .andWhere("m.supportId=:supportId", { supportId })
+                .orderBy("m.createdAt", "DESC")
+                .getRawMany();
+
+            const newMessagens = result.map((item) => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.c_supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                chatId: item.chatId,
+                createdAt: item.m_createdAt,
+            }));
+
+            return newMessagens
+
+        
     }
-    getMessagesRespondingToSupport(supportId: string): Promise<DtoNewMessages> {
-        throw new Error("Method not implemented.");
+
+    async getSearchProject(projectId: string): Promise<DtoNewMessages[]> {
+       
+            const selectIdClients = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .select("m.projectId", "projectId")
+                .addSelect("MAX(m.createdAt)", "latestCreatedAt")
+                .groupBy("m.projectId");
+
+
+            const result = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    "sub",
+                    "m.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt"
+                )
+                .leftJoin("chats", "c", "m.chatId = c.id")
+                .select([
+                    "m.projectId",
+                    "m.createdAt",
+                    "m.messages",
+                    "m.id",
+                    "c.supportId",
+                    "c.id as chatId",
+                    `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`,
+                ])
+                .where("m.projectId=:projectId", { projectId })
+                .orderBy("m.createdAt", "DESC")
+                .getRawMany();
+            
+            const newMessagens = result.map((item) => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.c_supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                chatId: item.chatId,
+                createdAt: item.m_createdAt,
+            }));
+
+            return newMessagens;
+       
     }
-    getSearchProject(projectId: string): Promise<DtoNewMessages> {
-        throw new Error("Method not implemented.");
+
+    async getSearchByWordOrPhrase(text: string, supportId: string): Promise<Messages[]> {
+      
+            const word = text.split(" ");
+
+            const resultSearch = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .where("m.supportId=:supportId", { supportId })
+                .andWhere(
+                    new Brackets((qb) => {
+                        qb.where(`m.messages LIKE :text`, { text: `%${text}%` });
+
+                        word.forEach((word, index) => {
+                            if (index === 0) {
+                                qb.orWhere(`m.messages LIKE :word`, { word: `%${word}%` });
+                            } else {
+                                qb.orWhere(`m.messages LIKE :word`, { word: `%${word}%` });
+                            }
+                        });
+                    })
+                )
+                .orderBy("m.createdAt", "ASC")
+                .getMany();
+
+            return resultSearch;
+      
     }
-    getSearchByWordOrPhrase(text: string, supportId: string): Promise<Messages[]> {
-        throw new Error("Method not implemented.");
-    }
+
     getSearchGenerationToSupport(text: string, supportId: string): Promise<Messages[]> {
         throw new Error("Method not implemented.");
     }
-    uploadMedia(data: UploadDataDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async uploadMedia(data: UploadDataDTO): Promise<void> {
+        
+            console.log(data)
+            const { filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin } = data
+            const urlImage = await uploadToAws(filename, filecontent)
+
+            const message = {
+                userType,
+                projectId,
+                supportId,
+                messageType,
+                urlImage,
+                messages,
+                origin,
+            }
+            const msg = await this.createMessage(message)
+
+            const datatoSocket = {
+                id: msg.id,
+                chatId: msg.chatId,
+                key,
+                userType,
+                projectId,
+                supportId,
+                messageType,
+                messages,
+                urlImage,
+                origin,
+                createdAt: msg.createdAt
+            }
+
+            if (origin == "support") {
+                io.to(projectId).emit('clientMessage', datatoSocket);
+                io.to('support').emit('supportResponse', datatoSocket);
+
+            } else {
+                io.to('support').emit('supportMessage', datatoSocket);
+
+                // if (supportId) {
+                //     console.log('veio aqui upload')
+                //     console.log(datatoSocket)
+                //     io.to(supportId).emit('supportMessage', datatoSocket);
+                //     io.to('support').emit('supportMessage', datatoSocket);
+
+                // }else{
+                //     console.log('veio aqui upload222222')
+                //     console.log(datatoSocket)
+                //     io.to('support').emit('supportMessage', datatoSocket);
+
+                // }
+            }
+
+            return
+
+       
     }
 
 
