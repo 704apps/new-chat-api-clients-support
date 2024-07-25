@@ -16,7 +16,7 @@ export const myDataSource = new DataSource(
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     entities: [Messages,Contacts,Users,Chats], // Ajuste o caminho conforme necessário
-    migrations: ["src/infra/typeorm/migrations/*.ts"],
+    migrations: ["src/main/infra/typeorm/migrations/*.ts"],
     synchronize: true
 },
 

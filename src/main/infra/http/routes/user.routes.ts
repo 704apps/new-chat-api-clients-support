@@ -16,6 +16,6 @@
 // userRoutes.post("/", createUserController.handle) 
 
 
-// uploadAvatar.single("avatar"),
-// updateUserAvatarController.handle)
+// uploadAvatar.single("avatar")
+// updateUserAvatarController.handle
 // export {userRoutes}
