@@ -19,8 +19,8 @@ class MessageController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { statusAttention } = req.query;
-                statusAttention ? statusAttention : '';
-                const messages = yield messageService.getNewMessages(String(statusAttention));
+                const statusChat = statusAttention != undefined ? statusAttention : '';
+                const messages = yield messageService.getNewMessages(String(statusChat));
                 res.status(200).json(messages);
             }
             catch (error) {

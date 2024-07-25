@@ -6,19 +6,20 @@ import { Contacts } from '../../../../modules/contacts/infra/typeorm/Entities/Co
 import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
 import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
 import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
+import { RefleshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
 
 export const myDataSource = new DataSource(
     {
-    type: "mysql",
-    host: process.env.DB_HOST,
-    port: 17564, //parseInt(`${process.env.DB_PORT}`),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    entities: [Messages,Contacts,Users,Chats], // Ajuste o caminho conforme necessário
-    migrations: ["src/main/infra/typeorm/migrations/*.ts"],
-    synchronize: true
-},
+        type: "mysql",
+        host: process.env.DB_HOST,
+        port: 17564, //parseInt(`${process.env.DB_PORT}`),
+        username: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        entities: [Messages, Contacts, Chats], // Ajuste o caminho conforme necessário
+        migrations: ["src/main/infra/typeorm/migrations/*.ts"],
+        synchronize: true
+    },
 
 );
 /*

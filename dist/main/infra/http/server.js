@@ -66,12 +66,12 @@ exports.io.on("connection", (socket) => {
         console.log('dataClient');
         console.log(dataClient);
         console.log('dataCldsfdfdient');
-        if (!socketUser) {
-            exports.io.to('support').emit('supportMessage', dataClient);
-        }
-        else {
-            exports.io.to(socketUser).emit('supportMessage', data);
-        }
+        exports.io.to('support').emit('supportMessage', dataClient);
+        // if (!data.supportId) {
+        //   io.to('support').emit('supportMessage', dataClient);
+        // } else {
+        //   io.to(data.supportId).emit('supportMessage', data);
+        // }
     }));
     //Suporte envia mensagem
     socket.on("supportMessage", (data) => __awaiter(void 0, void 0, void 0, function* () {

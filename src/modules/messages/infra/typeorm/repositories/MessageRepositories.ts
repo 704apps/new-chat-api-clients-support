@@ -124,7 +124,7 @@ class MessageRepository implements IMessageRepository {
         if (!project) {
             throw new AppError("Project not found!")
         }
-
+        
         project.messages = message;
         project.msgEdt = true;
         await this.repositoryMessage.save(project);

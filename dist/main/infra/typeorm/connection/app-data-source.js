@@ -29,8 +29,9 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const Contacts_1 = require("../../../../modules/contacts/infra/typeorm/Entities/Contacts");
 const Chats_1 = require("../../../../modules/chats/infra/typeorm/Entities/Chats");
-const Users_1 = require("../../../../modules/urers/infra/typeorm/Entities/Users");
+const Users_1 = require("../../../../modules/accounts/infra/typeorm/Entities/Users");
 const Messages_1 = require("../../../../modules/messages/infra/typeorm/Entities/Messages");
+const RefleshToken_1 = require("../../../../modules/refleshToken/infra/typeorm/Entities/RefleshToken");
 exports.myDataSource = new typeorm_1.DataSource({
     type: "mysql",
     host: process.env.DB_HOST,
@@ -38,8 +39,8 @@ exports.myDataSource = new typeorm_1.DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    entities: [Messages_1.Messages, Contacts_1.Contacts, Users_1.Users, Chats_1.Chats], // Ajuste o caminho conforme necessário
-    migrations: ["src/infra/typeorm/migrations/*.ts"],
+    entities: [Messages_1.Messages, Contacts_1.Contacts, Users_1.Users, Chats_1.Chats, RefleshToken_1.RefleshToken], // Ajuste o caminho conforme necessário
+    migrations: ["src/main/infra/typeorm/migrations/*.ts"],
     synchronize: true
 });
 /*

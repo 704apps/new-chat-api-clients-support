@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {RefreshToken} from '@modules/refreshToken/infra/typeorm/Entities/RefreshToken'
 @Entity({name:'users'})
 export class Users {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ nullable: false })
     name: string;
@@ -14,6 +14,9 @@ export class Users {
 
     @Column()
     password: string;
+
+    @OneToMany(()=>RefreshToken,refleshtoken=>refleshtoken.userId)
+    refreshTokens: RefreshToken[]
 
     @CreateDateColumn()
     createdAt: Date;

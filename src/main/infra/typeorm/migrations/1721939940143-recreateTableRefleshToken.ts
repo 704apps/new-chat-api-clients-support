@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateTableRefleshToken1721912434794 implements MigrationInterface {
+export class RecreateTableRefleshToken1721939940143 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
@@ -8,10 +8,11 @@ export class CreateTableRefleshToken1721912434794 implements MigrationInterface 
             columns: [
                 {
                     name: 'id',
-                    type: 'int',
+                    type: 'varchar',
                     isPrimary: true,
-                    isGenerated: true,
-                    generationStrategy: 'increment'
+
+                    isNullable: false,
+               
                 },
                 {
                     name: 'expiriesIn',
@@ -19,12 +20,11 @@ export class CreateTableRefleshToken1721912434794 implements MigrationInterface 
                 },
                 {
                     name: 'userId',
-                    type: 'int',
+                    type: 'varchar',
                 }
             ]
 
         }));
-
         await queryRunner.createForeignKey('refleshToken',
             new TableForeignKey({
                 columnNames: ["userId"],
@@ -33,6 +33,7 @@ export class CreateTableRefleshToken1721912434794 implements MigrationInterface 
                 onDelete: "CASCADE",
             })
         )
+      
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

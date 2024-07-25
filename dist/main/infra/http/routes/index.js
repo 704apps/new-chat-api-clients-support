@@ -5,6 +5,7 @@ require("reflect-metadata");
 const express_1 = require("express");
 const chat_routes_1 = require("./chat.routes");
 const message_routes_1 = require("./message.routes");
+const authenticate_routes_1 = require("./authenticate.routes");
 const router = (0, express_1.Router)();
 exports.router = router;
-router.use("/chat", message_routes_1.messageRoutes, chat_routes_1.chatRouter);
+router.use("/chat", message_routes_1.messageRoutes, chat_routes_1.chatRouter, authenticate_routes_1.autheticateRoutes);

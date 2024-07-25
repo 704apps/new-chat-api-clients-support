@@ -4,8 +4,8 @@ import { IUserRespository } from "@modules/accounts/repositories/IUsersResposito
 import {sign} from "jsonwebtoken"
 import {compare} from "bcrypt"
 import { AppError } from "@error/AppError";
-
-
+import { GenerateRefreshToken} from '@modules/refreshToken/useCases/GenerateRefreshToken'
+import {container} from 'tsyringe'
 interface IRequest{
     email: string;
     password: string;
@@ -47,9 +47,11 @@ class AutenticateUserUseCase{
            
         },secretKey,{
             subject: `${user.id}`, // Define o subject (assunto) do token
-            expiresIn: '1h'  // Define a expiração do token para 1 hora
+            expiresIn: '20s'  // Define a expiração do token para 1 hora
            
         })
+
+        const   generateRefleshToken = container.resolve(GenerateRefreshToken)
 
         const tokenReturn: IResponse ={
             token,

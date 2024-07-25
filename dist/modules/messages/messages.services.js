@@ -309,7 +309,7 @@ class MessageService {
                 return resultSearch;
             }
             catch (error) {
-                console.log(error);
+                throw new AppError_1.AppError("");
             }
         });
     }
@@ -373,7 +373,7 @@ class MessageService {
                     origin,
                 };
                 const msg = yield this.createMessage(message);
-                const dataClient = {
+                const datatoSocket = {
                     id: msg.id,
                     chatId: msg.chatId,
                     key,
@@ -386,12 +386,28 @@ class MessageService {
                     origin,
                     createdAt: msg.createdAt
                 };
-                yield server_1.io.to(projectId).emit('clientMessage', dataClient);
+                if (origin == "support") {
+                    server_1.io.to(projectId).emit('clientMessage', datatoSocket);
+                    server_1.io.to('support').emit('supportResponse', datatoSocket);
+                }
+                else {
+                    server_1.io.to('support').emit('supportMessage', datatoSocket);
+                    // if (supportId) {
+                    //     console.log('veio aqui upload')
+                    //     console.log(datatoSocket)
+                    //     io.to(supportId).emit('supportMessage', datatoSocket);
+                    //     io.to('support').emit('supportMessage', datatoSocket);
+                    // }else{
+                    //     console.log('veio aqui upload222222')
+                    //     console.log(datatoSocket)
+                    //     io.to('support').emit('supportMessage', datatoSocket);
+                    // }
+                }
                 return;
             }
             catch (error) {
                 console.log(error);
-                return String(error);
+                throw new AppError_1.AppError(`${error}`);
             }
         });
     }
