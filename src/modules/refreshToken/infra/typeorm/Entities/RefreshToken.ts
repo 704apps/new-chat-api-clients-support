@@ -1,5 +1,5 @@
 import { Users } from "@modules/accounts/infra/typeorm/Entities/Users";
-import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 
 
@@ -11,8 +11,12 @@ export class RefreshToken {
     @Column('int')
     expiriesIn: number;
 
+     
+    // @Column('varchar')
+    // userId: string;
 
-    @ManyToOne(() => Users, user => user.refreshTokens, { onDelete: "CASCADE" })
+    @ManyToOne(() => Users,userId => userId.id, { onDelete: "CASCADE" })
+    @JoinColumn({ name: 'userId' })
     userId: Users;
 
     @CreateDateColumn()

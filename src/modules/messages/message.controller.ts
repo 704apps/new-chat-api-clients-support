@@ -27,10 +27,10 @@ export class MessageController {
     public async getChatsRespondingToSupport(req: Request, res: Response): Promise<void> {
         try {
 
-            const supportId = req.params.id
+            const {supportId} = req.query
             console.log(supportId)
 
-            const messages = await messageService.getChatsRespondingToSupport(supportId);
+            const messages = await messageService.getChatsRespondingToSupport(String(supportId));
 
             res.status(200).json(messages)
         } catch (error) {

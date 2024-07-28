@@ -8,7 +8,9 @@ import { MessageController } from "../../../modules/messages/message.controller"
 import {router} from './routes'
 import { MessageDTO } from "../../../modules/messages/DTOs/messageDTO";
 import { MessageUpdateDTO } from "../../../modules/messages/DTOs/messageUpdateDTO";
+//import "@main/infra/typeorm"
 
+import "@main/container"
 import swaggerUi from "swagger-ui-express";
 import cors from "cors";
 
@@ -16,6 +18,8 @@ import swaggerDocs from "../../../api-doc/swagger.json";
 
 const app: Application = express();
 const server: HTTPServer = http.createServer(app);
+app.use(express.json());
+
 app.use(
   cors({
     origin: "*", // Permite qualquer origem
@@ -23,8 +27,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
+  
 );
-app.use(express.json());
 app.use(router);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));

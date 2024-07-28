@@ -21,11 +21,7 @@ export class Contacts1719583106508 implements MigrationInterface {
                             type: "varchar",
 
                         },
-                        {
-                            name: "typeContact",
-                            type: "varchar",
-
-                        },
+                   
                         {
                             name: "createdAt",
                             type: "timestamp",

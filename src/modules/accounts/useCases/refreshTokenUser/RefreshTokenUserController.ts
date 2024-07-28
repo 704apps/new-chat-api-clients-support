@@ -1,21 +1,17 @@
-// import { Request, Response } from "express"
-// import { UpdateUserAvatarUseCase } from "./UpdateUserAvatarUseCase"
-// import {container} from "tsyringe"
+import { Request, Response } from "express";
+import {RefreshTokenUserUseCase} from './RefreshTokenUserUseCase'
+import { container } from "tsyringe";
 
-// class UpdateUserAvatarController{
+class RefreshTokenUserController{
 
-//     async handle(request: Request, response: Response): Promise<Response> {
-//         const {id} = await request.user
-//         const avatar_file = await request.file.filename
-       
-//         const updateUserAvatarUseCase = await container.resolve(UpdateUserAvatarUseCase)
+    async handle(request:Request,response:Response){
+        const {refresh_token} = request.body
+        const refreshTokenUserUseCase = container.resolve(RefreshTokenUserUseCase)
 
-//         await updateUserAvatarUseCase.execute({user_id:id, avatar_file:avatar_file })
+        const token = await refreshTokenUserUseCase.execute(refresh_token)
+        
+        return response.status(200).json(token)
+    }
+}
 
-//         return response.status(201).send()
-
-
-//     }
-// }
-
-// export {UpdateUserAvatarController}
+export{RefreshTokenUserController}

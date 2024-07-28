@@ -1,12 +1,13 @@
 import { ICreateUserDTO } from "@modules/accounts/DTOs/ICreateUserDTOS";
-import { IUserRespository } from "@modules/accounts/repositories/IUsersRespository";
+import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { Repository } from "typeorm";
 import {myDataSource} from "@main/infra/typeorm/connection/app-data-source"
 import { Users } from "../Entities/Users";
 import { AppError } from "@error/AppError";
+import { injectable } from "tsyringe";
 
-
-class UserRepository implements IUserRespository {
+@injectable()
+class UserRepository implements IUserRepository {
 
     private repository: Repository<Users>
 
@@ -14,30 +15,35 @@ class UserRepository implements IUserRespository {
         this.repository = myDataSource.getRepository(Users)
     }
     
-    async create({ name, avatar, email, password, driver_license }: ICreateUserDTO): Promise<void> {
+    async create({ name,  email, password }: ICreateUserDTO): Promise<Users> {
+
         const user = await this.repository.create({
             name, 
             email, 
             password
             
         })
+        
+       const userCreated =  await this.repository.save(user)
+       console.log('user criado:')
+       console.log(userCreated) 
+       console.log('===============') 
 
-        await this.repository.save(user)
+       return userCreated
+
+
     }
   
 
-    async findByEmail(email: string): Promise<Users> {
+    async findByEmail(email: string): Promise<Users | null> {
+
         const user = await this.repository.findOneBy({email})
-        if(!user){
-            throw new AppError('User not found')
-        }
+        
         return user
     }
-    async findById(id: number): Promise<Users> {
+    async findById(id: string): Promise<Users | null> {
         const user = await this.repository.findOneBy({id})
-        if(!user){
-            throw new AppError('User not found')
-        }
+
         return user   
     }
 }

@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { RelationId, Repository } from "typeorm";
 import { IRefreshTokenRepostory } from "../../../repositories/IRefreshTokenRepositoies";
 import { RefreshToken } from "../Entities/RefreshToken";
 import { myDataSource } from "@main/infra/typeorm/connection/app-data-source";
@@ -15,8 +15,14 @@ class RefreshTokenRepostory implements IRefreshTokenRepostory {
         this.repositoryUsers = myDataSource.getRepository(Users)
 
     }
+
     async getOne(refresh_token: string): Promise<RefreshToken> {
-        const refreshToken = await this.repositoryRefleshToken.findOneBy({ id: refresh_token })
+        const refreshToken = await this.repositoryRefleshToken.createQueryBuilder('r')
+            .leftJoinAndSelect('r.userId', 'users')
+            .where('r.id=:refresh_token', { refresh_token })
+            .getOne()
+
+        console.log(refreshToken)
         if (!refreshToken) {
             throw new AppError('Missing token');
         }
@@ -26,22 +32,33 @@ class RefreshTokenRepostory implements IRefreshTokenRepostory {
     async create(userId: string): Promise<RefreshToken> {
 
         const expiriesIn = dayjs().add(20, 'seconds').unix(); //unix cria um numererico
+        console.log(userId)
+        const userAlreadyExist = await this.repositoryUsers.findOneBy({ id: userId })
 
-        const user = await this.repositoryRefleshToken.findOneBy({ id: userId })
-        if (!user) {
-            throw new AppError('Error when generating reflash token ')
+        if (!userAlreadyExist) {
+            throw new AppError('User not found')
         }
 
         const generateRefleshToken = await this.repositoryRefleshToken.create({
-            userId: user,
-
+            userId: userAlreadyExist,
             expiriesIn
         })
+        const refreshToken = this.repositoryRefleshToken.save(generateRefleshToken)
 
-        return generateRefleshToken
+        return refreshToken
 
     }
+    async deleteMany(userId: string): Promise<void> {
 
+        const userAlreadyExist = await this.repositoryUsers.findOneBy({ id: userId })
+
+        if (!userAlreadyExist) {
+            throw new AppError('User not found')
+        }
+        await this.repositoryRefleshToken.delete({ userId: userAlreadyExist });
+
+
+    }
 
 
 }

@@ -4,7 +4,7 @@ import {MessageRepository} from "@modules/messages/infra/typeorm/repositories/Me
 import {IMessageRepository} from "@modules/messages/repositories/IMessageRepositories"
 
 import {UserRepository} from "@modules/accounts/infra/typeorm/repositories/UserRepository"
-import {IUserRespository} from "@modules/accounts/repositories/IUsersRespository"
+import {IUserRepository} from "@modules/accounts/repositories/IUsersRepository"
 
 import {RefreshTokenRepostory} from "@modules/refreshToken/infra/typeorm/repositories/RefreshTokenRepositories"
 import {IRefreshTokenRepostory} from "@modules/refreshToken/repositories/IRefreshTokenRepositoies"
@@ -14,11 +14,11 @@ container.registerSingleton<IMessageRepository>(
     "MessageRepository",MessageRepository
 )
 
-container.registerSingleton<IUserRespository>(
-    "UserRepository",UserRepository
-)
+
 container.registerSingleton<IRefreshTokenRepostory>(
     "RefreshTokenRepostory",RefreshTokenRepostory
 )
 
-
+container.register<IUserRepository>("UserRepository", {
+    useClass: UserRepository,
+  });

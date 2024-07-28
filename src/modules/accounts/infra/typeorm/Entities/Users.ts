@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import {RefreshToken} from '@modules/refreshToken/infra/typeorm/Entities/RefreshToken'
+
 @Entity({name:'users'})
 export class Users {
 

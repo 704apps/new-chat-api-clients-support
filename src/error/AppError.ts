@@ -4,9 +4,9 @@ export class AppError{
     public readonly statusCode: number;
     public readonly error: Record<string ,any>;
     constructor (message:string,statusCode = 400,error: Record<string,any>={}){
-        this.message = message;
+        this.message = message
         this.statusCode = statusCode
-        this.error= error;
+        error ? this.error=error : null
         
     }
 }

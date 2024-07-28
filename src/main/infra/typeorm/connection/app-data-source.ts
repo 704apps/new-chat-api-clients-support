@@ -6,7 +6,7 @@ import { Contacts } from '../../../../modules/contacts/infra/typeorm/Entities/Co
 import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
 import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
 import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
-import { RefleshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
+import { RefreshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
 
 export const myDataSource = new DataSource(
     {
@@ -16,9 +16,11 @@ export const myDataSource = new DataSource(
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
-        entities: [Messages, Contacts, Chats], // Ajuste o caminho conforme necessário
+        entities: [Messages, Contacts, Chats, Users, RefreshToken], // Ajuste o caminho conforme necessário
         migrations: ["src/main/infra/typeorm/migrations/*.ts"],
-        synchronize: true
+        synchronize: true,
+        //logging: true, // Ative o registro para ver as consultas SQL
+        //logger: 'debug',
     },
 
 );

@@ -1,37 +1,56 @@
+import "reflect-metadata";
+
 import { inject, injectable } from "tsyringe";
 import { ICreateUserDTO } from "@modules/accounts/DTOs/ICreateUserDTOS";
-import {IUserRespository} from "@modules/accounts/repositories/IUsersRespository"
-import {hash} from 'bcrypt'
+import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository"
+import { hash } from 'bcrypt'
 import { AppError } from "@error/AppError";
+import { Users } from "@modules/accounts/infra/typeorm/Entities/Users";
 
 @injectable()
 class CreateUserUseCase {
 
     constructor(
         @inject("UserRepository")
-        private userRepository: IUserRespository
-    ) {}
+        private userRepository: IUserRepository
+    ) { }
 
 
-    async execute({ name, email, password, driver_license }: ICreateUserDTO) {
-        
-        const passwordHash= await hash(password,8)
-        const isuseralreadyExist= await this.userRepository.findByEmail(email)                                                                                                                                                                                                                                                                        
+    async execute({ name, email, password }: ICreateUserDTO) {
+        try {
+            console.log('a senha é '+password)
+            const passwordHash = await hash(password, 8)
+            console.log('veio no antes de ver email'+passwordHash)
+            
+            const isuseralreadyExist = await this.userRepository.findByEmail(email)
 
-        if(isuseralreadyExist){
-            throw new AppError("User already exists")
+            console.log('veio no depois de ver email')
+
+            if (isuseralreadyExist) {
+                throw new AppError("User already exists")
+            }
+
+            console.log('veio no antes de salvar')
+
+            const user = await this.userRepository.create({
+                name,
+                email,
+                password: passwordHash,
+            })
+            const userCreated = {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            }
+          
+            return userCreated
+        } catch (error) {
+            console.log(error)
+            throw new AppError('Error creating user',400,{error})
         }
 
-
-        this.userRepository.create({
-            name,
-            email,
-            password:passwordHash,
-            driver_license
-        })
-        
     }
-    
+
 }
 
 export { CreateUserUseCase }

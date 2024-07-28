@@ -6,8 +6,8 @@ export class AddColumnInTableChats1720625898778 implements MigrationInterface {
         await queryRunner.addColumn(
             'chats',            
             new TableColumn({
-                name: 'dateIndex',
-                type: 'timestamp',
+                name: 'necessary',
+                type: 'varchar',
                 isNullable: true, 
             })
         );

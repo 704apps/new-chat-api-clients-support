@@ -1,21 +1,28 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { AutenticateUserUseCase } from "./AutenticateUserUseCase";
+import { AppError } from "@error/AppError";
 
 
-class AuthenticateUserController{
+class AuthenticateUserController {
 
-    async handle(request:Request,response:Response):Promise<Response>{
-        const {email,password}= request.body
+    async handle(request: Request, response: Response): Promise<Response> {
+        try {
 
-        const authenticateUseCase = container.resolve(AutenticateUserUseCase)
+            const { email, password } = request.body
 
-        const token = await authenticateUseCase.execute({password,email})
+            const authenticateUseCase = container.resolve(AutenticateUserUseCase)
 
-        return response.json(token)
+            const { token, refreshToken  } = await authenticateUseCase.execute({ password, email })
+
+            return response.json({ token, refreshToken  })
+        } catch (error) {
+            throw new AppError('o erro foi', 400, { error })
+        }
     }
+
 
 }
 
 
-export {AuthenticateUserController}
+export { AuthenticateUserController }
