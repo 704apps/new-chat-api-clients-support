@@ -1,13 +1,14 @@
 
 import "reflect-metadata";
-
+import {Request,Response,NextFunction} from 'express'
 import { Server as SocketIOServer } from "socket.io";
 import express, { Application, response } from "express";
 import http, { Server as HTTPServer } from "http";
-import { MessageController } from "../../../modules/messages/message.controller";
+import { MessageController } from "@modules/messages/message.controller";
 import {router} from './routes'
-import { MessageDTO } from "../../../modules/messages/DTOs/messageDTO";
-import { MessageUpdateDTO } from "../../../modules/messages/DTOs/messageUpdateDTO";
+import { MessageDTO } from "@modules/messages/DTOs/messageDTO";
+import { AppError } from "@error/AppError";
+
 //import "@main/infra/typeorm"
 
 import "@main/container"
@@ -30,7 +31,17 @@ app.use(
   
 );
 app.use(router);
-
+app.use((err: Error,request:Request,response:Response,next:NextFunction )=>{
+  if(err instanceof AppError){
+      return response.status(err.statusCode).json({
+          message: err.message
+      })
+  }
+  return response.status(500).json({
+      status:"error",
+      message: `Internal server error - ${err.message}`
+  })
+})
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get("/terms", (request, response) => {

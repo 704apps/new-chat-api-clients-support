@@ -9,27 +9,27 @@ interface IPayload{
 }
 
 export async function ensureAuthenticated(request:Request,response:Response,next:NextFunction) {
+    const authHerder = request.headers.authorization;
+
+    if(!authHerder){
+        throw new AppError("Token missing",401)
+    }
+
+    const [,token] = authHerder.split(" ")
+
+    
+
     try{
-        const authorization = request.headers.authorization
-
-        if(!authorization){
-            throw new AppError("Token missing",401) //Token Ausente
-        }
-
-        const [,token] = authorization.split(" ");
-        const secretKey =String(process.env.SECRET_KEY)
-
-        const {sub: user_id} = verify(token,secretKey) as IPayload
-
-        const userRepository = new UserRepository();
-
+        const {sub: user_id} = verify(token,"e434b149e2f3c418268e23d778777dfc") as IPayload
+        const userRepository = new UserRepository()
         const user = await userRepository.findById(user_id)
         if(!user){
-            throw new AppError("User does not exists",401)
+            throw new AppError("User does not exists!", 401)
         }
-        const id = Number(user_id)
-        
-        request.user = {id}
+
+        //Aqui foi sobrescrito uma tipagem no @types
+   
+        next()
 
     }catch(error){
         throw new AppError("Invalid token", 401)
