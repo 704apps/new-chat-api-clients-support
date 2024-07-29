@@ -38,10 +38,12 @@ class AutenticateUserUseCase {
             throw new AppError("Email or password incorrect!",)
         }
 
+        console.log('veio aqui 1')
 
         const passwordMath = await compare(password, user.password)
 
         if (!passwordMath) {
+            console.log('veio aqui 2')
             throw new AppError("Email or password incorrect!")
         }
         ;

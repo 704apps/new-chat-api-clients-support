@@ -15,7 +15,7 @@ messageRoutes.patch('/update_message/:id',(req,res)=>messageController.getUpdate
 messageRoutes.delete('/delete_message/:id',(req,res)=>messageController.getDeleteMessage(req,res))
 
 
-messageRoutes.use(ensureAuthenticated)
+// messageRoutes.use(ensureAuthenticated)
 messageRoutes.get('/newmessages',(req,res)=>messageController.getMessages(req,res))
 messageRoutes.get('/assisting/',(req,res)=>messageController.getChatsRespondingToSupport(req,res))
 
