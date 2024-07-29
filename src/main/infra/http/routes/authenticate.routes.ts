@@ -5,6 +5,7 @@ import { CreateUserController } from "@modules/accounts/useCases/createUser/Crea
 import { RefreshTokenUserController } from "@modules/accounts/useCases/refreshTokenUser/RefreshTokenUserController"
 import { GetOneUserController } from "@modules/accounts/useCases/getOneUser/GetOneUserController"
 import { GetOneUserByEmailController } from "@modules/accounts/useCases/getOneUserByEmail/GetOneUserByEmailController"
+import {ensureAuthenticated} from '../middlewares/ensureAuthenticated'
 
 const autheticateRoutes = Router()
 
@@ -18,10 +19,11 @@ const refreshTokenUserController = new RefreshTokenUserController()
 
 
 autheticateRoutes.post("/create_user", createUserController.handle)
+autheticateRoutes.post("/sessions", authenticateUserController.handle)
+
+autheticateRoutes.use(ensureAuthenticated)
 autheticateRoutes.get("/user/:id", getOneUserController.handle)
 autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle)
-
-autheticateRoutes.post("/sessions", authenticateUserController.handle)
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle)
 
 
