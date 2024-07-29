@@ -1,14 +1,14 @@
 
 import "reflect-metadata";
-import {Request,Response,NextFunction} from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { Server as SocketIOServer } from "socket.io";
 import express, { Application, response } from "express";
 import http, { Server as HTTPServer } from "http";
 import { MessageController } from "@modules/messages/message.controller";
-import {router} from './routes'
+import { router } from './routes'
 import { MessageDTO } from "@modules/messages/DTOs/messageDTO";
-// import { AppError } from "@error/AppError";
-
+import { AppError } from "@error/AppError";
+import { errorHandler } from './middlewares/errorHandler'
 //import "@main/infra/typeorm"
 
 import "@main/container"
@@ -28,20 +28,10 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
-  
+
 );
 app.use(router);
-// app.use((err: Error,request:Request,response:Response,next:NextFunction )=>{
-//   if(err instanceof AppError){
-//       return response.status(err.statusCode).json({
-//           message: err.message
-//       })
-//   }
-//   return response.status(500).json({
-//       status:"error",
-//       message: `Internal server error - ${err.message}`
-//   })
-// })
+app.use(errorHandler)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get("/terms", (request, response) => {
@@ -63,34 +53,37 @@ export const io: SocketIOServer = new SocketIOServer(server, {
 io.on("connection", (socket) => {
   //Cliente envia mensagem
   socket.on("clientMessage", async (data) => {
-    const msg: MessageDTO = (await messageController.saveMessage(
-      data
-    )) as MessageDTO;
-    console.log(data)
-    const socketUser = data.supportId;
-    const dataClient = {
-      id: msg.id,
-      chatId: msg.chatId,
-      key: data.key,
-      userType: data.userType,
-      projectId: data.projectId,
-      supportId: data.supportId,
-      messageType: data.messageType,
-      messages: data.messages,
-      origin: data.origin,
-      createdAt: msg.createdAt
+    try {
+      const msg: MessageDTO = (await messageController.saveMessage(
+        data
+      )) as MessageDTO;
+      console.log(data)
+      const socketUser = data.supportId;
+      const dataClient = {
+        id: msg.id,
+        chatId: msg.chatId,
+        key: data.key,
+        userType: data.userType,
+        projectId: data.projectId,
+        supportId: data.supportId,
+        messageType: data.messageType,
+        messages: data.messages,
+        origin: data.origin,
+        createdAt: msg.createdAt
+      }
+      console.log('dataClient')
+      console.log(dataClient)
+      console.log('dataCldsfdfdient')
+      io.to('support').emit('supportMessage', dataClient);
+      // if (!data.supportId) {
+      //   io.to('support').emit('supportMessage', dataClient);
+      // } else {
+      //   io.to(data.supportId).emit('supportMessage', data);
+
+      // }
+    } catch (error) {
+      throw new AppError('dfdfdf')
     }
-    console.log('dataClient')
-    console.log(dataClient)
-    console.log('dataCldsfdfdient')
-    io.to('support').emit('supportMessage', dataClient);
-    // if (!data.supportId) {
-    //   io.to('support').emit('supportMessage', dataClient);
-    // } else {
-    //   io.to(data.supportId).emit('supportMessage', data);
-
-    // }
-
   });
 
 
@@ -98,37 +91,41 @@ io.on("connection", (socket) => {
 
   //Suporte envia mensagem
   socket.on("supportMessage", async (data: MessageDTO) => {
-
-    const socketProject = data.projectId;
-
-    const msg: MessageDTO = (await messageController.saveMessage(
-      data
-    )) as MessageDTO;
+    try {
 
 
-    const dataClient = {
-      id: msg.id,
-      chatId:  msg.chatId,
-      key: data.key,
-      userType: data.userType,
-      projectId: data.projectId,
-      supportId: data.supportId,
-      messageType: data.messageType,
-      messages: data.messages,
-      origin: data.origin,
-      createdAt: msg.createdAt
+      const socketProject = data.projectId;
+
+      const msg: MessageDTO = (await messageController.saveMessage(
+        data
+      )) as MessageDTO;
+
+
+      const dataClient = {
+        id: msg.id,
+        chatId: msg.chatId,
+        key: data.key,
+        userType: data.userType,
+        projectId: data.projectId,
+        supportId: data.supportId,
+        messageType: data.messageType,
+        messages: data.messages,
+        origin: data.origin,
+        createdAt: msg.createdAt
+      }
+
+      console.log(dataClient)
+
+
+      await io.to(socketProject).emit('clientMessage', dataClient);
+      //await io.to('support').emit('supportMessage', dataClient);
+      await io.to('support').emit('supportResponse', dataClient);
+    } catch (error) {
+      throw new AppError('dfdfdf')
     }
-
-    console.log(dataClient)
-
-
-    await io.to(socketProject).emit('clientMessage', dataClient);
-    //await io.to('support').emit('supportMessage', dataClient);
-    await io.to('support').emit('supportResponse', dataClient);
-
   })
 
- 
+
 
   socket.on("statusAttentionUpdate", async () => {
     io.to('support').emit('supportMessage');

@@ -23,7 +23,7 @@ class CreateUserController {
             
         } catch (error) {
             
-            return response.status(400).json({ error: 'Error ao criar usuário' });
+            return response.status(400).json({ error });
         }
 
     }

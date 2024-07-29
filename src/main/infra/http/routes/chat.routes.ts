@@ -6,7 +6,7 @@ const chatRouter = Router()
 const chatController = new ChatController();
 
 
-// chatRouter.use(ensureAuthenticated)
+//chatRouter.use(ensureAuthenticated)
 chatRouter.post('/create_chat/',(req,res)=>chatController.getCreateChat(req,res))
 // chatRouter.patch('/update_statusAttention/:id',(req,res)=>chatController.getUpdateStatusAttention(req,res))
 

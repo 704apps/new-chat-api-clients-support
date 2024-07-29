@@ -32,47 +32,51 @@ class AutenticateUserUseCase {
     ) { }
 
     async execute({ email, password }: IRequest) {
-        const user = await this.userRespository.findByEmail(email)
+      
 
-        if (!user) {
-            throw new AppError("Email or password incorrect!",)
-        }
 
-        console.log('veio aqui 1')
+            const user = await this.userRespository.findByEmail(email)
 
-        const passwordMath = await compare(password, user.password)
+            if (!user) {
+                throw new AppError("Email or password incorrect!",)
+            }
 
-        if (!passwordMath) {
-            console.log('veio aqui 2')
-            throw new AppError("Email or password incorrect!")
-        }
-        ;
-        const secretKey = String(process.env.SECRET_key)
+            console.log('veio aqui 1')
 
-        const token = sign({
+            const passwordMath = await compare(password, user.password)
 
-        }, secretKey, {
-            subject: `${user.id}`, // Define o subject (assunto) do token
-            expiresIn: '1h' // Define o tempo de expiração do token para 1 hora
+            if (!passwordMath) {
+                console.log('veio aqui 2')
+                throw new AppError("Email or password incorrect!")
+            }
+            
+            const secretKey = String(process.env.SECRET_key)
 
-        })
-         
-        const generateRefleshToken = container.resolve(GenerateRefreshToken)
-        const deleteRefleshToken = container.resolve(DeleteRefreshToken)
+            const token = sign({
 
-        await  deleteRefleshToken.deleteMany(user.id)
+            }, secretKey, {
+                subject: `${user.id}`, // Define o subject (assunto) do token
+                expiresIn: '1h' // Define o tempo de expiração do token para 1 hora
 
-        const returrefreshToken: RefreshToken = await generateRefleshToken.execute(user.id) as unknown as RefreshToken
+            })
 
-        const refreshToken = {
-          
+            const generateRefleshToken = container.resolve(GenerateRefreshToken)
+            const deleteRefleshToken = container.resolve(DeleteRefreshToken)
+
+            await deleteRefleshToken.deleteMany(user.id)
+
+            const returrefreshToken: RefreshToken = await generateRefleshToken.execute(user.id) as unknown as RefreshToken
+
+            const refreshToken = {
+
                 id: returrefreshToken.id,
                 expiriesIn: returrefreshToken.expiriesIn,
                 userid: returrefreshToken.userId.id,
                 userName: returrefreshToken.userId.name
-            
-        }
-        return {token, refreshToken }
+
+            }
+            return { token, refreshToken }
+        
     }
 }
 

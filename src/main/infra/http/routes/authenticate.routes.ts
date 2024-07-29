@@ -22,7 +22,7 @@ autheticateRoutes.post("/create_user", createUserController.handle)
 autheticateRoutes.post("/sessions", authenticateUserController.handle)
 
 // autheticateRoutes.use(ensureAuthenticated)
-autheticateRoutes.get("/user/:id", getOneUserController.handle)
+autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.handle)
 autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle)
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle)
 

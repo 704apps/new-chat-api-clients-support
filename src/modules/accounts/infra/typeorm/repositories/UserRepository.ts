@@ -40,9 +40,14 @@ class UserRepository implements IUserRepository {
         return user
     }
     async findById(id: string): Promise<Users | null> {
+        console.log('veio aqui')
+        try{
         const user = await this.repository.findOneBy({id})
-
+        
         return user   
+        }catch(error){
+            throw new AppError('dfdfdf')
+        }
     }
 }
 
