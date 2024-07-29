@@ -53,7 +53,7 @@
                         "description": "Messages not found."
                     },
                     "201": {
-                        "description": "Ok",
+                        "description": "User created successfully.",
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -62,26 +62,13 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value": [
-                                            {
-                                                "id": 1,
-                                                "projectId": "proj123",
-                                                "supportId": "sup456",
-                                                "statusAttention": "OPEN",
-                                                "messages": "Hello, how can I help you?",
-                                                "chatId": 789,
-                                                "createdAt": "2024-07-10T10:00:00Z"
-                                            },
-                                            {
-                                                "id": 2,
-                                                "projectId": "proj124",
-                                                "supportId": "sup457",
-                                                "statusAttention": "OPEN",
-                                                "messages": "Hello, how can I help you, please?",
-                                                "chatId": 790,
-                                                "createdAt": "2024-07-10T10:00:00Z"
+                                        "value": {
+                                            "user": {
+                                                "id": "a3a2de0a-4650-4a3a-9e9d-3cc7a1d9f991",
+                                                "name": "Paulo",
+                                                "email": "paulo@704.com"
                                             }
-                                        ]
+                                        }
                                     }
                                 }
                             }
@@ -115,7 +102,6 @@
                     "200": {
                         "content": {
                             "application/json": {
-                             
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
@@ -124,7 +110,6 @@
                                                 "id": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
                                                 "name": "Luan Santana",
                                                 "email": "luansantana@704.com",
-                                                "password": "$2b$08$/5jX9cdoXDV1tWQF57Rlg.MnBS6L8YahqvwmXkqD.oiTk3CJtQFhy",
                                                 "createdAt": "2024-07-26T23:01:30.508Z",
                                                 "updatedAt": "2024-07-26T23:01:30.508Z"
                                             }
@@ -162,7 +147,6 @@
                     "200": {
                         "content": {
                             "application/json": {
-                           
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
@@ -171,7 +155,6 @@
                                                 "id": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
                                                 "name": "Luan Santana",
                                                 "email": "luansantana@704.com",
-                                                "password": "$2b$08$/5jX9cdoXDV1tWQF57Rlg.MnBS6L8YahqvwmXkqD.oiTk3CJtQFhy",
                                                 "createdAt": "2024-07-26T23:01:30.508Z",
                                                 "updatedAt": "2024-07-26T23:01:30.508Z"
                                             }

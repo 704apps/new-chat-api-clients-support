@@ -16,16 +16,22 @@ class GetOneUserByEmailUseCase {
     ) { }
 
 
-    async getOneUserByEmail(email:string) {
+    async getOneUserByEmail(email: string) {
         try {
-            
-            const user = await this.userRepository.findByEmail(email)
-            console.log(user)
 
-            return user
+            const user = await this.userRepository.findByEmail(email)
+            const userData = {
+                id: user?.id,
+                name: user?.name,
+                email: user?.email,
+                createdAt: user?.createdAt,
+                updatedAt: user?.updatedAt,
+            }
+
+            return userData
         } catch (error) {
             console.log(error)
-            throw new AppError('User not found',400,{error})
+            throw new AppError('User not found', 400, { error })
         }
 
     }

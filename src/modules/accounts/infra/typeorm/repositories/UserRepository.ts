@@ -25,9 +25,7 @@ class UserRepository implements IUserRepository {
         })
         
        const userCreated =  await this.repository.save(user)
-       console.log('user criado:')
-       console.log(userCreated) 
-       console.log('===============') 
+   
 
        return userCreated
 
