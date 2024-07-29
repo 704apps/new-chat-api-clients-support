@@ -9,6 +9,8 @@ interface IMessageRepository{
     update(id:number,message:string):Promise<Messages>;
     upldateSA(id:number):Promise<Messages>;
     delete(id:number):Promise<String>;
+    getOneMessage(id:number):Promise<Messages>;
+    getFilterToStatusSidebar(statusAttention: string):Promise<DtoNewMessages[]>;
     getNewMessages(statusAttention:string):Promise<DtoNewMessages[]>;
     getMessagesRespondingToSupport(supportId:string):Promise<DtoNewMessages[]>;
     getSearchProject(projectId:string):Promise<DtoNewMessages[]>;

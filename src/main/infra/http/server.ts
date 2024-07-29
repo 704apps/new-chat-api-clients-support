@@ -82,7 +82,7 @@ io.on("connection", (socket) => {
 
       // }
     } catch (error) {
-      throw new AppError('dfdfdf')
+      throw new AppError('Unexpected error',400,{error})
     }
   });
 
@@ -121,7 +121,7 @@ io.on("connection", (socket) => {
       //await io.to('support').emit('supportMessage', dataClient);
       await io.to('support').emit('supportResponse', dataClient);
     } catch (error) {
-      throw new AppError('dfdfdf')
+      throw new AppError('Unexpected error',400,{error})
     }
   })
 

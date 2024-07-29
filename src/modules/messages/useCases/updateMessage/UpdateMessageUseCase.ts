@@ -4,16 +4,12 @@ import { AppError } from "@error/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-class MessageService {
-
+class UpdateMessageUseCase {
 
     constructor(
-        @inject("CarRepository")
+        @inject("MessageRepository")
         private messageRepository: IMessageRepository
-
-    ) { }
-
-
+    ){}
 
     public async updateMessage(id: number, message: string): Promise<Messages> {
         try {
@@ -26,9 +22,7 @@ class MessageService {
             throw new AppError('An error occurred while updating!', 400, { error })
 
         }
-
     }
-
-
-
 }
+
+export {UpdateMessageUseCase}

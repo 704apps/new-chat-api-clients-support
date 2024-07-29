@@ -32,11 +32,10 @@ class MessageRepository implements IMessageRepository {
             });
 
             if (!nameProject) {
-                try {
-                    this.repositoryContacts.create({ projectId });
-                } catch (error) {
-                    console.log(`Error: ${error}`);
-                }
+                
+                   const project = this.repositoryContacts.create({ projectId });
+                   this.repositoryContacts.save(project)
+                
             }
 
             // const sID = supportId === null || supportId === '' || supportId === undefined ? '' : supportId
@@ -131,7 +130,50 @@ class MessageRepository implements IMessageRepository {
         return project;
       
     }
+    public async getFilterToStatusSidebar(statusAttention: string):Promise<DtoNewMessages[]> {
+            
+        const selectIdClients = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .select("m.projectId", "projectId")
+                .addSelect("MAX(m.createdAt)", "latestCreatedAt")
+                .groupBy("m.projectId");
 
+
+            const result = await this.repositoryMessage
+                .createQueryBuilder("m")
+                .innerJoin(
+                    `(${selectIdClients.getQuery()})`,
+                    "sub",
+                    "m.projectId = sub.projectId AND m.createdAt = sub.latestCreatedAt"
+                )
+                .leftJoin("chats", "c", "m.chatId = c.id")
+                .select([
+                    "m.projectId",
+                    "m.createdAt",
+                    "m.messages",
+                    "m.id",
+                    "c.supportId",
+                    "c.id as chatId",
+                    `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`,
+                ])
+                .where("c.statusAttention=:statusAttention", { statusAttention })
+                .orderBy("m.createdAt", "DESC")
+                .getRawMany();
+            console.log("selectIdClients");
+            console.log(result);
+            const newMessagens = result.map((item) => ({
+                id: item.m_id,
+                projectId: item.m_projectId,
+                supportId: item.c_supportId,
+                statusAttention: item.statusAttention,
+                messages: item.m_messages,
+                chatId: item.chatId,
+                createdAt: item.m_createdAt,
+            })) as unknown as DtoNewMessages[]
+
+            return newMessagens;
+ 
+    }
     async upldateSA(id: number): Promise<Messages> {
         const project = await this.repositoryMessage.findOneBy({
             id,
@@ -160,7 +202,20 @@ class MessageRepository implements IMessageRepository {
             return  "Message deleted successfully" ;
        
     }
+    async getOneMessage(id: number): Promise<Messages> {
+       
+        const message = await this.repositoryMessage.findOneBy({
+            id,
+        });
+        if (!message) {
+           throw new AppError ("Message not found")
+        }
 
+        
+
+        return message;
+   
+}
     async getNewMessages(statusAttention: string): Promise<DtoNewMessages[]> {
         
             const selectIdClients = await this.repositoryMessage

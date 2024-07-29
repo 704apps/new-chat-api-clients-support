@@ -5,19 +5,24 @@ const messageService =  new MessageService()
 
 
 
-export class MessageController{
-    
+class GetOneChatClientController{
 
-    public async getOneMessagesClient(req:Request, res: Response ):Promise<void>{
-        try{
-            const chatId = req.params.id
+    async handle(request: Request, response: Response): Promise<Response> {
+
+        try {
+            const chatId = request.params.id
             const message = await messageService.getOneMessagesClient(Number(chatId));
 
-             res.status(200).json(message)
-
-        }catch(error){
-            res.status(400).json({message: 'Message not found '})
-
+            return response.status(200).json(message)
+            
+        } catch (error) {
+            
+            return response.status(400).json({ error });
         }
+
     }
+
+
 }
+
+export {GetOneChatClientController}

@@ -1,30 +1,23 @@
-import { Brackets } from 'typeorm'
-import { myDataSource } from 'main/infra/typeorm/connection/app-data-source';
-import { Messages } from '@modules/messages/infra/typeorm/Entities/Messages';
-import { Contacts } from '@modules/contacts/infra/typeorm/Entities/Contacts';
-import { Chats } from '@modules/chats/infra/typeorm/Entities/Chats';
+import { Request, Response } from 'express';
+import { UpdateMessageUseCase } from './UpdateMessageUseCase'
+import { container } from 'tsyringe'
 
-export class MessageService {
-    private messageRepository = myDataSource.getRepository(Messages);
 
-    constructor() {
-        //Verifica se a conexão estabelicida antes de obter acesso a entidade. 
-        if (!myDataSource.isInitialized) {
-            myDataSource.initialize().then(() => {
-                this.messageRepository = myDataSource.getRepository(Messages);
-            }).catch(error => console.error("Error ao incializar a conexão:", error))
-        }
-        
+
+export class UpdateMessageController {
+
+
+    async handle(request: Request, response: Response): Promise<Response> {
+
+        const id: number = request.params.id as unknown as number
+        const { message } = request.body;
+        const updateMessageUseCase = await container.resolve(UpdateMessageUseCase)
+        const messageUpdade = await updateMessageUseCase.updateMessage(id, message)
+
+        return response.status(200).json({ messageUpdade })
+
     }
 
-    public async getOneMessagesClient(chatId: number): Promise<Messages[]> {
-        const project = await this.messageRepository.findBy({
-            chatId
-        });
 
-        return project
-    }
-
-  
 
 }

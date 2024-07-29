@@ -9,17 +9,18 @@ class AuthenticateUserController {
     async handle(request: Request, response: Response): Promise<Response> {
     
         try {
-            
-       
-            const { email, password } = request.body
+                   
+            const { email, password } = request.body;
 
-            const authenticateUseCase = container.resolve(AutenticateUserUseCase)
+            const authenticateUseCase = container.resolve(AutenticateUserUseCase);
 
-            const { token, refreshToken  } = await authenticateUseCase.execute({ password, email })
+            const { token, refreshToken  } = await authenticateUseCase.execute({ password, email });
 
-            return response.status(200).json({ token, refreshToken  })
+            return response.status(200).json({ token, refreshToken  });
+
         } catch (error) {
-            return response.status(401).json({error})
+            return response.status(401).json({error});
+
         }
     }
 
