@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ChatService } from './chats.services';
 // import {MockResponse} from '../util/statusfunction'
-import { ChatDTO } from '../../DTOs/chat/chatDTO';
+import { ChatDTO } from './DTOs/chatDTO';
 const chatService =  new ChatService() 
 
 

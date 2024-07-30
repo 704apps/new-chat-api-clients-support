@@ -20,6 +20,7 @@ class MessageRepository implements IMessageRepository {
         this.repositoryMessage = myDataSource.getRepository(Messages)
         this.repositoryChat = myDataSource.getRepository(Chats)
     }
+  
 
     //Salva as mensagens enviada
     async createMessage(message: MessageDTO): Promise<Messages> {
@@ -382,10 +383,52 @@ class MessageRepository implements IMessageRepository {
       
     }
 
-    getSearchGenerationToSupport(text: string, supportId: string): Promise<Messages[]> {
-        throw new Error("Method not implemented.");
-    }
+    async getSearchGenerationToSupport(text: string, supportId: string): Promise<Messages[]> {
+        const word = text.split(" ");
 
+        const resultSearch = await this.repositoryMessage
+            .createQueryBuilder("m")
+            .where("m.supportId = :supportId", { supportId })
+            .andWhere(
+                new Brackets((qb) => {
+                    qb.andWhere("CONCAT(m.projectId, ' ', m.messages) LIKE :text", {
+                        text: `%${text}%`,
+                    });
+                    word.forEach((word, index) => {
+                        if (index === 0) {
+                            qb.orWhere(
+                                "CONCAT(m.projectId, ' ' , m.messages) LIKE :word0",
+                                { word0: `%${word}%` }
+                            );
+                        } else {
+                            qb.orWhere(
+                                `CONCAT(m.projectId, ' ', m.messages) LIKE :word${index}`,
+                                { [`word${index}`]: `%${word}%` }
+                            );
+                        }
+                    });
+                })
+            )
+            .orderBy("m.createdAt", "ASC")
+            .getMany();
+
+        return resultSearch;
+    }
+    async getOneMessagesClient(projectId: string,page: number,pageSize: number):Promise<Messages[]>{
+        const skip = (page - 1) * pageSize;
+
+        const project = await this.repositoryMessage
+            .createQueryBuilder('m')
+            // .where('m.supportId=:supportId', { supportId })
+            .where('m.projectId=:projectId', { projectId })
+            // .skip(skip)
+            // .take(pageSize)
+            .orderBy('m.createdAt', 'ASC')
+            .getMany()
+
+
+        return project;
+    }
     async uploadMedia(data: UploadDataDTO): Promise<void> {
         
             console.log(data)

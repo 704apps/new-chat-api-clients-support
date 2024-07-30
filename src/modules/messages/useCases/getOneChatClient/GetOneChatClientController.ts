@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { MessageService } from './GetOneChatClientUseCase';
+import { GetOneChatClientUseCase } from './GetOneChatClientUseCase';
+import { container } from 'tsyringe';
 
-const messageService =  new MessageService() 
 
 
 
@@ -11,9 +11,12 @@ class GetOneChatClientController{
 
         try {
             const chatId = request.params.id
-            const message = await messageService.getOneMessagesClient(Number(chatId));
 
-            return response.status(200).json(message)
+            const getOneChatClientUseCase = container.resolve(GetOneChatClientUseCase)
+
+            const message = await getOneChatClientUseCase.getOneMessagesClient(Number(chatId));
+
+            return response.status(200).json({message})
             
         } catch (error) {
             

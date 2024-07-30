@@ -7,7 +7,7 @@ import { IMessageRepository } from '@modules/messages/repositories/IMessageRepos
 import { DtoNewMessages } from '@modules/messages/DTOs/newMessagesDTO';
 
 @injectable()
-class GetNewMessagesClientUseCase {
+class GetNewMessagesUseCase {
 
     
     constructor(
@@ -23,13 +23,11 @@ class GetNewMessagesClientUseCase {
             return newMessage
 
         } catch (error) {
+          
             throw new AppError('Unexpected error', 400, { error })
 
         }
     }
-
-
-
 }
 
-export {GetNewMessagesClientUseCase}
+export {GetNewMessagesUseCase}

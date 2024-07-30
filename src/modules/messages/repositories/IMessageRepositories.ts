@@ -14,6 +14,7 @@ interface IMessageRepository{
     getNewMessages(statusAttention:string):Promise<DtoNewMessages[]>;
     getMessagesRespondingToSupport(supportId:string):Promise<DtoNewMessages[]>;
     getSearchProject(projectId:string):Promise<DtoNewMessages[]>;
+    getOneMessagesClient( projectId: string,page: number,pageSize: number):Promise<Messages[]>
     getSearchByWordOrPhrase(text: string, supportId: string):Promise<Messages[]>;
     getSearchGenerationToSupport(text: string, supportId: string):Promise<Messages[]>;
     uploadMedia(data:UploadDataDTO):Promise<void>;

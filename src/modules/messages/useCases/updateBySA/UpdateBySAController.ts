@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UpdateMessageUseCase } from './UpdateMessageUseCase'
+import { UpdateBySAUseCase } from './UpdateBySAUseCase'
 import { container } from 'tsyringe'
 
 
@@ -12,9 +12,8 @@ export class UpdateMessageController {
 
 
             const id: number = request.params.id as unknown as number
-            const { message } = request.body;
-            const updateMessageUseCase = await container.resolve(UpdateMessageUseCase)
-            const messageUpdade = await updateMessageUseCase.updateMessage(id, message)
+            const uppdateBySAUseCase = await container.resolve(UpdateBySAUseCase)
+            const messageUpdade = await uppdateBySAUseCase.upldateSA(id)
 
             return response.status(200).json({ messageUpdade })
 

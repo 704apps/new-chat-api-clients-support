@@ -7,7 +7,7 @@ import { IMessageRepository } from '@modules/messages/repositories/IMessageRepos
 import { DtoNewMessages } from '@modules/messages/DTOs/newMessagesDTO';
 
 @injectable()
-class GetFilterToStatusSidebarUseCase {
+class GetOneMessagesClientUseCase {
 
     
     constructor(
@@ -15,22 +15,19 @@ class GetFilterToStatusSidebarUseCase {
         private messageRepository: IMessageRepository
     ){}
 
-    public async getFilterToStatusSidebar(statusAttention: string): Promise<DtoNewMessages[]> {
+    public async getOneMessagesClient(statusAttention: string,page:number, pageSize:number): Promise<Messages[]> {
         try {
             
-            const newMessage = await this.messageRepository.getFilterToStatusSidebar(statusAttention)
+            const newMessage = await this.messageRepository.getOneMessagesClient(statusAttention,page,pageSize)
 
             return newMessage
 
         } catch (error) {
-           
+          
             throw new AppError('Unexpected error', 400, { error })
 
         }
     }
-
-
-
 }
 
-export {GetFilterToStatusSidebarUseCase}
+export {GetOneMessagesClientUseCase}

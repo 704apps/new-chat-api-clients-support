@@ -23,6 +23,7 @@ class GetChatsRespondingToSupportUseCase {
             return newMessage
 
         } catch (error) {
+            
             throw new AppError('Unexpected error', 400, { error })
 
         }

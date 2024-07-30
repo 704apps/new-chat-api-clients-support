@@ -7,7 +7,7 @@ import { IMessageRepository } from '@modules/messages/repositories/IMessageRepos
 import { DtoNewMessages } from '@modules/messages/DTOs/newMessagesDTO';
 
 @injectable()
-class GetFilterToStatusSidebarUseCase {
+class GetSearchGenerationToSupportUseCase {
 
     
     constructor(
@@ -15,11 +15,11 @@ class GetFilterToStatusSidebarUseCase {
         private messageRepository: IMessageRepository
     ){}
 
-    public async getFilterToStatusSidebar(statusAttention: string): Promise<DtoNewMessages[]> {
+    public async getSearchGenerationToSupport(text: string,supportId:string): Promise<Messages[]> {
         try {
             
-            const newMessage = await this.messageRepository.getFilterToStatusSidebar(statusAttention)
-
+            const newMessage = await this.messageRepository.getSearchGenerationToSupport(text,supportId)
+           
             return newMessage
 
         } catch (error) {
@@ -33,4 +33,4 @@ class GetFilterToStatusSidebarUseCase {
 
 }
 
-export {GetFilterToStatusSidebarUseCase}
+export {GetSearchGenerationToSupportUseCase}

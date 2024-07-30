@@ -1,4 +1,4 @@
-import { ChatDTO } from '../../DTOs/chat/chatDTO';
+import { ChatDTO } from './DTOs/chatDTO';
 import { myDataSource } from '../../main/infra/typeorm/connection/app-data-source';
 import { Chats } from './infra/typeorm/Entities/Chats';
 import {io} from '../../main/infra/http/server'

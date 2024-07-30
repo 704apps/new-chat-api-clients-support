@@ -4,26 +4,26 @@ import { AppError } from "@error/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-class DeleteMessageUseCase {
+class UpdateBySAUseCase {
 
     constructor(
         @inject("MessageRepository")
         private messageRepository: IMessageRepository
     ){}
 
-    public async delete(id: number) {
+    public async upldateSA(id: number): Promise<Messages> {
         try {
 
-            await this.messageRepository.delete(id);
-
-            return 
+            const project = await this.messageRepository.upldateSA(id);
+           
+            return project
 
         } catch (error) {
 
-            throw new AppError('Error when deleting message!', 400, { error })
+            throw new AppError('An error occurred while updating!', 400, { error })
 
         }
     }
 }
 
-export {DeleteMessageUseCase}
+export {UpdateBySAUseCase}
