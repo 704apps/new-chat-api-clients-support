@@ -129,18 +129,26 @@ class MessageRepository implements IMessageRepository {
 
 
     async update(id: number, message: string): Promise<Messages> {
-        const project = await this.repositoryMessage.findOneBy({
+        const getMessage = await this.repositoryMessage.findOneBy({
             id,
         });
 
-        if (!project) {
+        if (!getMessage) {
             throw new AppError("Project not found!")
         }
 
-        project.messages = message;
-        project.msgEdt = true;
-        await this.repositoryMessage.save(project);
-        return project;
+        getMessage.messages = message;
+        getMessage.msgEdt = true;
+        await this.repositoryMessage.save(getMessage);
+
+        if (getMessage.origin === 'support') {
+            console.log('veio aqui')
+            await io.to(getMessage.projectId).emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages });
+        } else {
+            await io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages });
+        }
+
+        return getMessage;
 
     }
     public async getFilterToStatusSidebar(statusAttention: string): Promise<DtoNewMessages[]> {

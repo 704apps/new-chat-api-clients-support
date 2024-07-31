@@ -19,6 +19,8 @@ export const myDataSource = new DataSource(
         entities: [Messages, Contacts, Chats, Users, RefreshToken], // Ajuste o caminho conforme necessário
         migrations: ["src/main/infra/typeorm/migrations/*.ts"],
         synchronize: true,
+        timezone: 'Z',  // Para UTC
+
         // logging: true, // Ative o registro para ver as consultas SQL
         // logger: 'debug',
     },
