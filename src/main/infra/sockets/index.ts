@@ -10,20 +10,18 @@ const saveMessageController = new SaveMessageController();
 console.log("SocketIOServer created");
 
 export function setupSocketIO() {
-    console.log("Setting up SocketIO");
 
     io.on("connection", (socket) => {
-        console.log("New client connected");
+
 
         //Cliente envia mensagem
         socket.on("clientMessage", async (data) => {
             try {
-                console.log(data)
 
                 const msg: MessageDTO = (await saveMessageController.saveMessage(
                     data
                 )) as MessageDTO;
-                console.log('dfdfdfdfdf')
+
                 const socketUser = data.supportId;
                 const dataClient = {
                     id: msg.id,
@@ -37,9 +35,7 @@ export function setupSocketIO() {
                     origin: data.origin,
                     createdAt: msg.createdAt
                 }
-                console.log('dataClient')
-                console.log(dataClient)
-                console.log('dataCldsfdfdient')
+
                 io.to('support').emit('supportMessage', dataClient);
                 // if (!data.supportId) {
                 //   io.to('support').emit('supportMessage', dataClient);
@@ -47,7 +43,6 @@ export function setupSocketIO() {
                 //   io.to(data.supportId).emit('supportMessage', data);
 
                 // }
-                console.log(msg)
 
             } catch (error) {
                 throw new AppError('Unexpected error', 400, { error })
@@ -56,7 +51,42 @@ export function setupSocketIO() {
 
 
 
+        socket.on("callUserClient", async (data) => {
+            try {
 
+                const socketId = data.socketId;
+
+                const dataCall = {
+                    ...data,
+                    signal: data.signalData,
+                    from: data.from,
+                }
+
+                if (socketId) {
+                    io.to(socketId).emit("callUserSupport", dataCall);
+                }
+
+            } catch (error) {
+                throw new AppError('Unexpected error', 400, { error })
+            }
+        });
+
+
+        socket.on("callUserSupport", async (data) => {
+            try {
+
+                const dataCall = {
+                    ...data,
+                    signal: data.signalData,
+                    from: data.from,
+                }
+                io.to("support").emit("callUserSupport", dataCall);
+
+
+            } catch (error) {
+                throw new AppError('Unexpected error', 400, { error })
+            }
+        });
         //Suporte envia mensagem
         socket.on("supportMessage", async (data: MessageDTO) => {
             try {
@@ -93,12 +123,9 @@ export function setupSocketIO() {
             }
         })
 
-
-
         socket.on("statusAttentionUpdate", async () => {
             io.to('support').emit('supportMessage');
         })
-
 
         //Adiciona o cliente à sala especifica
         socket.on('joinRoom', (data) => {
@@ -121,7 +148,6 @@ export function setupSocketIO() {
 
 
     });
-    console.log("SocketIO setup complete");
 
 }
 
