@@ -2,22 +2,25 @@
 import { MessageDTO } from '@modules/messages/DTOs/messageDTO';
 import { SaveMessageUseCase } from "./SaveMessageUseCase"
 import { container } from 'tsyringe';
-import { response } from 'express'
+import { response, NextFunction } from 'express'
 
-export class MessageService {
-
+export class SaveMessageController {
+    private next:  NextFunction
     public async saveMessage(message: MessageDTO) {
         try {
 
 
             const saveMessageUseCase = container.resolve(SaveMessageUseCase)
             const newMessage = saveMessageUseCase.createMessage(message)
+          
 
-            return newMessage
+            return  newMessage
 
         } catch (error) {
+          
 
-            return response.status(400).json({error})
+            this.next(error)
+           
             
         }
     }

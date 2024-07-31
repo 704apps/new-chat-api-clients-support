@@ -4,7 +4,7 @@ import { GetChatsRespondingToSupportUseCase } from './getChatsRespondingToSuppor
 import { container } from 'tsyringe'
 
 
-class getChatsRespondingToSupportController {
+class GetChatsRespondingToSupportController {
 
 
     async handle(request: Request, response: Response): Promise<Response> {
@@ -25,4 +25,4 @@ class getChatsRespondingToSupportController {
     }
 }
 
-export { getChatsRespondingToSupportController }
+export { GetChatsRespondingToSupportController }

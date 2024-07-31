@@ -4,7 +4,7 @@ import { GetStatusAttentionUseCase } from './GetStatusAttentionUseCase'
 import { container } from 'tsyringe'
 
 
-class DeleteMessageController {
+class GetStatusAttentionController {
 
 
     async handle(request: Request, response: Response): Promise<Response> {
@@ -17,7 +17,7 @@ class DeleteMessageController {
             const getStatusAttentionUseCase = await container.resolve(GetStatusAttentionUseCase)
             await getStatusAttentionUseCase.getStatusAttention(idChat,String(supportId))
 
-            return response.status(200).json({chat:getStatusAttentionUseCase})
+            return response.status(200).json(getStatusAttentionUseCase)
 
         } catch (error) {
             
@@ -27,4 +27,4 @@ class DeleteMessageController {
     }
 }
 
-export {DeleteMessageController}
+export {GetStatusAttentionController}

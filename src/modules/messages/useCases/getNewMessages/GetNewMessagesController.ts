@@ -11,7 +11,7 @@ class GetNewMessagesController {
         try {
             const { statusAttention } = request.query
 
-            const statusChat = statusAttention != undefined ? statusAttention : ''
+            const statusChat = statusAttention !== undefined ? statusAttention : ''
 
             const getNewMessagesUseCase =   container.resolve(GetNewMessagesUseCase)
 

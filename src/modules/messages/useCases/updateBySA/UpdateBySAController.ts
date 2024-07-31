@@ -15,7 +15,7 @@ export class UpdateMessageController {
             const uppdateBySAUseCase = await container.resolve(UpdateBySAUseCase)
             const messageUpdade = await uppdateBySAUseCase.upldateSA(id)
 
-            return response.status(200).json({ messageUpdade })
+            return response.status(200).json( messageUpdade)
 
         } catch (error) {
 

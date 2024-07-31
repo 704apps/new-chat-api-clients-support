@@ -5,7 +5,7 @@ import { UploadDataDTO } from '@modules/messages/DTOs/querysparamsDTO';
 
 
 
-export class UpdateMessageController {
+export class UploadMediaController {
 
 
     async handle(request: Request, response: Response): Promise<Response> {

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import wz, { Request, Response } from 'express';
 import { UpdateMessageUseCase } from './UpdateMessageUseCase'
 import { container } from 'tsyringe'
 
@@ -12,11 +12,12 @@ export class UpdateMessageController {
 
 
             const id: number = request.params.id as unknown as number
-            const { message } = request.body;
+            const { messages } = request.body;
+       
             const updateMessageUseCase = await container.resolve(UpdateMessageUseCase)
-            const messageUpdade = await updateMessageUseCase.updateMessage(id, message)
+            const messageUpdade = await updateMessageUseCase.updateMessage(id, messages)
 
-            return response.status(200).json({ messageUpdade })
+            return response.status(200).json( messageUpdade )
 
         } catch (error) {
 

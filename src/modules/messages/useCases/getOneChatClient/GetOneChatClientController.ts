@@ -16,7 +16,7 @@ class GetOneChatClientController{
 
             const message = await getOneChatClientUseCase.getOneMessagesClient(Number(chatId));
 
-            return response.status(200).json({message})
+            return response.status(200).json(message)
             
         } catch (error) {
             

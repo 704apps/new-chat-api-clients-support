@@ -4,7 +4,7 @@ import { UpdateStatusFinishedUseCase } from './UpdateStatusFinishedUseCase'
 import { container } from 'tsyringe'
 
 
-class DeleteMessageController {
+class UpdateStatusFinishedController {
 
 
     async handle(request: Request, response: Response): Promise<Response> {
@@ -15,7 +15,7 @@ class DeleteMessageController {
             const updateStatusFinishedUseCase = await container.resolve(UpdateStatusFinishedUseCase)
             await updateStatusFinishedUseCase.updateStatusFinished(idChat)
 
-            return response.status(200).json({chat:updateStatusFinishedUseCase})
+            return response.status(200).json(updateStatusFinishedUseCase)
 
         } catch (error) {
             
@@ -25,4 +25,4 @@ class DeleteMessageController {
     }
 }
 
-export {DeleteMessageController}
+export {UpdateStatusFinishedController}

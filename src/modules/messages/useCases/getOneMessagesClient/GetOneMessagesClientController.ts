@@ -4,7 +4,7 @@ import { GetOneMessagesClientUseCase } from './GetOneMessagesClientUseCase';
 import {container} from 'tsyringe'
 
 
-class GetNewMessagesController {
+class GetOneMessagesClientController {
 
 
     public async handle(request: Request, response: Response): Promise<Response> {
@@ -25,4 +25,4 @@ class GetNewMessagesController {
     }
 }
 
-export {GetNewMessagesController}
+export {GetOneMessagesClientController}
