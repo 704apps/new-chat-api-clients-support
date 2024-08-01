@@ -1023,6 +1023,49 @@
                 }
             }
         },
+        
+        "socket_emit: callUserClient": {
+            "get": {
+                "summary": "ENVIO da parte do MONITOR",
+                "description": "Use esse socket para envio da video conferencia. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.emit('callUserClient',{ projetcId: '99pop', signalData: signalData, from:from, //demais parametros necessarios})",
+                "tags": [
+                    "SOCKETS"
+                ]
+               
+            }
+        },
+        
+        "socket_on: callUserSupport": {
+            "get": {
+                "summary": "ESCUTA da parte do SUPORTE",
+                "description": "Use esse socket para envio da video conferencia. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.on('callUserSupport', async (data) => {  \n\n      //Pega os paramentro de entra pelo data:\n      const signal = data.signalData\n      const from = data.from\n      const projetcId = data.projectId})",
+                "tags": [
+                    "SOCKETS"
+                ]
+            
+            }
+        },
+        "socket_emit: callUserSupport": {
+            "get": {
+                "summary": "ENVIO da parte do SUPORTE",
+                "description": "Use esse socket para envio da video conferencia. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.emit('callUserSupport',{ projetcId: '99pop', signalData: signalData, from:from, //demais parametros necessarios})",
+                "tags": [
+                    "SOCKETS"
+                ]
+                
+            }
+        },
+        
+        "socket_on: callUserClient": {
+            "get": {
+                "summary": "ESCUTA da parte do MONITOR",
+                "description": "Use esse socket para envio da video conferencia. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.on('callUserClient', async (data) => {  \n\n      //Pega os paramentro de entra pelo data:\n      const signal = data.signalData\n      const from = data.from\n      const projetcId = data.projectId})",
+                "tags": [
+                    "SOCKETS"
+                ]
+           
+            }
+        },
         "socket: update messagens": {
             "get": {
                 "summary": "SOCKET PARA ATUALIZAR MENSAGENS EDITADAS",
