@@ -1,4 +1,4 @@
-import { Users } from "@modules/accounts/infra/typeorm/Entities/Users";
+import { Users } from "../../../../../modules/accounts/infra/typeorm/Entities/Users";
 import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 

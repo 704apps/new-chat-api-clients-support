@@ -8,7 +8,7 @@ import { GenerateRefreshToken } from '@modules/refreshToken/useCases/genereRefre
 import { container } from 'tsyringe'
 import { DeleteRefreshToken } from '@modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken'
 
-import { RefreshToken } from "@modules/refreshToken/infra/typeorm/Entities/RefreshToken";
+import { RefreshToken } from "../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken";
 interface IRequest {
     email: string;
     password: string;

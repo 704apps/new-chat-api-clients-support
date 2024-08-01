@@ -5,7 +5,7 @@ import { ICreateUserDTO } from "@modules/accounts/DTOs/ICreateUserDTOS";
 import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository"
 import { hash } from 'bcrypt'
 import { AppError } from "@error/AppError";
-import { Users } from "@modules/accounts/infra/typeorm/Entities/Users";
+import { Users } from "../../../../modules/accounts/infra/typeorm/Entities/Users";
 
 @injectable()
 class GetOneUserByEmailUseCase {
