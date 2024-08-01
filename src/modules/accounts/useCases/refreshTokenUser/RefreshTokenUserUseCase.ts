@@ -28,14 +28,18 @@ class RefreshTokenUserUseCase{
             const generateRefleshTokenProvider = container.resolve( GenerateRefreshToken)
             const nRefreshToken = await generateRefleshTokenProvider.execute(String(refreshToken.userId.id))
             const newRefreshToken = {
-                id: nRefreshToken?.id ,
+                id: nRefreshToken?.id
+            } 
+            const user = {
                 expiriesIn:nRefreshToken?.expiriesIn,
                 userid: nRefreshToken?.userId.id,
                 userName: refreshToken?.userId.name,
-                supportId: refreshToken?.userId.name
-
-            } 
-            return {token,newRefreshToken}
+                supportId: refreshToken?.userId.name,
+                email: refreshToken?.userId.email,
+                createdAt: refreshToken?.userId.createdAt,
+                updatedAt: refreshToken?.userId.updatedAt
+            }
+            return {token,newRefreshToken,user}
         }
 
         return {token}
