@@ -31,7 +31,8 @@ class RefreshTokenUserUseCase{
                 id: nRefreshToken?.id ,
                 expiriesIn:nRefreshToken?.expiriesIn,
                 userid: nRefreshToken?.userId.id,
-                userName: refreshToken?.userId.name
+                userName: refreshToken?.userId.name,
+                supportId: refreshToken?.userId.name
 
             } 
             return {token,newRefreshToken}

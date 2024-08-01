@@ -69,7 +69,9 @@ class AutenticateUserUseCase {
                 id: returrefreshToken.id,
                 expiriesIn: returrefreshToken.expiriesIn,
                 userid: returrefreshToken.userId.id,
-                userName: returrefreshToken.userId.name
+                userName: returrefreshToken.userId.name,
+                supportId: returrefreshToken.userId.name
+
             
         }
         return {token, refreshToken }
