@@ -41,7 +41,7 @@ export class BuckupEditionMessages1722459743994 implements MigrationInterface {
 
         }));
 
-        await queryRunner.createForeignKey('buckupEditionMessageForeingKey',
+        await queryRunner.createForeignKey('buckupEditionMessage',
             new TableForeignKey({
                 columnNames: ["messageId"],
                 referencedColumnNames: ["id"],

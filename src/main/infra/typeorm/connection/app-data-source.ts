@@ -21,7 +21,7 @@ export const myDataSource = new DataSource(
         synchronize: true,
         timezone: 'Z',  // Para UTC
 
-        logging: true, // Ative o registro para ver as consultas SQL
+        //: true, // Ative o registro para ver as consultas SQL
         // logger: 'debug',
     },
 
