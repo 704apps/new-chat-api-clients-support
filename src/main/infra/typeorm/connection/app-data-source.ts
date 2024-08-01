@@ -2,11 +2,11 @@ import { DataSource } from "typeorm";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { Contacts } from '@modules/contacts/infra/typeorm/Entities/Contacts';
-import { Chats } from '@modules/chats/infra/typeorm/Entities/Chats';
-import { Users } from '@modules/accounts/infra/typeorm/Entities/Users';
-import { Messages } from '@modules/messages/infra/typeorm/Entities/Messages';
-import { RefreshToken } from '@modules/refreshToken/infra/typeorm/Entities/RefreshToken'
+import { Contacts } from '../../../../modules/contacts/infra/typeorm/Entities/Contacts';
+import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
+import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
+import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
+import { RefreshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
 
 export const myDataSource = new DataSource(
     {
@@ -21,7 +21,7 @@ export const myDataSource = new DataSource(
         synchronize: true,
         timezone: 'Z',  // Para UTC
 
-        // logging: true, // Ative o registro para ver as consultas SQL
+        logging: true, // Ative o registro para ver as consultas SQL
         // logger: 'debug',
     },
 
