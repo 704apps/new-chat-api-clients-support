@@ -12,10 +12,12 @@
       "emitDecoratorMetadata": true,
       "resolveJsonModule": true,
       "skipLibCheck": true,
+      "typeRoots": ["./node_modules/@types","./src/@types"],
       "paths": {
-        "@infra/*":["infra/*"],
+        "@main/*":["main/*"],
         "@modules/*":["modules/*"],
-        "@DTOs/*":["DTOs/*"]
+        "@DTOs/*":["DTOs/*"],
+        "@error/*":["error/*"]
       }
     },
     "include": ["src/**/*", "swagger.ts"],

@@ -16,6 +16,278 @@
         }
     ],
     "paths": {
+        "/create_user": {
+            "post": {
+                "summary": "Cadastro  de Usuário.",
+                "description": "Essa rota faz o Cadastro do Usuário.",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Messages not found."
+                    },
+                    "201": {
+                        "description": "User created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "$ref": "#/components/schemas/ListClients"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": {
+                                            "user": {
+                                                "id": "a3a2de0a-4650-4a3a-9e9d-3cc7a1d9f991",
+                                                "name": "Paulo",
+                                                "email": "paulo@704.com"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "summary": "Pesquisa usuário pelo id",
+                "description": "Essa rota Pesquisa um usuário pelo seu id",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": {
+                                            "user": {
+                                                "id": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
+                                                "name": "Luan Santana",
+                                                "email": "luansantana@704.com",
+                                                "createdAt": "2024-07-26T23:01:30.508Z",
+                                                "updatedAt": "2024-07-26T23:01:30.508Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search_user_byemail": {
+            "get": {
+                "summary": "Pesquisa usuário pelo email",
+                "description": "Essa rota Pesquisa um usuário pelo seu EMAIL",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "EMAIL do Usuário"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": {
+                                            "user": {
+                                                "id": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
+                                                "name": "Luan Santana",
+                                                "email": "luansantana@704.com",
+                                                "createdAt": "2024-07-26T23:01:30.508Z",
+                                                "updatedAt": "2024-07-26T23:01:30.508Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sessions": {
+            "post": {
+                "summary": "Login de Usarios",
+                "description": "Essa rota faz o Login dos Usuários.",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Messages not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "$ref": "#/components/schemas/ListClients"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response login",
+                                        "value": {
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjIxODYyMzgsImV4cCI6MTcyMjE4NjI1OCwic3ViIjoiYjBmZGRjNzEtNzFkNS00NDI2LWI5ZTktNzMwYTE1ZDBjN2EwIn0.Ec6a5kKgCM1GtVyihXYrYjqnjuyOGSBjtO-CT3nDoWc",
+                                            "refreshToken": {
+                                                "id": "d740e485-60d5-497f-b67d-5734eeaa871e",
+                                                "expiriesIn": 1722186258,
+                                                "userid": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
+                                                "userName": "Luan Santana"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/refresh_token": {
+            "post": {
+                "summary": "Rota de Refresh de Token",
+                "description": "Essa rota faz o Refresh do Token",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "refresh_token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "refresh_token"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": ""
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "$ref": "#/components/schemas/ListClients"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Quando o token ainda não espirou",
+                                        "value": {
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjIxODYyMzgsImV4cCI6MTcyMjE4NjI1OCwic3ViIjoiYjBmZGRjNzEtNzFkNS00NDI2LWI5ZTktNzMwYTE1ZDBjN2EwIn0.Ec6a5kKgCM1GtVyihXYrYjqnjuyOGSBjtO-CT3nDoWc"
+                                        }
+                                    },
+                                    "example-2": {
+                                        "summary": "Quando o token expira",
+                                        "value": {
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjIxODYyMzgsImV4cCI6MTcyMjE4NjI1OCwic3ViIjoiYjBmZGRjNzEtNzFkNS00NDI2LWI5ZTktNzMwYTE1ZDBjN2EwIn0.Ec6a5kKgCM1GtVyihXYrYjqnjuyOGSBjtO-CT3nDoWc",
+                                            "refreshToken": {
+                                                "id": "d740e485-60d5-497f-b67d-5734eeaa871e",
+                                                "expiriesIn": 1722186258,
+                                                "userid": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
+                                                "userName": "Luan Santana"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/newmessages": {
             "get": {
                 "summary": "Lista todos clientes que enviaram mensagem ou Fitrar por status do chat",
@@ -23,7 +295,7 @@
                 "tags": [
                     "Rota do Sidebar"
                 ],
-                "parameters":[
+                "parameters": [
                     {
                         "name": "statusAttention",
                         "in": "query",
@@ -112,7 +384,6 @@
                 "tags": [
                     "Rotas referente as Mensagens"
                 ],
-        
                 "responses": {
                     "400": {
                         "description": "ProjectId not found."
@@ -128,7 +399,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value":[
+                                        "value": [
                                             {
                                                 "id": 168,
                                                 "userType": "contacts",
@@ -213,7 +484,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value":{
+                                        "value": {
                                             "id": 449,
                                             "userType": "support",
                                             "projectId": "20buscar",
@@ -237,7 +508,7 @@
             "delete": {
                 "summary": "Deletar mensagem",
                 "description": "Essa rota uma mensagem de um projectId",
-                "tags":[
+                "tags": [
                     "Rotas referente as Mensagens"
                 ],
                 "parameters": [
@@ -257,7 +528,6 @@
                     },
                     "200": {
                         "description": "Message deleted successfully"
-                       
                     }
                 }
             }
@@ -280,7 +550,6 @@
                         "description": "ID primoryKey da coluna da tabela Chat"
                     }
                 ],
-               
                 "responses": {
                     "400": {
                         "description": "ProjectId not found."
@@ -326,7 +595,6 @@
                         "description": "supportId"
                     }
                 ],
-               
                 "responses": {
                     "400": {
                         "description": "ProjectId not found."
@@ -349,7 +617,7 @@
             "get": {
                 "summary": "Pesquisa de mensagens de um cliente",
                 "description": "Traz um cliente",
-                "tags":[
+                "tags": [
                     "Rotas referente as Mensagens"
                 ],
                 "parameters": [
@@ -362,15 +630,12 @@
                         },
                         "description": "Nome do projeto"
                     }
-                   
                 ],
-               
                 "responses": {
                     "400": {
                         "description": "Bad Request"
                     },
                     "200": {
-                     
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -392,7 +657,6 @@
                                                 "createdAt": "2024-07-01T21:26:09.590Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
                                             }
-                                           
                                         ]
                                     }
                                 }
@@ -402,32 +666,29 @@
                 }
             }
         },
-        "/filter_status_attention/": {
+        "/assisting/": {
             "get": {
-                "summary": "Filtro de Status de Atendimento",
+                "summary": "Filtro de Meus Atendimento",
                 "description": "Essa rota faz o filtro de status de atendimento",
-                "tags":[
+                "tags": [
                     "Rotas referente as Mensagens"
                 ],
                 "parameters": [
                     {
-                        "name": "statusAttention",
+                        "name": "supportId",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Status do atendimento: OPEN | RESPONDING | FINISHED"
+                        "description": "Coloque o supportId"
                     }
-                   
                 ],
-               
                 "responses": {
                     "400": {
                         "description": "Bad Request"
                     },
                     "200": {
-                     
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -456,7 +717,65 @@
                                                 "createdAt": "2024-07-10T10:00:00Z"
                                             }
                                         ]
-                                     
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/filter_status_attention/": {
+            "get": {
+                "summary": "Filtro de Status de Atendimento",
+                "description": "Essa rota faz o filtro de status de atendimento",
+                "tags": [
+                    "Rotas referente as Mensagens"
+                ],
+                "parameters": [
+                    {
+                        "name": "statusAttention",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Status do atendimento: OPEN | RESPONDING | FINISHED"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": 1,
+                                                "projectId": "proj123",
+                                                "supportId": "sup456",
+                                                "statusAttention": "RESPONDING",
+                                                "messages": "Hello, how can I help you?",
+                                                "chatId": 789,
+                                                "createdAt": "2024-07-10T10:00:00Z"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "projectId": "proj124",
+                                                "supportId": "sup457",
+                                                "statusAttention": "RESPONDING",
+                                                "messages": "Hello, how can I help you, please?",
+                                                "chatId": 790,
+                                                "createdAt": "2024-07-10T10:00:00Z"
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -469,7 +788,7 @@
             "get": {
                 "summary": "Pesquisa de palavra e/ou frase",
                 "description": "Essa rota traz as mensagens com as palavras e/ou frase conforme colocada na pesquisa",
-                "tags":[
+                "tags": [
                     "Rotas referente as Mensagens"
                 ],
                 "parameters": [
@@ -492,13 +811,11 @@
                         "description": "Palavra, Frase"
                     }
                 ],
-               
                 "responses": {
                     "400": {
                         "description": "Bad Request"
                     },
                     "200": {
-                     
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -546,7 +863,7 @@
             "get": {
                 "summary": "Pesquisa de palavra e/ou frase e/ou projeto",
                 "description": "Essa rota traz as mensagens com as palavras e/ou frase e/ou projeto conforme colocada na pesquisa",
-                "tags":[
+                "tags": [
                     "Rotas referente as Mensagens"
                 ],
                 "parameters": [
@@ -569,13 +886,11 @@
                         "description": "Palavra, Frase ou Nome do Projeto"
                     }
                 ],
-               
                 "responses": {
                     "400": {
                         "description": "Bad Request"
                     },
                     "200": {
-                     
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -619,15 +934,15 @@
                 }
             }
         },
-
-        "/media_in_message/":{
-            "post":{
+        "/media_in_message/": {
+            "post": {
                 "summary": "Upload de arquivo",
                 "description": "Use essa rota para gravar arquivo de mídia na mensagem",
-                "tags":[
+                "tags": [
                     "Rotas referente as Mensagens"
                 ],
-                "parameters": [{
+                "parameters": [
+                    {
                         "name": "file",
                         "in": "formData",
                         "required": true,
@@ -654,7 +969,6 @@
                         },
                         "description": "Nome Cliente ou Id Cliente"
                     },
-                  
                     {
                         "name": "messageType",
                         "in": "formData",
@@ -691,56 +1005,45 @@
                         },
                         "description": "Id do chat"
                     }
-
-                 ],
-                 "responses": {
+                ],
+                "responses": {
                     "400": {
                         "description": "Bad Request"
                     },
                     "200": {
                         "description": "Upload completed successfully.",
-
                         "content": {
                             "application/json": {
                                 "schemas": {
                                     "type": "string"
                                 }
-                               
                             }
                         }
                     }
                 }
             }
-
-
         },
-        "socket: update messagens":{
-            "get":{
-               "summary": "SOCKET PARA ATUALIZAR MENSAGENS EDITADAS",
+        "socket: update messagens": {
+            "get": {
+                "summary": "SOCKET PARA ATUALIZAR MENSAGENS EDITADAS",
                 "description": "Use esse socket no frontend para capturar as mensagens EDITADAS. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.on('supportMsgUpdate', async (data) => {  \n\n      setMessages(prevMessages =>  prevMessages.map(mensagem => mensagem.id === data.id \n      ? { ...mensagem, messages: data.updatedMessage } \n      : mensagem\n      ))\n      })",
-                
-                "tags":[
+                "tags": [
                     "SOCKETS"
                 ],
-             
-                "responses":{
-                    "data":{
+                "responses": {
+                    "data": {
                         "content": {
                             "application/json": {
                                 "schemas": {
                                     "type": "object"
                                 },
                                 "examples": {
-                                   
                                     "example-1": {
                                         "summary": "Como fica a resposta no data",
-                                        "value": 
-                                            {
-                                                "id": 26,
-                                                "updatedMessage": "Messagem atualizada"
-                                              
-                                            }
-                                            
+                                        "value": {
+                                            "id": 26,
+                                            "updatedMessage": "Messagem atualizada"
+                                        }
                                     }
                                 }
                             }
@@ -748,35 +1051,28 @@
                     }
                 }
             }
-
         },
-        "socket: delete messagens":{
-            "get":{
-               "summary": "SOCKET PARA ATUALIZAR MENSAGENS DELETAS",
+        "socket: delete messagens": {
+            "get": {
+                "summary": "SOCKET PARA ATUALIZAR MENSAGENS DELETAS",
                 "description": "Use esse socket no frontend para capturar as mensagens DELETADAS. Exemplo de como colocar no frontend para escutar as mensagens deletadas: \n\n\n\n    socket.on('deletedMessage', async (data) => {  \n\n          setMessages(prevMessages => prevMessages.filter(mensagem => mensagem.id !== data.id));\n      })",
-                
-                "tags":[
+                "tags": [
                     "SOCKETS"
                 ],
-             
-                "responses":{
-                    "data":{
+                "responses": {
+                    "data": {
                         "content": {
                             "application/json": {
                                 "schemas": {
                                     "type": "object"
                                 },
                                 "examples": {
-                                   
                                     "example-1": {
                                         "summary": "Como fica a resposta no data",
-                                        "value": 
-                                            {
-                                                "id": 26,
-                                                "updatedMessage": "Messagem atualizada"
-                                              
-                                            }
-                                            
+                                        "value": {
+                                            "id": 26,
+                                            "updatedMessage": "Messagem atualizada"
+                                        }
                                     }
                                 }
                             }
@@ -784,7 +1080,6 @@
                     }
                 }
             }
-
         }
     },
     "components": {
@@ -874,6 +1169,5 @@
                 }
             }
         }
-      
     }
 }

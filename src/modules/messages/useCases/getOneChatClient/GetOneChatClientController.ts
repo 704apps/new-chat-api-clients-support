@@ -1,23 +1,31 @@
 import { Request, Response } from 'express';
-import { MessageService } from './GetOneChatClientUseCase';
-
-const messageService =  new MessageService() 
-
+import { GetOneChatClientUseCase } from './GetOneChatClientUseCase';
+import { container } from 'tsyringe';
 
 
-export class MessageController{
-    
 
-    public async getOneMessagesClient(req:Request, res: Response ):Promise<void>{
-        try{
-            const chatId = req.params.id
-            const message = await messageService.getOneMessagesClient(Number(chatId));
 
-             res.status(200).json(message)
+class GetOneChatClientController{
 
-        }catch(error){
-            res.status(400).json({message: 'Message not found '})
+    async handle(request: Request, response: Response): Promise<Response> {
 
+        try {
+            const chatId = request.params.id
+
+            const getOneChatClientUseCase = container.resolve(GetOneChatClientUseCase)
+
+            const message = await getOneChatClientUseCase.getOneMessagesClient(Number(chatId));
+
+            return response.status(200).json(message)
+            
+        } catch (error) {
+            
+            return response.status(400).json({ error });
         }
+
     }
+
+
 }
+
+export {GetOneChatClientController}

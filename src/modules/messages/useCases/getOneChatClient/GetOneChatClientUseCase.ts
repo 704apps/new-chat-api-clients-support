@@ -1,8 +1,9 @@
 import { Brackets } from 'typeorm'
-import { myDataSource } from 'infra/typeorm/connection/app-data-source';
-import { Messages } from 'infra/typeorm/Entities/Messages';
+import { myDataSource } from 'main/infra/typeorm/connection/app-data-source';
+import { Messages } from '@modules/messages/infra/typeorm/Entities/Messages';
+import { AppError } from '@error/AppError';
 
-export class MessageService {
+class GetOneChatClientUseCase {
     private messageRepository = myDataSource.getRepository(Messages);
 
     constructor() {
@@ -15,13 +16,19 @@ export class MessageService {
     }
 
     public async getOneMessagesClient(chatId: number): Promise<Messages[]> {
-        const project = await this.messageRepository.findBy({
-            chatId
-        });
+        try {
+            const project = await this.messageRepository.findBy({
+                chatId
+            });
 
-        return project
+            return project
+
+        } catch (error) {
+
+            throw new AppError('Unexpected error', 400, { error })
+
+        }
     }
-
-  
-
 }
+
+export {GetOneChatClientUseCase}
