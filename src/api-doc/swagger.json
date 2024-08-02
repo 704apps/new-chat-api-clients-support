@@ -1045,7 +1045,13 @@
             
             }
         },
+        "socket_emit: so teste": {
+            "summary": "ENVIO da parte do SUPORTE",
+            "description": "Use esse socket para envio da video conferencia. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.emit('callUserSupport',{ projetcId: '99pop', signalData: signalData, from:from, //demais parametros necessarios})"
+        
+        },
         "socket_emit: callUserSupport": {
+            
             "get": {
                 "summary": "ENVIO da parte do SUPORTE",
                 "description": "Use esse socket para envio da video conferencia. Exemplo de como colocar no frontend para escutar as mensagens atualizadas: \n\n\n\n    socket.emit('callUserSupport',{ projetcId: '99pop', signalData: signalData, from:from, //demais parametros necessarios})",
