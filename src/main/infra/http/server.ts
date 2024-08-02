@@ -6,15 +6,13 @@ import http, { Server as HTTPServer } from "http";
 import {setupSocketIO} from '../sockets/index'
 import { router } from './routes'
 import { Server as SocketIOServer } from "socket.io";
-
 import { errorHandler } from './middlewares/errorHandler'
-
-
-import "@main/container"
 import swaggerUi from "swagger-ui-express";
 import cors from "cors";
-
 import swaggerDocs from "../../../api-doc/swagger.json";
+
+import "@main/container"
+
 
 const app: Application = express();
 export const server: HTTPServer = http.createServer(app);
