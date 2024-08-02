@@ -32,15 +32,15 @@ class AutenticateUserUseCase {
     ) { }
 
     async execute({ email, password }: IRequest) {
-        const user = await this.userRespository.findByEmail(email)
+        const userVerify = await this.userRespository.findByEmail(email)
 
-        if (!user) {
+        if (!userVerify) {
             throw new AppError("Email or password incorrect!",)
         }
 
         console.log('veio aqui 1')
 
-        const passwordMath = await compare(password, user.password)
+        const passwordMath = await compare(password, userVerify.password)
 
         if (!passwordMath) {
             console.log('veio aqui 2')
@@ -52,27 +52,33 @@ class AutenticateUserUseCase {
         const token = sign({
 
         }, secretKey, {
-            subject: `${user.id}`, // Define o subject (assunto) do token
-            expiresIn: '1h' // Define o tempo de expiração do token para 1 hora
+            subject: `${userVerify.id}`, // Define o subject (assunto) do token
+            expiresIn: '20s' // Define o tempo de expiração do token para 1 hora
 
         })
          
         const generateRefleshToken = container.resolve(GenerateRefreshToken)
         const deleteRefleshToken = container.resolve(DeleteRefreshToken)
 
-        await  deleteRefleshToken.deleteMany(user.id)
+        await  deleteRefleshToken.deleteMany(userVerify.id)
 
-        const returrefreshToken: RefreshToken = await generateRefleshToken.execute(user.id) as unknown as RefreshToken
+        const returrefreshToken: RefreshToken = await generateRefleshToken.execute(userVerify.id) as unknown as RefreshToken
 
         const refreshToken = {
           
-                id: returrefreshToken.id,
-                expiriesIn: returrefreshToken.expiriesIn,
-                userid: returrefreshToken.userId.id,
-                userName: returrefreshToken.userId.name
-            
+            id: returrefreshToken?.id ,
+            expiriesIn:returrefreshToken?.expiriesIn,
+      
         }
-        return {token, refreshToken }
+        const user = {
+            userid: returrefreshToken?.userId.id,
+            userName: returrefreshToken?.userId.name,
+            supportId: returrefreshToken?.userId.name,
+            email: returrefreshToken?.userId.email,
+            createdAt: returrefreshToken?.userId.createdAt,
+            updatedAt: returrefreshToken?.userId.updatedAt
+        }
+        return {token,refreshToken,user}
     }
 }
 
