@@ -45,7 +45,7 @@ var GenerateTokenProvider = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var secretKey, token;
             return __generator(this, function (_a) {
-                secretKey = String(process.env.SECRET_key);
+                secretKey = String(process.env.SECRET_JWT);
                 console.log(userId);
                 token = (0, jsonwebtoken_1.sign)({}, secretKey, {
                     subject: "".concat(userId), // Define o subject (assunto) do token

@@ -4,7 +4,7 @@ class GenerateTokenProvider {
 
     async execute(userId: string) {
 
-        const secretKey = String(process.env.SECRET_key)
+        const secretKey = String(process.env.SECRET_JWT)
         console.log(userId)
         const token = sign(
             {}, 
