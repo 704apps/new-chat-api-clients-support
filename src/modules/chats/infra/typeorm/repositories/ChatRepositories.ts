@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm'
-import { myDataSource } from '@main/infra/typeorm/connection/app-data-source';
-import { ChatDTO } from "@modules/chats/DTOs/chatDTO";
-import { IChatRepository } from "@modules/chats/repositories/IChatRepositories";
+import { myDataSource } from '../../../../../main/infra/typeorm/connection/app-data-source';
+import { ChatDTO } from "../../../../../modules/chats/DTOs/chatDTO";
+import { IChatRepository } from "../../../../../modules/chats/repositories/IChatRepositories";
 import { Chats } from "../Entities/Chats";
-import { io } from '@main/infra/http/server';
-import { AppError } from '@error/AppError';
+import { io } from '../../../../../main/infra/http/server';
+import { AppError } from '../../../../../error/AppError';
 
 
 

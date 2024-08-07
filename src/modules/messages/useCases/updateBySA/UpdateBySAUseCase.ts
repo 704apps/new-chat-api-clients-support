@@ -1,6 +1,6 @@
-import { Messages } from "@modules/messages/infra/typeorm/Entities/Messages";
-import { IMessageRepository } from "@modules/messages/repositories/IMessageRepositories";
-import { AppError } from "@error/AppError";
+import { Messages } from "../../../../modules/messages/infra/typeorm/Entities/Messages";
+import { IMessageRepository } from "../../../../modules/messages/repositories/IMessageRepositories";
+import { AppError } from "../../../../error/AppError";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

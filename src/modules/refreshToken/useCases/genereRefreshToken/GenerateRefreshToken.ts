@@ -1,9 +1,8 @@
-import { Repository } from "typeorm"
+
 import { RefreshToken } from "../../infra/typeorm/Entities/RefreshToken"
-import { myDataSource } from "@main/infra/typeorm/connection/app-data-source"
 import {injectable, inject } from "tsyringe"
 import { IRefreshTokenRepostory } from "../../repositories/IRefreshTokenRepositoies"
-import { AppError } from "@error/AppError"
+import { AppError } from "../../../../error/AppError"
 
 @injectable()
 class GenerateRefreshToken{

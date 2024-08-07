@@ -1,12 +1,35 @@
 import { DataSource } from "typeorm";
 import * as dotenv from 'dotenv';
 dotenv.config();
+import fs from 'fs'
+import path from 'path';
 
 import { Contacts } from '../../../../modules/contacts/infra/typeorm/Entities/Contacts';
 import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
 import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
 import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
 import { RefreshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
+
+// async function getMigrationFiles(): Promise<string[]> {
+//     const migrationsDir = path.join(__dirname, 'migrations'); // Ajuste conforme necessário
+
+//     try {
+//         const files = await fs.promises.readdir(migrationsDir);
+//         const isUsingJs = migrationFiles.some(file => file.endsWith('.js'));
+//         const typeFile = await  files.filter(file => file.endsWith('.ts') || file.endsWith('.js')).map(file => path.join(migrationsDir, file));
+
+//         const migrationsPath = isUsingJs ? 'dist/main/infra/typeorm/migrations/*.js' : 'src/main/infra/typeorm/migrations/*.ts';
+//         return ''
+//         // Verifica a extensão dos arquivos e retorna apenas arquivos .ts ou .js
+//     } catch (error) {
+//         console.error(`Erro ao ler o diretório de migrações:`, error);
+//         return [];
+//     }
+// }
+
+// const migrationFiles = await getMigrationFiles();
+        
+// Verifica a extensão do primeiro arquivo de migração para decidir o caminho
 
 export const myDataSource = new DataSource(
     {
@@ -17,7 +40,7 @@ export const myDataSource = new DataSource(
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
         entities: [Messages, Contacts, Chats, Users, RefreshToken], // Ajuste o caminho conforme necessário
-        migrations: ["src/main/infra/typeorm/migrations/*.ts"],
+        migrations: ["../migrations/*"],
         synchronize: true,
         timezone: 'Z',  // Para UTC
 

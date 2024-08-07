@@ -1,20 +1,20 @@
 import {Router} from 'express'
 import {ensureAuthenticated} from '../middlewares/ensureAuthenticated'
-import {UploadMediaController} from '@modules/messages/useCases/uploadMedia/UploadMediaController'
+import {UploadMediaController} from '../../../../modules/messages/useCases/uploadMedia/UploadMediaController'
 
-import {UpdateMessageController} from '@modules/messages/useCases/updateMessage/UpdateMessageController'
-import {DeleteMessageController} from '@modules/messages/useCases/deleteMessage/DeleteMessageController'
+import {UpdateMessageController} from '../../../../modules/messages/useCases/updateMessage/UpdateMessageController'
+import {DeleteMessageController} from '../../../../modules/messages/useCases/deleteMessage/DeleteMessageController'
 
-import {GetNewMessagesController} from '@modules/messages/useCases/getNewMessages/GetNewMessagesController'
+import {GetNewMessagesController} from '../../../../modules/messages/useCases/getNewMessages/GetNewMessagesController'
 
-import {GetChatsRespondingToSupportController} from '@modules/messages/useCases/getChatsRespondingToSupport/getChatsRespondingToSupportController'
-import {GetOneMessagesClientController} from '@modules/messages/useCases/getOneMessagesClient/GetOneMessagesClientController'
+import {GetChatsRespondingToSupportController} from '../../../../modules/messages/useCases/getChatsRespondingToSupport/getChatsRespondingToSupportController'
+import {GetOneMessagesClientController} from '../../../../modules/messages/useCases/getOneMessagesClient/GetOneMessagesClientController'
 
-import {GetSearchProjectController} from '@modules/messages/useCases/getSearchProject/GetSearchProjectController'
+import {GetSearchProjectController} from '../../../../modules/messages/useCases/getSearchProject/GetSearchProjectController'
 
-import {GetSearchByWordOrPhraseController} from '@modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController'
-import {GetSearchGenerationToSupportController} from '@modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController'
-import {GetFilterToStatusSidebarController} from '@modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController'
+import {GetSearchByWordOrPhraseController} from '../../../../modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController'
+import {GetSearchGenerationToSupportController} from '../../../../modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController'
+import {GetFilterToStatusSidebarController} from '../../../../modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController'
 
 
 

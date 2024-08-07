@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { AppError } from '@error/AppError';
-export function errorHandler(
+import { AppError } from '../../../../error/AppError';
+ function errorHandler(
     err: Error,
     request: Request,
     response: Response,
@@ -22,3 +22,6 @@ export function errorHandler(
       message: 'Internal Server Error'
     });
   }
+
+
+  export {errorHandler}

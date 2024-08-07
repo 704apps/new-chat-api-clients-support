@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColum
 
 
 @Entity({name:'contacts'})
-export class Contacts {
+ class Contacts {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -17,3 +17,4 @@ export class Contacts {
     updatedAt: Date;
 
 }
+export {Contacts}

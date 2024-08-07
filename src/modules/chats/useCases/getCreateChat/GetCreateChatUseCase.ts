@@ -1,9 +1,8 @@
-import { Messages } from "@modules/messages/infra/typeorm/Entities/Messages";
-import { IChatRepository } from "@modules/chats/repositories/IChatRepositories";
-import { AppError } from "@error/AppError";
+import { IChatRepository } from "../../../../modules/chats/repositories/IChatRepositories";
+import { AppError } from "../../../../error/AppError";
 import { inject, injectable } from "tsyringe";
-import { Chats } from "@modules/chats/infra/typeorm/Entities/Chats";
-import { ChatDTO } from "@modules/chats/DTOs/chatDTO";
+import { Chats } from "../../../../modules/chats/infra/typeorm/Entities/Chats";
+import { ChatDTO } from "../../../../modules/chats/DTOs/chatDTO";
 
 @injectable()
 class GetCreateChatUseCase {

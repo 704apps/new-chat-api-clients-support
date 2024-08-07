@@ -1,7 +1,6 @@
-import { Brackets } from 'typeorm'
-import { myDataSource } from 'main/infra/typeorm/connection/app-data-source';
-import { Messages } from '@modules/messages/infra/typeorm/Entities/Messages';
-import { AppError } from '@error/AppError';
+import { myDataSource } from '../../../../main/infra/typeorm/connection/app-data-source';
+import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
+import { AppError } from '../../../../error/AppError';
 
 class GetOneChatClientUseCase {
     private messageRepository = myDataSource.getRepository(Messages);

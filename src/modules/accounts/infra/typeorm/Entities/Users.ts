@@ -1,11 +1,13 @@
+import "reflect-metadata";
+
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import {RefreshToken} from '@modules/refreshToken/infra/typeorm/Entities/RefreshToken'
+import {RefreshToken} from '../../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
 
 @Entity({name:'users'})
-export class Users {
+class Users {
 
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id!: string;
 
     @Column({ nullable: false })
     name: string;
@@ -25,3 +27,6 @@ export class Users {
     @UpdateDateColumn()
     updatedAt: Date;
 }
+
+
+export {Users}

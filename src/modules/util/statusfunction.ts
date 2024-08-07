@@ -1,4 +1,4 @@
-export class MockResponse {
+ class MockResponse {
     status(statusCode: number) {
       console.log(`Status: ${statusCode}`);
       return this;
@@ -8,4 +8,6 @@ export class MockResponse {
       return this;
     }
   }
+
+  export {MockResponse}
   

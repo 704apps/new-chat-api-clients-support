@@ -1,8 +1,7 @@
-import { Messages } from "@modules/messages/infra/typeorm/Entities/Messages";
-import { IChatRepository } from "@modules/chats/repositories/IChatRepositories";
-import { AppError } from "@error/AppError";
+import { IChatRepository } from "../../../../modules/chats/repositories/IChatRepositories";
+import { AppError } from "../../../../error/AppError";
 import { inject, injectable } from "tsyringe";
-import { Chats } from "@modules/chats/infra/typeorm/Entities/Chats";
+import { Chats } from "../../../../modules/chats/infra/typeorm/Entities/Chats";
 
 @injectable()
 class UpdateStatusOpenUseCase {

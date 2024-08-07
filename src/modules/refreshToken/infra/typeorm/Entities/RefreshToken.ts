@@ -1,12 +1,13 @@
-import { Users } from "@modules/accounts/infra/typeorm/Entities/Users";
+import { Users } from "../../../../../modules/accounts/infra/typeorm/Entities/Users";
 import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 
 
 @Entity({name:'refreshToken'})
-export class RefreshToken {
+class RefreshToken {
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
 
     @Column('int')
     expiriesIn: number;
@@ -26,3 +27,6 @@ export class RefreshToken {
     updatedAt: Date;
 
 }
+
+
+export {RefreshToken}

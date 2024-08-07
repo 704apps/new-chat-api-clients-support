@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { UploadMediaUseCase } from './UploadMediaUseCase'
 import { container } from 'tsyringe'
-import { UploadDataDTO } from '@modules/messages/DTOs/querysparamsDTO';
+import { UploadDataDTO } from '../../../../modules/messages/DTOs/querysparamsDTO';
 
 
 
-export class UploadMediaController {
+ class UploadMediaController {
 
 
     async handle(request: Request, response: Response): Promise<Response> {
@@ -32,3 +32,4 @@ export class UploadMediaController {
 
 
 }
+export {UploadMediaController}

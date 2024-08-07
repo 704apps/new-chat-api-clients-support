@@ -1,7 +1,7 @@
 
-import { MessageDTO } from "@modules/messages/DTOs/messageDTO";
-import { SaveMessageController } from "@modules/messages/useCases/saveMessages/SaveMessageController";
-import { AppError } from "@error/AppError";
+import { MessageDTO } from "../../../modules/messages/DTOs/messageDTO";
+import { SaveMessageController } from "../../../modules/messages/useCases/saveMessages/SaveMessageController";
+import { AppError } from "../../../error/AppError";
 import { io } from '../http/server'
 const saveMessageController = new SaveMessageController();
 
@@ -9,7 +9,7 @@ const saveMessageController = new SaveMessageController();
 
 console.log("SocketIOServer created");
 
-export function setupSocketIO() {
+function setupSocketIO() {
 
     io.on("connection", (socket) => {
 
@@ -54,7 +54,6 @@ export function setupSocketIO() {
         socket.on("callUserClient", async (data) => {
             try {
 
-                const socketId = data.socketId;
 
                 const dataCall = {
                     ...data,
@@ -62,9 +61,9 @@ export function setupSocketIO() {
                     from: data.from,
                 }
 
-                if (socketId) {
-                    io.to(socketId).emit("callUserSupport", dataCall);
-                }
+
+                io.to('support').emit("callUserSupport", dataCall);
+
 
             } catch (error) {
                 throw new AppError('Unexpected error', 400, { error })
@@ -74,13 +73,16 @@ export function setupSocketIO() {
 
         socket.on("callUserSupport", async (data) => {
             try {
+                const socketId = data.projectId;
 
                 const dataCall = {
                     ...data,
                     signal: data.signalData,
                     from: data.from,
                 }
-                io.to("support").emit("callUserSupport", dataCall);
+                if (socketId) {
+                    io.to(socketId).emit("callUserSupport", dataCall);
+                }
 
 
             } catch (error) {
@@ -151,3 +153,6 @@ export function setupSocketIO() {
 
 }
 
+
+
+export {setupSocketIO}

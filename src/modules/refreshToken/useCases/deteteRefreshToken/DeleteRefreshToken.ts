@@ -1,7 +1,7 @@
 
 import {injectable, inject } from "tsyringe"
 import { IRefreshTokenRepostory } from "../../repositories/IRefreshTokenRepositoies"
-import { AppError } from "@error/AppError"
+import { AppError } from "../../../../error/AppError"
 
 @injectable()
 class DeleteRefreshToken{

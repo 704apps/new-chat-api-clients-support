@@ -1,10 +1,10 @@
 import {Router} from "express"
 
-import { AuthenticateUserController } from "@modules/accounts/useCases/authenticateUser/AutenticateUserController"
-import { CreateUserController } from "@modules/accounts/useCases/createUser/CreateUserController"
-import { RefreshTokenUserController } from "@modules/accounts/useCases/refreshTokenUser/RefreshTokenUserController"
-import { GetOneUserController } from "@modules/accounts/useCases/getOneUser/GetOneUserController"
-import { GetOneUserByEmailController } from "@modules/accounts/useCases/getOneUserByEmail/GetOneUserByEmailController"
+import { AuthenticateUserController } from "../../../../modules/accounts/useCases/authenticateUser/AutenticateUserController"
+import { CreateUserController } from "../../../../modules/accounts/useCases/createUser/CreateUserController"
+import { RefreshTokenUserController } from "../../../../modules/accounts/useCases/refreshTokenUser/RefreshTokenUserController"
+import { GetOneUserController } from "../../../../modules/accounts/useCases/getOneUser/GetOneUserController"
+import { GetOneUserByEmailController } from "../../../../modules/accounts/useCases/getOneUserByEmail/GetOneUserByEmailController"
 import {ensureAuthenticated} from '../middlewares/ensureAuthenticated'
 
 const autheticateRoutes = Router()

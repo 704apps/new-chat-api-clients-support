@@ -1,9 +1,9 @@
-import { ICreateUserDTO } from "@modules/accounts/DTOs/ICreateUserDTOS";
-import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { ICreateUserDTO } from "../../../../../modules/accounts/DTOs/ICreateUserDTOS";
+import { IUserRepository } from "../../../../../modules/accounts/repositories/IUsersRepository";
 import { Repository } from "typeorm";
-import {myDataSource} from "@main/infra/typeorm/connection/app-data-source"
+import {myDataSource} from "../../../../../main/infra/typeorm/connection/app-data-source"
 import { Users } from "../Entities/Users";
-import { AppError } from "@error/AppError";
+import { AppError } from "../../../../../error/AppError";
 import { injectable } from "tsyringe";
 
 @injectable()

@@ -1,10 +1,10 @@
 import { RelationId, Repository } from "typeorm";
 import { IRefreshTokenRepostory } from "../../../repositories/IRefreshTokenRepositoies";
 import { RefreshToken } from "../Entities/RefreshToken";
-import { myDataSource } from "@main/infra/typeorm/connection/app-data-source";
+import { myDataSource } from "../../../../../main/infra/typeorm/connection/app-data-source";
 import dayjs from "dayjs";
-import { AppError } from "@error/AppError";
-import { Users } from "@modules/accounts/infra/typeorm/Entities/Users";
+import { AppError } from "../../../../../error/AppError";
+import { Users } from "../../../../../modules/accounts/infra/typeorm/Entities/Users";
 
 class RefreshTokenRepostory implements IRefreshTokenRepostory {
     private repositoryRefleshToken: Repository<RefreshToken>

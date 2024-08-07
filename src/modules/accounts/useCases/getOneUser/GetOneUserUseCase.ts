@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository";
-import { AppError } from "@error/AppError";
+import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
+import { AppError } from "../../../../error/AppError";
 
 @injectable()
 class GetOneUserUseCase {

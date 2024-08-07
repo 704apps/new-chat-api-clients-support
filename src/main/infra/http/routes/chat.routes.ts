@@ -1,8 +1,8 @@
 import {Router} from 'express'
 
-import { GetCreateChatController } from '@modules/chats/useCases/getCreateChat/GetCreateChatController'
-import {  UpdateStatusFinishedController} from '@modules/chats/useCases/updateStatusFinished/UpdateStatusFinishedController'
-import {UpdateStatusOpenController } from '@modules/chats/useCases/updateStatusOpen/UpdateStatusOpenController'
+import { GetCreateChatController } from '../../../../modules/chats/useCases/getCreateChat/GetCreateChatController'
+import {  UpdateStatusFinishedController} from '../../../../modules/chats/useCases/updateStatusFinished/UpdateStatusFinishedController'
+import {UpdateStatusOpenController } from '../../../../modules/chats/useCases/updateStatusOpen/UpdateStatusOpenController'
 
 const chatRouter = Router()
 

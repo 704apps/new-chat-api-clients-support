@@ -1,7 +1,7 @@
-import { AppError } from "@error/AppError";
-import { GenerateTokenProvider } from "@modules/accounts/provider/GenerateToeknProvider";
-import { IRefreshTokenRepostory } from "@modules/refreshToken/repositories/IRefreshTokenRepositoies";
-import { GenerateRefreshToken } from "@modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken";
+import { AppError } from "../../../../error/AppError";
+import { GenerateTokenProvider } from "../../../../modules/accounts/provider/GenerateToeknProvider";
+import { IRefreshTokenRepostory } from "../../../../modules/refreshToken/repositories/IRefreshTokenRepositoies";
+import { GenerateRefreshToken } from "../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken";
 import dayjs from "dayjs";
 import {injectable, inject, container } from "tsyringe";
 

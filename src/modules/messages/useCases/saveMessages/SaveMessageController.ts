@@ -1,10 +1,10 @@
 
-import { MessageDTO } from '@modules/messages/DTOs/messageDTO';
+import { MessageDTO } from '../../../../modules/messages/DTOs/messageDTO';
 import { SaveMessageUseCase } from "./SaveMessageUseCase"
 import { container } from 'tsyringe';
-import { response, NextFunction } from 'express'
+import {  NextFunction } from 'express'
 
-export class SaveMessageController {
+class SaveMessageController {
     private next:  NextFunction
     public async saveMessage(message: MessageDTO) {
         try {
@@ -25,3 +25,5 @@ export class SaveMessageController {
         }
     }
 }
+
+export {SaveMessageController}

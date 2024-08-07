@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { AutenticateUserUseCase } from "./AutenticateUserUseCase";
-import { AppError } from "@error/AppError";
 
 
 class AuthenticateUserController {

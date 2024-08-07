@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { GetSearchProjectUseCase } from './GetSearchProjectUseCase';
 
 import {container} from 'tsyringe'
-import { AppError } from '@error/AppError';
+import { AppError } from '../../../../error/AppError';
 
 
 class GetSearchProjectController {

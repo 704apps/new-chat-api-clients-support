@@ -1,6 +1,6 @@
 
-import "reflect-metadata";
 
+import "reflect-metadata";
 import express, { Application, response } from "express";
 import http, { Server as HTTPServer } from "http";
 import {setupSocketIO} from '../sockets/index'
@@ -11,7 +11,9 @@ import swaggerUi from "swagger-ui-express";
 import cors from "cors";
 import swaggerDocs from "../../../api-doc/swagger.json";
 
-import "@main/container"
+import "../../container/index"
+
+
 
 
 const app: Application = express();

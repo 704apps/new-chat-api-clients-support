@@ -1,26 +1,36 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "CommonJS",
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "baseUrl": "./src",
-      "strict": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "strictPropertyInitialization": false,
-      "emitDecoratorMetadata": true,
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "typeRoots": ["./node_modules/@types","./src/@types"],
-      "paths": {
-        "@main/*":["main/*"],
-        "@modules/*":["modules/*"],
-        "@DTOs/*":["DTOs/*"],
-        "@error/*":["error/*"]
-      }
+  "compilerOptions": {
+    "module": "CommonJS", // Esta configuração é importante
+    "declaration": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "incremental": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["node_modules/*"]
     },
-    "include": ["src/**/*", "swagger.ts"],
-    "exclude": ["node_modules"]
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "swagger.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".vscode/**/*"
+  ]
 }
-  

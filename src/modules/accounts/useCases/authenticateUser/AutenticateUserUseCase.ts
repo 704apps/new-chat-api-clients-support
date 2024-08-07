@@ -1,14 +1,14 @@
 import "reflect-metadata"
 import { injectable, inject } from "tsyringe";
-import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
 import { sign } from "jsonwebtoken"
 import { compare } from "bcrypt"
-import { AppError } from "@error/AppError";
-import { GenerateRefreshToken } from '@modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken'
+import { AppError } from "../../../../error/AppError";
+import { GenerateRefreshToken } from '../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken'
 import { container } from 'tsyringe'
-import { DeleteRefreshToken } from '@modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken'
+import { DeleteRefreshToken } from '../../../../modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken'
 
-import { RefreshToken } from "@modules/refreshToken/infra/typeorm/Entities/RefreshToken";
+import { RefreshToken } from "../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken";
 interface IRequest {
     email: string;
     password: string;

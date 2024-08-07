@@ -4,7 +4,7 @@ import { container } from 'tsyringe'
 
 
 
-export class UpdateMessageController {
+ class UpdateMessageController {
 
 
     async handle(request: Request, response: Response): Promise<Response> {
@@ -24,3 +24,4 @@ export class UpdateMessageController {
         }
     }
 }
+export {UpdateMessageController}

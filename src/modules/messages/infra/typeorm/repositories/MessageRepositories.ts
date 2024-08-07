@@ -1,15 +1,15 @@
-import { IMessageRepository } from "@modules/messages/repositories/IMessageRepositories";
+import { IMessageRepository } from "../../../../../modules/messages/repositories/IMessageRepositories";
 import { Brackets, Repository } from "typeorm";
 import { Messages } from "../Entities/Messages";
-import { MessageDTO } from "@modules/messages/DTOs/messageDTO";
-import { DtoNewMessages } from "@modules/messages/DTOs/newMessagesDTO";
-import { UploadDataDTO } from "@modules/messages/DTOs/querysparamsDTO";
-import { myDataSource } from "@main/infra/typeorm/connection/app-data-source";
-import { Chats } from '@modules/chats/infra/typeorm/Entities/Chats'
-import { Contacts } from '@modules/contacts/infra/typeorm/Entities/Contacts'
-import { io } from '@main/infra/http/server'
-import { AppError } from "@error/AppError";
-import { uploadToAws } from "@main/infra/upload/aws";
+import { MessageDTO } from "../../../../../modules/messages/DTOs/messageDTO";
+import { DtoNewMessages } from "../../../../../modules/messages/DTOs/newMessagesDTO";
+import { UploadDataDTO } from "../../../../../modules/messages/DTOs/querysparamsDTO";
+import { myDataSource } from "../../../../../main/infra/typeorm/connection/app-data-source";
+import { Chats } from '../../../../../modules/chats/infra/typeorm/Entities/Chats'
+import { Contacts } from '../../../../../modules/contacts/infra/typeorm/Entities/Contacts'
+import { io } from '../../../../../main/infra/http/server'
+import { AppError } from "../../../../../error/AppError";
+import { uploadToAws } from "../../../../../main/infra/upload/aws";
 import { NextFunction } from "express";
 
 class MessageRepository implements IMessageRepository {

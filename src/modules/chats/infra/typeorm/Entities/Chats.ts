@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'chats' })
-export class Chats {
+class Chats {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -23,3 +23,5 @@ export class Chats {
     @UpdateDateColumn()
     updatedAt: Date;
 }
+
+export {Chats}

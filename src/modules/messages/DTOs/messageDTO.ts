@@ -1,4 +1,4 @@
-export interface MessageDTO {
+interface MessageDTO {
     
     id?: number;
     chatId?: number;
@@ -16,3 +16,5 @@ export interface MessageDTO {
 
     
 }
+
+export {MessageDTO}

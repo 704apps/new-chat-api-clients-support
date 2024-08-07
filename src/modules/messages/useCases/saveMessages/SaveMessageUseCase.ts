@@ -1,9 +1,9 @@
-import { Messages } from "@modules/messages/infra/typeorm/Entities/Messages";
-import { IMessageRepository } from "@modules/messages/repositories/IMessageRepositories";
-import { AppError } from "@error/AppError";
+
+import { IMessageRepository } from "../../../../modules/messages/repositories/IMessageRepositories";
+
 import { inject, injectable } from "tsyringe";
 
-import { MessageDTO } from "@modules/messages/DTOs/messageDTO";
+import { MessageDTO } from "../../../../modules/messages/DTOs/messageDTO";
 import { NextFunction } from "express";
 
 @injectable()

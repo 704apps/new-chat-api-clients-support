@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { GetCreateChatUseCase } from './GetCreateChatUseCase'
 import { container } from 'tsyringe'
-import { ChatDTO } from '@modules/chats/DTOs/chatDTO';
+import { ChatDTO } from '../../../../modules/chats/DTOs/chatDTO';
 
 
 class GetCreateChatController {
