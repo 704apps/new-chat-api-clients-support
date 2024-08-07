@@ -82,7 +82,7 @@ var AutenticateUserUseCase = /** @class */ (function () {
                             throw new AppError_1.AppError("Email or password incorrect!");
                         }
                         ;
-                        secretKey = String(process.env.SECRET_key);
+                        secretKey = String(process.env.SECRET_JWT);
                         token = (0, jsonwebtoken_1.sign)({}, secretKey, {
                             subject: "".concat(userVerify.id), // Define o subject (assunto) do token
                             expiresIn: '20s' // Define o tempo de expiração do token para 1 hora

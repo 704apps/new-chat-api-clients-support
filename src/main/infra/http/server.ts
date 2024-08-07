@@ -61,7 +61,7 @@ app.get("/terms", (request, response) => {
 
 
 
-server.listen(4000, () => {
+server.listen(process.env.PORT, () => {
   console.log('Listening on port 4000 ');
   setupSocketIO(); //inicializadno o socket
   

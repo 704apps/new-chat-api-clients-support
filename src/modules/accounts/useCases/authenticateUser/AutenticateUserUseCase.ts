@@ -47,7 +47,7 @@ class AutenticateUserUseCase {
             throw new AppError("Email or password incorrect!")
         }
         ;
-        const secretKey = String(process.env.SECRET_key)
+        const secretKey = String(process.env.SECRET_JWT)
 
         const token = sign({
 
