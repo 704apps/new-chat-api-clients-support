@@ -88,6 +88,7 @@ function setupSocketIO() {
             } catch (error) {
                 throw new AppError('Unexpected error', 400, { error })
             }
+            
         });
         //Suporte envia mensagem
         socket.on("supportMessage", async (data: MessageDTO) => {
