@@ -14,6 +14,10 @@ class Chats {
     @Column('varchar',{ nullable: true })
     statusAttention: string;
 
+    // @OneToMany(()=>RefreshToken,refleshtoken=>refleshtoken.userId)
+    // refreshTokens: RefreshToken[]
+
+
     @Column('date')
     dateIndex: Date;
 

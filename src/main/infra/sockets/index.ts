@@ -48,7 +48,12 @@ function setupSocketIO() {
                 throw new AppError('Unexpected error', 400, { error })
             }
         });
-
+        socket.on("answerCall", (data) => {
+            const socketId = data.projectId;
+            if (socketId) {
+              io.to(socketId).emit("returnCall", data.signal);
+            }
+        });
 
 
         socket.on("callUserClient", async (data) => {
@@ -77,7 +82,7 @@ function setupSocketIO() {
 
                 const dataCall = {
                     ...data,
-                    signal: data.signalData,
+                    signal: data.signal,
                     from: data.from,
                 }
                 if (socketId) {
