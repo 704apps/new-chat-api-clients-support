@@ -53,7 +53,6 @@ class MessageRepository implements IMessageRepository {
                 })
                 .getOne();
 
-            console.log('666', chat);
 
             let chatId = chat?.id;
             console.log('777', chatId);
@@ -89,7 +88,7 @@ class MessageRepository implements IMessageRepository {
                         .where("chatId = :chatId", { chatId: chat.id })
                         .execute();
                 } else if (origin === "support" && chat.supportId) {
-                    console.log('999');
+
                     if (chat.supportId !== supportId) {
                         chat.supportId = supportId;
                         await this.repositoryChat.save(chat);
@@ -105,7 +104,7 @@ class MessageRepository implements IMessageRepository {
             }
             console.log('101010');
 
-            const newMessage = this.repositoryMessage.create({
+            const newMessage =  this.repositoryMessage.create({
                 messageType,
                 chatId,
                 messages,
@@ -115,9 +114,9 @@ class MessageRepository implements IMessageRepository {
                 userType,
                 urlImage
             });
-            console.log('12212');
 
             return await this.repositoryMessage.save(newMessage);
+            
         } catch (error) {
             console.log('131313131', error);
             this.next(error);
@@ -148,7 +147,7 @@ class MessageRepository implements IMessageRepository {
             await io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages });
         }
 
-        return getMessage;
+        return getMessage;''
 
     }
     public async getFilterToStatusSidebar(statusAttention: string): Promise<DtoNewMessages[]> {

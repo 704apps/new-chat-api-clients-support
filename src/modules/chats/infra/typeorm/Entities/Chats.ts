@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Messages } from "../../../../messages/infra/typeorm/Entities/Messages";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 
 @Entity({ name: 'chats' })
 class Chats {
@@ -13,6 +14,10 @@ class Chats {
      // supportId projectId statusAttention dateIndex
     @Column('varchar',{ nullable: true })
     statusAttention: string;
+
+    // @OneToMany(()=>Messages,message=>message.chatId)
+    // message: Messages[]
+
 
     @Column('date')
     dateIndex: Date;

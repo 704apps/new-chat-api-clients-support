@@ -48,7 +48,12 @@ function setupSocketIO() {
                 throw new AppError('Unexpected error', 400, { error })
             }
         });
-
+        socket.on("answerCall", (data) => {
+            const socketId = data.projectId;
+            if (socketId) {
+              io.to(socketId).emit("returnCall", data.signal);
+            }
+        });
 
 
         socket.on("callUserClient", async (data) => {
@@ -77,17 +82,18 @@ function setupSocketIO() {
 
                 const dataCall = {
                     ...data,
-                    signal: data.signalData,
+                    signal: data.signal,
                     from: data.from,
                 }
                 if (socketId) {
-                    io.to(socketId).emit("callUserSupport", dataCall);
+                    io.to(socketId).emit("callUserClient", dataCall);
                 }
 
 
             } catch (error) {
                 throw new AppError('Unexpected error', 400, { error })
             }
+            
         });
         //Suporte envia mensagem
         socket.on("supportMessage", async (data: MessageDTO) => {
