@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Messages } from "../../../../messages/infra/typeorm/Entities/Messages";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 
 @Entity({ name: 'chats' })
 class Chats {
@@ -14,8 +15,8 @@ class Chats {
     @Column('varchar',{ nullable: true })
     statusAttention: string;
 
-    // @OneToMany(()=>RefreshToken,refleshtoken=>refleshtoken.userId)
-    // refreshTokens: RefreshToken[]
+    // @OneToMany(()=>Messages,message=>message.chatId)
+    // message: Messages[]
 
 
     @Column('date')

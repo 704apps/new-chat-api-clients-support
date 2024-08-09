@@ -40,7 +40,7 @@ export const myDataSource = new DataSource(
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
         entities: [Messages, Contacts, Chats, Users, RefreshToken], // Ajuste o caminho conforme necessário
-        migrations: ["../migrations/*"],
+        migrations: ["dist/main/infra/typeorm/migrations/*.js"],
         synchronize: true,
         timezone: 'Z',  // Para UTC
 
