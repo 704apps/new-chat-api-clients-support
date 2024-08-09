@@ -2,7 +2,7 @@ import { S3Client, PutObjectCommand, GetObjectCommand, GetObjectRequest } from "
 // import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import path from 'path'
 import { uuidGeneration } from '../util/uuid.generation'
-
+import {Buffer} from 'buffer'
 export async function uploadToAws(Key: string, Body: Buffer) {
     const region = process.env.AWS_REGION;
     const Bucket = String(process.env.AWS_BUCKET_NAME)
