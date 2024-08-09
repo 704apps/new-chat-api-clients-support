@@ -1,4 +1,4 @@
-
+import {Buffer} from 'buffer'
 
 export interface QuerySearchProject{
     supportId:string;
