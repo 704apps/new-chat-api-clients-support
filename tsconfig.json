@@ -2,9 +2,9 @@
   "compilerOptions": {
     "module": "CommonJS", // Esta configuração é importante
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "allowSyntheticDefaultImports": true,
-    "incremental": true,
+    "incremental": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
