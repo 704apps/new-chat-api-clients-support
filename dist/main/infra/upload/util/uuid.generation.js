@@ -1,9 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.uuidGeneration = uuidGeneration;
-var uuid_1 = require("uuid");
+var _uuid = require("uuid");
 function uuidGeneration() {
-    var uuid = (0, uuid_1.v4)();
-    return uuid;
+  const uuid = (0, _uuid.v4)();
+  return uuid;
 }
-//# sourceMappingURL=uuid.generation.js.map

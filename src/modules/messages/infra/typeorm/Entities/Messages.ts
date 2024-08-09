@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Chats } from "./../../../../chats/infra/typeorm/Entities/Chats";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity({ name: 'messages' })
  class Messages {
@@ -8,9 +9,13 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
     @Column('varchar')
     userType: string;
     
-    @Column('int',{ nullable: true })
+    @Column('int')
     chatId: number;
-    
+
+    // @ManyToOne(() => Chats,chats => chats.message, { onDelete: "CASCADE" })
+    // @JoinColumn({ name: 'chatId' })
+    // chatId: Chats;
+
     @Column('varchar',{ nullable: true })
     projectId: string;
     

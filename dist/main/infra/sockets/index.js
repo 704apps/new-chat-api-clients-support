@@ -1,182 +1,126 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.setupSocketIO = setupSocketIO;
-var SaveMessageController_1 = require("../../../modules/messages/useCases/saveMessages/SaveMessageController");
-var AppError_1 = require("../../../error/AppError");
-var server_1 = require("../http/server");
-var saveMessageController = new SaveMessageController_1.SaveMessageController();
+var _SaveMessageController = require("../../../modules/messages/useCases/saveMessages/SaveMessageController");
+var _AppError = require("../../../error/AppError");
+var _server = require("../http/server");
+const saveMessageController = new _SaveMessageController.SaveMessageController();
 console.log("SocketIOServer created");
 function setupSocketIO() {
-    var _this = this;
-    server_1.io.on("connection", function (socket) {
-        //Cliente envia mensagem
-        socket.on("clientMessage", function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var msg, socketUser, dataClient, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, saveMessageController.saveMessage(data)];
-                    case 1:
-                        msg = (_a.sent());
-                        socketUser = data.supportId;
-                        dataClient = {
-                            id: msg.id,
-                            chatId: msg.chatId,
-                            key: data.key,
-                            userType: data.userType,
-                            projectId: data.projectId,
-                            supportId: data.supportId,
-                            messageType: data.messageType,
-                            messages: data.messages,
-                            origin: data.origin,
-                            createdAt: msg.createdAt
-                        };
-                        server_1.io.to('support').emit('supportMessage', dataClient);
-                        return [3 /*break*/, 3];
-                    case 2:
-                        error_1 = _a.sent();
-                        throw new AppError_1.AppError('Unexpected error', 400, { error: error_1 });
-                    case 3: return [2 /*return*/];
-                }
-            });
-        }); });
-        socket.on("callUserClient", function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var dataCall;
-            return __generator(this, function (_a) {
-                try {
-                    dataCall = __assign(__assign({}, data), { signal: data.signalData, from: data.from });
-                    server_1.io.to('support').emit("callUserSupport", dataCall);
-                }
-                catch (error) {
-                    throw new AppError_1.AppError('Unexpected error', 400, { error: error });
-                }
-                return [2 /*return*/];
-            });
-        }); });
-        socket.on("callUserSupport", function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var socketId, dataCall;
-            return __generator(this, function (_a) {
-                try {
-                    socketId = data.projectId;
-                    dataCall = __assign(__assign({}, data), { signal: data.signalData, from: data.from });
-                    if (socketId) {
-                        server_1.io.to(socketId).emit("callUserSupport", dataCall);
-                    }
-                }
-                catch (error) {
-                    throw new AppError_1.AppError('Unexpected error', 400, { error: error });
-                }
-                return [2 /*return*/];
-            });
-        }); });
-        //Suporte envia mensagem
-        socket.on("supportMessage", function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var socketProject, msg, dataClient, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        socketProject = data.projectId;
-                        console.log(data);
-                        return [4 /*yield*/, saveMessageController.saveMessage(data)];
-                    case 1:
-                        msg = (_a.sent());
-                        dataClient = {
-                            id: msg.id,
-                            chatId: msg.chatId,
-                            key: data.key,
-                            userType: data.userType,
-                            projectId: data.projectId,
-                            supportId: data.supportId,
-                            messageType: data.messageType,
-                            messages: data.messages,
-                            origin: data.origin,
-                            createdAt: msg.createdAt
-                        };
-                        console.log(dataClient);
-                        return [4 /*yield*/, server_1.io.to(socketProject).emit('clientMessage', dataClient)];
-                    case 2:
-                        _a.sent();
-                        //await io.to('support').emit('supportMessage', dataClient);
-                        return [4 /*yield*/, server_1.io.to('support').emit('supportResponse', dataClient)];
-                    case 3:
-                        //await io.to('support').emit('supportMessage', dataClient);
-                        _a.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
-                        error_2 = _a.sent();
-                        throw new AppError_1.AppError('Unexpected error', 400, { error: error_2 });
-                    case 5: return [2 /*return*/];
-                }
-            });
-        }); });
-        socket.on("statusAttentionUpdate", function () { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                server_1.io.to('support').emit('supportMessage');
-                return [2 /*return*/];
-            });
-        }); });
-        //Adiciona o cliente à sala especifica
-        socket.on('joinRoom', function (data) {
-            if (data.room === 'support') {
-                socket.join('support');
-            }
-            else {
-                var socketProject = data.projectId;
-                socket.join(socketProject);
-            }
+  _server.io.on("connection", socket => {
+    //Cliente envia mensagem
+    socket.on("clientMessage", async data => {
+      try {
+        const msg = await saveMessageController.saveMessage(data);
+        const socketUser = data.supportId;
+        const dataClient = {
+          id: msg.id,
+          chatId: msg.chatId,
+          key: data.key,
+          userType: data.userType,
+          projectId: data.projectId,
+          supportId: data.supportId,
+          messageType: data.messageType,
+          messages: data.messages,
+          origin: data.origin,
+          createdAt: msg.createdAt
+        };
+        _server.io.to('support').emit('supportMessage', dataClient);
+        // if (!data.supportId) {
+        //   io.to('support').emit('supportMessage', dataClient);
+        // } else {
+        //   io.to(data.supportId).emit('supportMessage', data);
+
+        // }
+      } catch (error) {
+        throw new _AppError.AppError('Unexpected error', 400, {
+          error
         });
-        socket.on('disconnect', function () {
-            console.log('Cliente desconectado');
-        });
+      }
     });
+    socket.on("answerCall", data => {
+      const socketId = data.projectId;
+      if (socketId) {
+        _server.io.to(socketId).emit("returnCall", data.signal);
+      }
+    });
+    socket.on("callUserClient", async data => {
+      try {
+        const dataCall = {
+          ...data,
+          signal: data.signalData,
+          from: data.from
+        };
+        _server.io.to('support').emit("callUserSupport", dataCall);
+      } catch (error) {
+        throw new _AppError.AppError('Unexpected error', 400, {
+          error
+        });
+      }
+    });
+    socket.on("callUserSupport", async data => {
+      try {
+        const socketId = data.projectId;
+        const dataCall = {
+          ...data,
+          signal: data.signal,
+          from: data.from
+        };
+        if (socketId) {
+          _server.io.to(socketId).emit("callUserClient", dataCall);
+        }
+      } catch (error) {
+        throw new _AppError.AppError('Unexpected error', 400, {
+          error
+        });
+      }
+    });
+    //Suporte envia mensagem
+    socket.on("supportMessage", async data => {
+      try {
+        const socketProject = data.projectId;
+        console.log(data);
+        const msg = await saveMessageController.saveMessage(data);
+        const dataClient = {
+          id: msg.id,
+          chatId: msg.chatId,
+          key: data.key,
+          userType: data.userType,
+          projectId: data.projectId,
+          supportId: data.supportId,
+          messageType: data.messageType,
+          messages: data.messages,
+          origin: data.origin,
+          createdAt: msg.createdAt
+        };
+        console.log(dataClient);
+        await _server.io.to(socketProject).emit('clientMessage', dataClient);
+        //await io.to('support').emit('supportMessage', dataClient);
+        await _server.io.to('support').emit('supportResponse', dataClient);
+      } catch (error) {
+        throw new _AppError.AppError('Unexpected error', 400, {
+          error
+        });
+      }
+    });
+    socket.on("statusAttentionUpdate", async () => {
+      _server.io.to('support').emit('supportMessage');
+    });
+
+    //Adiciona o cliente à sala especifica
+    socket.on('joinRoom', data => {
+      if (data.room === 'support') {
+        socket.join('support');
+      } else {
+        const socketProject = data.projectId;
+        socket.join(socketProject);
+      }
+    });
+    socket.on('disconnect', () => {
+      console.log('Cliente desconectado');
+    });
+  });
 }
-//# sourceMappingURL=index.js.map
