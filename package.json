@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-
-  
   "scripts": {
     "clean": "rimraf dist",
     "tsc": "yarn clean && tsc --build --force",
@@ -18,6 +16,7 @@
     "@aws-sdk/s3-request-presigner": "^3.616.0",
     "@babel/core": "^7.25.2",
     "bcrypt": "^5.1.1",
+    "buffer": "^6.0.3",
     "cors": "^2.8.5",
     "dayjs": "^1.11.12",
     "dotenv": "^16.4.5",
