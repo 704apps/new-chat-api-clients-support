@@ -13,6 +13,7 @@ function loadJS(src) {
   document.body.appendChild(script);
 }
 function createChatDiv() {
+  // Verifica se o body está completamente carregado
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       const chatDiv = document.createElement("div");
@@ -20,8 +21,8 @@ function createChatDiv() {
       document.body.appendChild(chatDiv);
     });
   } else {
+    // Caso o DOM já esteja carregado
     const chatDiv = document.createElement("div");
-
     chatDiv.id = "704chat";
     document.body.appendChild(chatDiv);
   }
