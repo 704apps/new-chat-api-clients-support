@@ -1,7 +1,7 @@
-node_modules
+
 .vscode
 .env
 tmp
-dist
+
 
 tsconfig.tsbuildinfo
