@@ -1,54 +1,110 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.RefreshTokenUserUseCase = void 0;
-var _AppError = require("../../../../error/AppError");
-var _GenerateToeknProvider = require("../../../../modules/accounts/provider/GenerateToeknProvider");
-var _IRefreshTokenRepositoies = require("../../../../modules/refreshToken/repositories/IRefreshTokenRepositoies");
-var _GenerateRefreshToken = require("../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken");
-var _dayjs = _interopRequireDefault(require("dayjs"));
-var _tsyringe = require("tsyringe");
-var _dec, _dec2, _dec3, _dec4, _class;
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-let RefreshTokenUserUseCase = exports.RefreshTokenUserUseCase = (_dec = (0, _tsyringe.injectable)(), _dec2 = function (target, key) {
-  return (0, _tsyringe.inject)("RefreshTokenRepostory")(target, undefined, 0);
-}, _dec3 = Reflect.metadata("design:type", Function), _dec4 = Reflect.metadata("design:paramtypes", [typeof _IRefreshTokenRepositoies.IRefreshTokenRepostory === "undefined" ? Object : _IRefreshTokenRepositoies.IRefreshTokenRepostory]), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = class RefreshTokenUserUseCase {
-  constructor(repositoryRefreshToken) {
-    this.repositoryRefreshToken = repositoryRefreshToken;
-  }
-  async execute(refresh_token) {
-    const refreshToken = await this.repositoryRefreshToken.getOne(refresh_token);
-    if (!refreshToken) {
-      throw new _AppError.AppError('Refresh token invalid');
+var AppError_1 = require("../../../../error/AppError");
+var GenerateToeknProvider_1 = require("../../../../modules/accounts/provider/GenerateToeknProvider");
+var GenerateRefreshToken_1 = require("../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken");
+var dayjs_1 = __importDefault(require("dayjs"));
+var tsyringe_1 = require("tsyringe");
+var RefreshTokenUserUseCase = /** @class */ (function () {
+    function RefreshTokenUserUseCase(repositoryRefreshToken) {
+        this.repositoryRefreshToken = repositoryRefreshToken;
     }
-    const refreshTokenExpired = (0, _dayjs.default)().isAfter(_dayjs.default.unix(refreshToken.expiriesIn));
-    const generateRefleshToken = new _GenerateToeknProvider.GenerateTokenProvider();
-    const token = await generateRefleshToken.execute(String(refreshToken.userId.id));
-    if (refreshTokenExpired) {
-      const generateRefleshTokenProvider = _tsyringe.container.resolve(_GenerateRefreshToken.GenerateRefreshToken);
-      const nRefreshToken = await generateRefleshTokenProvider.execute(String(refreshToken.userId.id));
-      const newRefreshToken = {
-        id: nRefreshToken?.id
-      };
-      const user = {
-        expiriesIn: nRefreshToken?.expiriesIn,
-        userid: nRefreshToken?.userId.id,
-        userName: refreshToken?.userId.name,
-        supportId: refreshToken?.userId.name,
-        email: refreshToken?.userId.email,
-        createdAt: refreshToken?.userId.createdAt,
-        updatedAt: refreshToken?.userId.updatedAt
-      };
-      return {
-        token,
-        newRefreshToken,
-        user
-      };
-    }
-    return {
-      token
+    RefreshTokenUserUseCase.prototype.execute = function (refresh_token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var refreshToken, refreshTokenExpired, generateRefleshToken, token, generateRefleshTokenProvider, nRefreshToken, newRefreshToken, user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repositoryRefreshToken.getOne(refresh_token)];
+                    case 1:
+                        refreshToken = _a.sent();
+                        if (!refreshToken) {
+                            throw new AppError_1.AppError('Refresh token invalid');
+                        }
+                        refreshTokenExpired = (0, dayjs_1.default)().isAfter(dayjs_1.default.unix(refreshToken.expiriesIn));
+                        generateRefleshToken = new GenerateToeknProvider_1.GenerateTokenProvider();
+                        return [4 /*yield*/, generateRefleshToken.execute(String(refreshToken.userId.id))];
+                    case 2:
+                        token = _a.sent();
+                        if (!refreshTokenExpired) return [3 /*break*/, 4];
+                        generateRefleshTokenProvider = tsyringe_1.container.resolve(GenerateRefreshToken_1.GenerateRefreshToken);
+                        return [4 /*yield*/, generateRefleshTokenProvider.execute(String(refreshToken.userId.id))];
+                    case 3:
+                        nRefreshToken = _a.sent();
+                        newRefreshToken = {
+                            id: nRefreshToken === null || nRefreshToken === void 0 ? void 0 : nRefreshToken.id
+                        };
+                        user = {
+                            expiriesIn: nRefreshToken === null || nRefreshToken === void 0 ? void 0 : nRefreshToken.expiriesIn,
+                            userid: nRefreshToken === null || nRefreshToken === void 0 ? void 0 : nRefreshToken.userId.id,
+                            userName: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
+                            supportId: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
+                            email: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.email,
+                            createdAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.createdAt,
+                            updatedAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.updatedAt
+                        };
+                        return [2 /*return*/, { token: token, newRefreshToken: newRefreshToken, user: user }];
+                    case 4: return [2 /*return*/, { token: token }];
+                }
+            });
+        });
     };
-  }
-}) || _class) || _class) || _class) || _class);
+    RefreshTokenUserUseCase = __decorate([
+        (0, tsyringe_1.injectable)(),
+        __param(0, (0, tsyringe_1.inject)("RefreshTokenRepostory")),
+        __metadata("design:paramtypes", [Object])
+    ], RefreshTokenUserUseCase);
+    return RefreshTokenUserUseCase;
+}());
+exports.RefreshTokenUserUseCase = RefreshTokenUserUseCase;

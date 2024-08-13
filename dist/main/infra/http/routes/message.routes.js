@@ -1,36 +1,33 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.messageRoutes = void 0;
-var _express = require("express");
-var _UploadMediaController = require("../../../../modules/messages/useCases/uploadMedia/UploadMediaController");
-var _UpdateMessageController = require("../../../../modules/messages/useCases/updateMessage/UpdateMessageController");
-var _DeleteMessageController = require("../../../../modules/messages/useCases/deleteMessage/DeleteMessageController");
-var _GetNewMessagesController = require("../../../../modules/messages/useCases/getNewMessages/GetNewMessagesController");
-var _getChatsRespondingToSupportController = require("../../../../modules/messages/useCases/getChatsRespondingToSupport/getChatsRespondingToSupportController");
-var _GetOneMessagesClientController = require("../../../../modules/messages/useCases/getOneMessagesClient/GetOneMessagesClientController");
-var _GetSearchProjectController = require("../../../../modules/messages/useCases/getSearchProject/GetSearchProjectController");
-var _GetSearchByWordOrPhraseController = require("../../../../modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController");
-var _GetSearchGenerationToSupportController = require("../../../../modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController");
-var _GetFilterToStatusSidebarController = require("../../../../modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController");
-var _upload = require("../../upload");
-const messageRoutes = exports.messageRoutes = (0, _express.Router)();
-const uploadMediaController = new _UploadMediaController.UploadMediaController();
-const updateMessageController = new _UpdateMessageController.UpdateMessageController();
-const deleteMessageController = new _DeleteMessageController.DeleteMessageController();
-const getNewMessagesController = new _GetNewMessagesController.GetNewMessagesController();
-const getChatsRespondingToSupportController = new _getChatsRespondingToSupportController.GetChatsRespondingToSupportController();
-const getSearchProjectController = new _GetSearchProjectController.GetSearchProjectController();
-const getOneMessagesClientController = new _GetOneMessagesClientController.GetOneMessagesClientController();
-const getSearchByWordOrPhraseController = new _GetSearchByWordOrPhraseController.GetSearchByWordOrPhraseController();
-const getSearchGenerationToSupportController = new _GetSearchGenerationToSupportController.GetSearchGenerationToSupportController();
-const getFilterToStatusSidebarController = new _GetFilterToStatusSidebarController.GetFilterToStatusSidebarController();
-messageRoutes.post('/media_in_message/', _upload.upload.single('file'), uploadMediaController.handle);
+var express_1 = require("express");
+var UploadMediaController_1 = require("../../../../modules/messages/useCases/uploadMedia/UploadMediaController");
+var UpdateMessageController_1 = require("../../../../modules/messages/useCases/updateMessage/UpdateMessageController");
+var DeleteMessageController_1 = require("../../../../modules/messages/useCases/deleteMessage/DeleteMessageController");
+var GetNewMessagesController_1 = require("../../../../modules/messages/useCases/getNewMessages/GetNewMessagesController");
+var getChatsRespondingToSupportController_1 = require("../../../../modules/messages/useCases/getChatsRespondingToSupport/getChatsRespondingToSupportController");
+var GetOneMessagesClientController_1 = require("../../../../modules/messages/useCases/getOneMessagesClient/GetOneMessagesClientController");
+var GetSearchProjectController_1 = require("../../../../modules/messages/useCases/getSearchProject/GetSearchProjectController");
+var GetSearchByWordOrPhraseController_1 = require("../../../../modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController");
+var GetSearchGenerationToSupportController_1 = require("../../../../modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController");
+var GetFilterToStatusSidebarController_1 = require("../../../../modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController");
+var upload_1 = require("../../upload");
+var messageRoutes = (0, express_1.Router)();
+exports.messageRoutes = messageRoutes;
+var uploadMediaController = new UploadMediaController_1.UploadMediaController();
+var updateMessageController = new UpdateMessageController_1.UpdateMessageController();
+var deleteMessageController = new DeleteMessageController_1.DeleteMessageController();
+var getNewMessagesController = new GetNewMessagesController_1.GetNewMessagesController();
+var getChatsRespondingToSupportController = new getChatsRespondingToSupportController_1.GetChatsRespondingToSupportController();
+var getSearchProjectController = new GetSearchProjectController_1.GetSearchProjectController();
+var getOneMessagesClientController = new GetOneMessagesClientController_1.GetOneMessagesClientController();
+var getSearchByWordOrPhraseController = new GetSearchByWordOrPhraseController_1.GetSearchByWordOrPhraseController();
+var getSearchGenerationToSupportController = new GetSearchGenerationToSupportController_1.GetSearchGenerationToSupportController();
+var getFilterToStatusSidebarController = new GetFilterToStatusSidebarController_1.GetFilterToStatusSidebarController();
+messageRoutes.post('/media_in_message/', upload_1.upload.single('file'), uploadMediaController.handle);
 messageRoutes.patch('/update_message/:id', updateMessageController.handle);
 messageRoutes.delete('/delete_message/:id', deleteMessageController.handle);
-
 // // messageRoutes.use(ensureAuthenticated)
 messageRoutes.get('/newmessages', getNewMessagesController.handle);
 messageRoutes.get('/assisting/', getChatsRespondingToSupportController.handle);
