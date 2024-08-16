@@ -49,6 +49,35 @@ class UserRepository implements IUserRepository {
             throw new AppError('dfdfdf')
         }
     }
+
+    async allUsers(): Promise<Users[]> {
+        console.log('veio aqui')
+        try{
+            const users = await this.repository.find();
+            return users;
+        }catch(error){
+            throw new AppError('dfdfdf')
+        }
+    }
+
+    async resetPasswordNoEmail(id: string,newPassword:string): Promise<string> {
+        console.log('veio aqui')
+        try{
+            const user = await this.repository.findOneBy({id})
+            if(!user){
+                throw new AppError('User Not Found')
+            }
+            user.password = newPassword
+
+            await this.repository.save(user)
+
+            return 'Password change successfully';
+
+        }catch(error){
+            throw new AppError('',400,{error})
+        }
+    }
+
 }
 
 export { UserRepository }

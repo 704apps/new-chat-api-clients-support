@@ -5,7 +5,8 @@ interface IUserRepository{
     create(data: ICreateUserDTO):Promise<Users>
     findByEmail(email:string):Promise<Users | null>
     findById(id:string):Promise<Users | null>
-    
+    allUsers():Promise<Users []>
+    resetPasswordNoEmail(id: string,newPassword:string): Promise<string> 
 }
 
 export {IUserRepository}
