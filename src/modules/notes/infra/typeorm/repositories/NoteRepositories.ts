@@ -1,83 +1,76 @@
 import { Repository } from 'typeorm'
 import { myDataSource } from '../../../../../main/infra/typeorm/connection/app-data-source';
 import { ChatDTO } from "../../../../../modules/chats/DTOs/chatDTO";
-import { IChatRepository } from "../../../../../modules/chats/repositories/IChatRepositories";
-import { Chats } from "../Entities/Chats";
+import {  Notes } from "../Entities/Notes";
 import { io } from '../../../../../main/infra/http/server';
 import { AppError } from '../../../../../error/AppError';
+import { NoteDTO } from '../../../DTOs/NoteDTO';
+import { INoteRepository } from '../../../repositories/INoteRepositories'
 
 
-
-class ChatRepository implements IChatRepository {
-    private repositoryChat: Repository<Chats>;
+//implements INoteRepository
+class NoteRepository implements INoteRepository {
+    private repositoryNotes: Repository<Notes>;
 
     constructor() {
-        this.repositoryChat = myDataSource.getRepository(Chats)
+        this.repositoryNotes = myDataSource.getRepository(Notes)
+    }
+    async getOneNote(id: number): Promise<Notes> {
+        const getNote = await this.repositoryNotes.findOneBy({id})
+
+        if(!getNote){
+            throw new AppError('Note not found');
+        }
+        return getNote
     }
 
-    async getStatusAttention(id: number, supportId: string): Promise<Chats> {
-        const chat = await this.repositoryChat.findOneBy({
-            id
-        });
+    async deleteNote(id: number): Promise<String> {
+        const getNote = await this.repositoryNotes.findOneBy({id})
+      
+        if(!getNote){
+            throw new AppError('Note not found');
 
-        if (!chat) {
-            throw new AppError('Chat not found')
         }
 
-        chat.statusAttention = "RESPONDING"
-        chat.supportId = supportId
-        await this.repositoryChat.save(chat)
-        return chat
+        await this.repositoryNotes.delete({ id });
 
 
+        return "Note deleted successfully";
 
     }
-    async updateStatusFinished(id: number): Promise<Chats> {
-        const chat = await this.repositoryChat.findOneBy({
-            id
-        });
+   
 
-        if (!chat) {
-            throw new AppError('Chat not found')
-        }
-        chat.statusAttention = 'FINISHED'
-        await this.repositoryChat.save(chat)
+    async updateNote(id: number,note:string): Promise<Notes> {
 
-        io.to('support').emit('statusChat', { chatId: chat.id, statusChat: chat.statusAttention });
+        const getNote = await this.repositoryNotes.findOneBy({id})
+      
+        if(!getNote){
+            throw new AppError('Note not found');
 
-
-        return chat
-
-    }
-    async updateStatusOpen(id: number, supportId: string): Promise<Chats> {
-        const chat = await this.repositoryChat.findOneBy({
-            id
-        })
-        if (!chat) {
-            throw new AppError('Chat not found')
         }
 
-        chat.statusAttention = 'OPEN'
-        chat.supportId = supportId
-        await this.repositoryChat.save(chat)
-        await io.to('support').emit('statusChat', { chatId: chat.id, statusChat: chat.statusAttention });
+        getNote.note = note
+
+        const noteUpdaded = await this.repositoryNotes.save(getNote);
+
+        return noteUpdaded
 
 
-        return chat
     }
-    async getCreateChat(infochat: ChatDTO): Promise<Chats> {
-        const { supportId, projectId, statusAttention } = await infochat
-        const chat = await this.repositoryChat.create({
+
+    async createNote(infochat: NoteDTO): Promise<Notes> {
+        const { supportId,chatId ,note} = await infochat
+        const createNote = await this.repositoryNotes.create({
             supportId,
-            projectId,
-            statusAttention,
-            dateIndex: new Date()
+            chatId,
+            note
+         
         });
-        const chatCreated = await this.repositoryChat.save(chat)
+        const noteCreated = await this.repositoryNotes.save(createNote)
 
-        return chatCreated
+        return noteCreated
     }
 
 }
 
-export {ChatRepository}
+export {NoteRepository}

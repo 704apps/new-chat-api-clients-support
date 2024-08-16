@@ -1,10 +1,7 @@
-export interface ChatDTO {
+export interface NoteDTO {
     id?: number;
     supportId: string;
-    projectId: string;
-    statusAttention: string;
-    dateIndex: string;
-    createdAt:string;
-    updatedAt:string
+    chatId: string;
+    note:string
 
 }

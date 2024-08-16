@@ -1,13 +1,13 @@
-import { ChatDTO } from '../DTOs/chatDTO'
-import { Chats } from '../infra/typeorm/Entities/Chats'
+import { NoteDTO } from '../DTOs/NoteDTO'
+import { Notes } from '../infra/typeorm/Entities/Notes'
 
-export interface IChatRepository {
+export interface INoteRepository {
 
 
-    getStatusAttention(id: number, supportId: string): Promise<Chats>
-    updateStatusFinished(id: number): Promise<Chats>
-    updateStatusOpen(id: number, supportId: string): Promise<Chats>
-    getCreateChat(infochat: ChatDTO): Promise<Chats>
+    getOneNote(id: number): Promise<Notes>;
+    updateNote(id: number,note:string): Promise<Notes>;
+    deleteNote(id: number): Promise<String>;
+    createNote(infochat: NoteDTO): Promise<Notes>;
 
 
 }

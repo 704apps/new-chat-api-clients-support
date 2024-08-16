@@ -9,6 +9,7 @@ import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
 import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
 import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
 import { RefreshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
+import { Notes } from "../../../../modules/notes/infra/typeorm/Entities/Notes";
 
 // async function getMigrationFiles(): Promise<string[]> {
 //     const migrationsDir = path.join(__dirname, 'migrations'); // Ajuste conforme necessário
@@ -39,7 +40,7 @@ export const myDataSource = new DataSource(
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
-        entities: [Messages, Contacts, Chats, Users, RefreshToken], // Ajuste o caminho conforme necessário
+        entities: [Messages, Contacts, Chats, Users, RefreshToken,Notes], // Ajuste o caminho conforme necessário
         migrations: ["dist/main/infra/typeorm/migrations/*.js"],
         synchronize: true,
         timezone: 'Z',  // Para UTC

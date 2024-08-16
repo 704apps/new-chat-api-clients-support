@@ -10,7 +10,9 @@ import {RefreshTokenRepostory} from "../../modules/refreshToken/infra/typeorm/re
 import {IRefreshTokenRepostory} from "../../modules/refreshToken/repositories/IRefreshTokenRepositoies"
 import { IChatRepository } from "../../modules/chats/repositories/IChatRepositories"
 import { ChatRepository } from "../../modules/chats/infra/typeorm/repositories/ChatRepositories"
+import { INoteRepository } from "../../modules/notes/repositories/INoteRepositories"
 
+import { NoteRepository } from "../../modules/notes/infra/typeorm/repositories/NoteRepositories"
 
 container.registerSingleton<IMessageRepository>(
     "MessageRepository",MessageRepository
@@ -22,6 +24,10 @@ container.registerSingleton<IRefreshTokenRepostory>(
 
 container.registerSingleton<IChatRepository>(
     "ChatRepository",ChatRepository
+)
+
+container.registerSingleton<INoteRepository>(
+    "NoteRepository",NoteRepository
 )
 
 
