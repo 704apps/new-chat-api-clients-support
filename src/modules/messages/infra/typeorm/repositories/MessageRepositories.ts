@@ -133,7 +133,7 @@ class MessageRepository implements IMessageRepository {
         });
 
         if (!getMessage) {
-            throw new AppError("Project not found!")
+            throw new AppError("Message not found!")
         }
 
         getMessage.messages = message;
