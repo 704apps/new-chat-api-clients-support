@@ -666,6 +666,226 @@
                 }
             }
         },
+        "/create_note/": {
+            "post": {
+                "summary": "Criação de Notas",
+                "description": "Criação de Notas",
+                "tags": [
+                    "Rotas referente as Notas"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "supportId": {
+                                        "type": "string"
+                                    },
+                                    "note": {
+                                        "type": "string"
+                                    },
+                                    "chatId": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "supportId",
+                                    "note",
+                                    "chatId"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "supportId": "joao",
+                                                "note": "Fui Almoçar",
+                                                "chatId": 15,
+                                                "id": 2,
+                                                "createdAt": "2024-08-16T17:58:50.091Z",
+                                                "updatedAt": "2024-08-16T17:58:50.091Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/edit_note/{id}": {
+            "patch": {
+                "summary": "Atualização de Notas",
+                "description": "Atualização de Notas",
+                "tags": [
+                    "Rotas referente as Notas"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID chave Primaria da tabela nota"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "note": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "note"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "supportId": "joao",
+                                                "note": "Fui Almoçar Agora",
+                                                "chatId": 15,
+                                                "id": 2,
+                                                "createdAt": "2024-08-16T17:58:50.091Z",
+                                                "updatedAt": "2024-08-16T17:58:50.091Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_note/{id}": {
+            "get": {
+                "summary": "Ver uma Notas",
+                "description": "Ver uma Notas",
+                "tags": [
+                    "Rotas referente as Notas"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID chave Primaria da tabela nota"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "supportId": "joao",
+                                                "note": "Fui Almoçar Agora",
+                                                "chatId": 15,
+                                                "id": 2,
+                                                "createdAt": "2024-08-16T17:58:50.091Z",
+                                                "updatedAt": "2024-08-16T17:58:50.091Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/delete_note/{id}": {
+            "delete": {
+                "summary": "Deletar uma Notas",
+                "description": "Deletar uma Notas",
+                "tags": [
+                    "Rotas referente as Notas"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID chave Primaria da tabela nota"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": "Note deleted successfully"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/assisting/": {
             "get": {
                 "summary": "Filtro de Meus Atendimento",
