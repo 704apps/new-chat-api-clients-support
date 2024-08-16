@@ -182,7 +182,7 @@ var MessageRepository = /** @class */ (function () {
                     case 1:
                         getMessage = _a.sent();
                         if (!getMessage) {
-                            throw new AppError_1.AppError("Project not found!");
+                            throw new AppError_1.AppError("Message not found!");
                         }
                         getMessage.messages = message;
                         getMessage.msgEdt = true;
