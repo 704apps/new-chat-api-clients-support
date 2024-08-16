@@ -47,6 +47,6 @@ app.get("/terms", function (request, response) {
 //   }
 // });
 exports.server.listen(process.env.PORT, function () {
-    console.log("Listening on port 4000 ");
+    console.log("Listening on port ".concat(process.env.PORT, " "));
     (0, index_1.setupSocketIO)(); //inicializando o socket
 });
