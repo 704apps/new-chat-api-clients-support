@@ -30,7 +30,7 @@ function createChatDiv() {
 
 createChatDiv();
 
-const projectUrl = "https://api.newchat.fb704.com.br";
+const projectUrl = "https://api.newchat.fb704.com.br"+'/sdsdsdsd';
 
 const cssURL = `${projectUrl}/static/chat-bubble/index.css`;
 const jsURL = `${projectUrl}/static/chat-bubble/index.js`;

@@ -13,6 +13,7 @@ import { UploadDataDTO } from '../../../../modules/messages/DTOs/querysparamsDTO
             const file = await request.file
             const dataBody: UploadDataDTO = await request.body
             const uploadMediaUseCase = container.resolve(UploadMediaUseCase)
+            
             if (file) {
                 dataBody.filecontent = file.buffer
                 dataBody.filename = file.originalname

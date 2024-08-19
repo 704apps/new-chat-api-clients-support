@@ -17,19 +17,19 @@ class CreateUserUseCase {
 
     async execute({ name, email, password }: ICreateUserDTO) {
         try {
-            console.log('a senha é '+password)
+           
             const passwordHash = await hash(password, 8)
-            console.log('veio no antes de ver email'+passwordHash)
+           // console.log('veio no antes de ver email'+passwordHash)
             
             const isuseralreadyExist = await this.userRepository.findByEmail(email)
 
-            console.log('veio no depois de ver email')
+          //  console.log('veio no depois de ver email')
 
             if (isuseralreadyExist) {
                 throw new AppError("User already exists")
             }
 
-            console.log('veio no antes de salvar')
+           // console.log('veio no antes de salvar')
 
             const user = await this.userRepository.create({
                 name,

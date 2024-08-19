@@ -39,14 +39,15 @@ const getFilterToStatusSidebarController = new GetFilterToStatusSidebarControlle
 
 
 
-messageRoutes.post('/media_in_message/',upload.single('file'),uploadMediaController.handle)
+messageRoutes.post('/media_in_message/',upload.single('file'),ensureAuthenticated,uploadMediaController.handle)
 
-messageRoutes.patch('/update_message/:id',updateMessageController.handle)
-messageRoutes.delete('/delete_message/:id',deleteMessageController.handle)
+messageRoutes.patch('/update_message/:id',ensureAuthenticated,updateMessageController.handle)
+messageRoutes.delete('/delete_message/:id',ensureAuthenticated,deleteMessageController.handle)
+
 
 
 // // messageRoutes.use(ensureAuthenticated)
-messageRoutes.get('/newmessages',getNewMessagesController.handle)
+messageRoutes.get('/newmessages', getNewMessagesController.handle)
 messageRoutes.get('/assisting/',getChatsRespondingToSupportController.handle)
 
 

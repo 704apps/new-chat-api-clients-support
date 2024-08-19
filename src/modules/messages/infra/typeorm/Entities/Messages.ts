@@ -2,7 +2,7 @@ import { Chats } from "./../../../../chats/infra/typeorm/Entities/Chats";
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity({ name: 'messages' })
- class Messages {
+ class  Messages {
     @PrimaryGeneratedColumn()
     id: number;
 
