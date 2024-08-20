@@ -22,7 +22,7 @@ class RefreshTokenRepostory implements IRefreshTokenRepostory {
             .where('r.id=:refresh_token', { refresh_token })
             .getOne()
 
-        console.log(refreshToken)
+       // console.log(refreshToken)
         if (!refreshToken) {
             throw new AppError('Missing token');
         }
@@ -32,7 +32,7 @@ class RefreshTokenRepostory implements IRefreshTokenRepostory {
     async create(userId: string): Promise<RefreshToken> {
 
         const expiriesIn = dayjs().add(20, 'seconds').unix(); //unix cria um numererico
-        console.log(userId)
+     //   console.log(userId)
         const userAlreadyExist = await this.repositoryUsers.findOneBy({ id: userId })
 
         if (!userAlreadyExist) {

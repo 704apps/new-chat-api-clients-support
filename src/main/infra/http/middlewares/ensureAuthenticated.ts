@@ -20,7 +20,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         const [, token] = authHeader.split(' ');
 
         // Verifica o token JWT
-        const { sub: userId } = verify(token, 'e434b149e2f3c418268e23d778777dfc') as IPayload;
+        const { sub: userId } = verify(token, process.env.SECRET_JWT) as IPayload;
 
         const userRepository = new UserRepository();
         const user = await userRepository.findById(userId);
@@ -36,22 +36,22 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 const authHeader = request.headers.authorization;
 
                 if (!authHeader) {
-                    console.log('veio aqui antes0')
+                    //console.log('veio aqui antes0')
                     throw new AppError('Token missing', 401);
                 }
 
                 const [, token] = authHeader.split(' ');
                 const id = request.params.id;
-                console.log('veio aqui antes')
+               // console.log('veio aqui antes')
                 if (!id) {
-                    console.log('veio aqui2222')
+                  //  console.log('veio aqui2222')
                     const { projectId } = request.body; // Obtendo projectId do body
-                    console.log(projectId)
+                   // console.log(projectId)
                     try {
                         const tokenMatches = await compare(projectId, token);
 
                         if (!tokenMatches) {
-                            console.log('veio aqui3:' + projectId)
+                     //       console.log('veio aqui3:' + projectId)
 
                             throw new AppError('Invalid or expired token', 401);
                         }

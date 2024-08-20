@@ -40,7 +40,7 @@ class UserRepository implements IUserRepository {
         return user
     }
     async findById(id: string): Promise<Users | null> {
-        console.log('veio aqui')
+      //  console.log('veio aqui')
         try{
         const user = await this.repository.findOneBy({id})
         
@@ -51,7 +51,7 @@ class UserRepository implements IUserRepository {
     }
 
     async allUsers(): Promise<Users[]> {
-        console.log('veio aqui')
+     //   console.log('veio aqui')
         try{
             const users = await this.repository.find();
             return users;
@@ -61,7 +61,7 @@ class UserRepository implements IUserRepository {
     }
 
     async resetPasswordNoEmail(id: string,newPassword:string): Promise<string> {
-        console.log('veio aqui')
+       // console.log('veio aqui')
         try{
             const user = await this.repository.findOneBy({id})
             if(!user){

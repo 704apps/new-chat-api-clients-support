@@ -12,8 +12,8 @@ class ResetPasswordNoEmailController {
         try {
             const id = request.params.id
             const { password } = request.body
-            console.log(id)
-            console.log(password)
+           // console.log(id)
+         
             if (!password) {
                 return response.status(400).json({ error: "Missing required fields" });
             }
@@ -24,7 +24,7 @@ class ResetPasswordNoEmailController {
             return response.status(201).json(resChanged)
             
         } catch (error) {
-            console.log(error)
+          //  console.log(error)
             return response.status(400).json({ error });
         }
 

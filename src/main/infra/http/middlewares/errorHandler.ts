@@ -6,7 +6,7 @@ function errorHandler(
   response: Response,
   next: NextFunction
 ) {
-  console.log('entrou aqui');
+  //console.log('entrou aqui');
 
   // Verifica se o erro é uma instância do AppError
   if (err instanceof AppError) {

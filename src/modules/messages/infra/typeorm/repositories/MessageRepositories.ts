@@ -30,20 +30,20 @@ class MessageRepository implements IMessageRepository {
     //Salva as mensagens enviada
     async createMessage(message: MessageDTO): Promise<Messages> {
         try {
-            console.log('111');
+          //  console.log('111');
             const { messageType, messages, origin, projectId, supportId, userType, urlImage } = message;
-            console.log('222');
-            console.log(projectId);
+          //  console.log('222');
+         //   console.log(projectId);
 
             const nameProject = await this.repositoryContacts.findOneBy({ projectId });
-            console.log('333', nameProject);
+         //   console.log('333', nameProject);
 
             if (!nameProject) {
-                console.log('444');
+         //       console.log('444');
                 const project = this.repositoryContacts.create({ projectId });
                 await this.repositoryContacts.save(project);
             }
-            console.log('555');
+         //   console.log('555');
 
             const chat = await this.repositoryChat
                 .createQueryBuilder("chat")
@@ -55,10 +55,10 @@ class MessageRepository implements IMessageRepository {
 
 
             let chatId = chat?.id;
-            console.log('777', chatId);
+         //   console.log('777', chatId);
 
             if (!chat) {
-                console.log("veio aqui com a mensagem");
+             //   console.log("veio aqui com a mensagem");
                 const newChat = this.repositoryChat.create({
                     supportId: supportId,
                     projectId,
@@ -70,7 +70,7 @@ class MessageRepository implements IMessageRepository {
                 chatId = chatSave.id;
             } else {
                 if (origin === "support" && !chat.supportId) {
-                    console.log('888');
+                   // console.log('888');
                     chat.supportId = supportId;
                     chat.statusAttention = "RESPONDING";
                     await this.repositoryChat.save(chat);
@@ -102,7 +102,7 @@ class MessageRepository implements IMessageRepository {
                     }
                 }
             }
-            console.log('101010');
+           // console.log('101010');
 
             const newMessage =  this.repositoryMessage.create({
                 messageType,
@@ -118,7 +118,7 @@ class MessageRepository implements IMessageRepository {
             return await this.repositoryMessage.save(newMessage);
             
         } catch (error) {
-            console.log('131313131', error);
+           // console.log('131313131', error);
             this.next(error);
             throw new AppError('error', 400, { error });
         }
@@ -141,7 +141,7 @@ class MessageRepository implements IMessageRepository {
         await this.repositoryMessage.save(getMessage);
 
         if (getMessage.origin === 'support') {
-            console.log('veio aqui')
+          //  console.log('veio aqui')
             await io.to(getMessage.projectId).emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages });
         } else {
             await io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages });
@@ -179,8 +179,8 @@ class MessageRepository implements IMessageRepository {
             .where("c.statusAttention=:statusAttention", { statusAttention })
             .orderBy("m.createdAt", "DESC")
             .getRawMany();
-        console.log("selectIdClients");
-        console.log(result);
+       // console.log("selectIdClients");
+        //console.log(result);
         const newMessagens = result.map((item) => ({
             id: item.m_id,
             projectId: item.m_projectId,
@@ -450,7 +450,7 @@ class MessageRepository implements IMessageRepository {
     }
     async uploadMedia(data: UploadDataDTO): Promise<void> {
 
-        console.log(data)
+       // console.log(data)
         const { filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin } = data
         const urlImage = await uploadToAws(filename, filecontent)
 

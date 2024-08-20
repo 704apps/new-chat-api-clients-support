@@ -19,7 +19,7 @@ class GetOneNoteController {
             return response.status(200).json(note)
 
         } catch (error) {
-            console.log(error)
+           // console.log(error)
 
             return response.status(400).json({ error });
 

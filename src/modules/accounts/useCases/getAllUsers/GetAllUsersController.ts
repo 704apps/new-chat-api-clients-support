@@ -18,7 +18,7 @@ class GetAllUsersController {
             return response.status(200).json(users)
             
         } catch (error) {
-            console.log(error)
+           // console.log(error)
             return response.status(400).json({ error });
         }
 
