@@ -7,6 +7,7 @@ import { GetCreateNoteController } from '../../../../modules/notes/useCases/getC
 import { GetUpdateNoteController } from '../../../../modules/notes/useCases/getUpdateNote/GetUpdateNoteController'
 import { DeleteNoteController } from '../../../../modules/notes/useCases/deleteNote/DeleteNoteController'
 import { GetOneNoteController } from '../../../../modules/notes/useCases/getOneNote/GetOneNoteController'
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
 const noteRouter = Router()
 

@@ -60,6 +60,7 @@ var UpdateMessageController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(messageUpdade)];
                     case 3:
                         error_1 = _a.sent();
+                        console.log(error_1);
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 4: return [2 /*return*/];
                 }

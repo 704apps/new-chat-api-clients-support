@@ -56,7 +56,6 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                     return next();
  
                 }
-                console.log('veio aqui depois')
 
                 const getNewMessagesClientUseCase = container.resolve(GetOneMessagesClientUseCase);
                 const messages = await getNewMessagesClientUseCase.getOneMessage(Number(id));

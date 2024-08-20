@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.messageRoutes = void 0;
 var express_1 = require("express");
+var ensureAuthenticated_1 = require("../middlewares/ensureAuthenticated");
 var UploadMediaController_1 = require("../../../../modules/messages/useCases/uploadMedia/UploadMediaController");
 var UpdateMessageController_1 = require("../../../../modules/messages/useCases/updateMessage/UpdateMessageController");
 var DeleteMessageController_1 = require("../../../../modules/messages/useCases/deleteMessage/DeleteMessageController");
@@ -25,9 +26,9 @@ var getOneMessagesClientController = new GetOneMessagesClientController_1.GetOne
 var getSearchByWordOrPhraseController = new GetSearchByWordOrPhraseController_1.GetSearchByWordOrPhraseController();
 var getSearchGenerationToSupportController = new GetSearchGenerationToSupportController_1.GetSearchGenerationToSupportController();
 var getFilterToStatusSidebarController = new GetFilterToStatusSidebarController_1.GetFilterToStatusSidebarController();
-messageRoutes.post('/media_in_message/', upload_1.upload.single('file'), uploadMediaController.handle);
-messageRoutes.patch('/update_message/:id', updateMessageController.handle);
-messageRoutes.delete('/delete_message/:id', deleteMessageController.handle);
+messageRoutes.post('/media_in_message/', upload_1.upload.single('file'), ensureAuthenticated_1.ensureAuthenticated, uploadMediaController.handle);
+messageRoutes.patch('/update_message/:id', ensureAuthenticated_1.ensureAuthenticated, updateMessageController.handle);
+messageRoutes.delete('/delete_message/:id', ensureAuthenticated_1.ensureAuthenticated, deleteMessageController.handle);
 // // messageRoutes.use(ensureAuthenticated)
 messageRoutes.get('/newmessages', getNewMessagesController.handle);
 messageRoutes.get('/assisting/', getChatsRespondingToSupportController.handle);

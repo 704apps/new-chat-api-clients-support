@@ -21,8 +21,8 @@ var authenticateUserController = new AutenticateUserController_1.AuthenticateUse
 var refreshTokenUserController = new RefreshTokenUserController_1.RefreshTokenUserController();
 autheticateRoutes.post("/create_user", createUserController.handle);
 autheticateRoutes.post("/sessions", authenticateUserController.handle);
-// autheticateRoutes.use(ensureAuthenticated)
 autheticateRoutes.get("/user/:id", ensureAuthenticated_1.ensureAuthenticated, getOneUserController.handle);
+autheticateRoutes.post("/reset_password/:id", resetPasswordNoEmailController.handle);
 autheticateRoutes.post("/reset_password/:id", resetPasswordNoEmailController.handle);
 autheticateRoutes.get("/users", getAllUsersController.handle);
 autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle);

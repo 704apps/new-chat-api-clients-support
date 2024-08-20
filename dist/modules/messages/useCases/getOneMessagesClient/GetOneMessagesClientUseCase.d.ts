@@ -3,6 +3,6 @@ import { IMessageRepository } from '../../../../modules/messages/repositories/IM
 declare class GetOneMessagesClientUseCase {
     private messageRepository;
     constructor(messageRepository: IMessageRepository);
-    getOneMessagesClient(statusAttention: string, page: number, pageSize: number): Promise<Messages[]>;
+    getOneMessagesClient(projectId: string, page: number, pageSize: number): Promise<Messages[]>;
 }
 export { GetOneMessagesClientUseCase };

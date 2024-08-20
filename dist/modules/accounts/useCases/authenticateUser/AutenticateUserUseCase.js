@@ -85,7 +85,7 @@ var AutenticateUserUseCase = /** @class */ (function () {
                         secretKey = String(process.env.SECRET_JWT);
                         token = (0, jsonwebtoken_1.sign)({}, secretKey, {
                             subject: "".concat(userVerify.id), // Define o subject (assunto) do token
-                            expiresIn: '20s' // Define o tempo de expiração do token para 1 hora
+                            expiresIn: '1h' // Define o tempo de expiração do token para 1 hora
                         });
                         generateRefleshToken = tsyringe_2.container.resolve(GenerateRefreshToken_1.GenerateRefreshToken);
                         deleteRefleshToken = tsyringe_2.container.resolve(DeleteRefreshToken_1.DeleteRefreshToken);
