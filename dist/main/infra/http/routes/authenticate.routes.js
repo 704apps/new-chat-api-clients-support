@@ -19,11 +19,10 @@ var resetPasswordNoEmailController = new ResetPasswordNoEmailController_1.ResetP
 var getOneUserByEmailController = new GetOneUserByEmailController_1.GetOneUserByEmailController();
 var authenticateUserController = new AutenticateUserController_1.AuthenticateUserController();
 var refreshTokenUserController = new RefreshTokenUserController_1.RefreshTokenUserController();
-autheticateRoutes.post("/create_user", createUserController.handle);
+autheticateRoutes.post("/create_user", ensureAuthenticated_1.ensureAuthenticated, createUserController.handle);
 autheticateRoutes.post("/sessions", authenticateUserController.handle);
 autheticateRoutes.get("/user/:id", ensureAuthenticated_1.ensureAuthenticated, getOneUserController.handle);
-autheticateRoutes.post("/reset_password/:id", resetPasswordNoEmailController.handle);
-autheticateRoutes.post("/reset_password/:id", resetPasswordNoEmailController.handle);
+autheticateRoutes.post("/reset_password/:id", ensureAuthenticated_1.ensureAuthenticated, resetPasswordNoEmailController.handle);
 autheticateRoutes.get("/users", getAllUsersController.handle);
 autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle);
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle);
