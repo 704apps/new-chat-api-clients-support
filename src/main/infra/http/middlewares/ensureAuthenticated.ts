@@ -46,6 +46,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
 
                 const [, token] = authHeader.split(' ');
                 const id = request.params.id;
+               
                // console.log('veio aqui antes')
                 if (!id) {
                   //  console.log('veio aqui2222')
