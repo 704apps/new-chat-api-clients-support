@@ -47,17 +47,17 @@ messageRoutes.delete('/delete_message/:id',ensureAuthenticated,deleteMessageCont
 
 
 // // messageRoutes.use(ensureAuthenticated)
-messageRoutes.get('/newmessages', getNewMessagesController.handle)
-messageRoutes.get('/assisting/',getChatsRespondingToSupportController.handle)
+messageRoutes.get('/newmessages',ensureAuthenticated, getNewMessagesController.handle)
+messageRoutes.get('/assisting/',ensureAuthenticated, getChatsRespondingToSupportController.handle)
 
 
-messageRoutes.get('/messages/:id',getOneMessagesClientController.handle)
+messageRoutes.get('/messages/:id',ensureAuthenticated, getOneMessagesClientController.handle)
 
-messageRoutes.get('/search_project/:id',getSearchProjectController.handle)
-messageRoutes.get('/search_word_phrase/',getSearchByWordOrPhraseController.handle)
-messageRoutes.get('/search_generaltosupport/',getSearchGenerationToSupportController.handle)
+messageRoutes.get('/search_project/:id',ensureAuthenticated, getSearchProjectController.handle)
+messageRoutes.get('/search_word_phrase/',ensureAuthenticated, getSearchByWordOrPhraseController.handle)
+messageRoutes.get('/search_generaltosupport/',ensureAuthenticated, getSearchGenerationToSupportController.handle)
 
-messageRoutes.get('/filter_status_attention/',getFilterToStatusSidebarController.handle)
+messageRoutes.get('/filter_status_attention/',ensureAuthenticated, getFilterToStatusSidebarController.handle)
 
 
 

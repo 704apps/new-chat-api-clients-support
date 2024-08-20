@@ -7,6 +7,7 @@ import { GetCreateNoteController } from '../../../../modules/notes/useCases/getC
 import { GetUpdateNoteController } from '../../../../modules/notes/useCases/getUpdateNote/GetUpdateNoteController'
 import { DeleteNoteController } from '../../../../modules/notes/useCases/deleteNote/DeleteNoteController'
 import { GetOneNoteController } from '../../../../modules/notes/useCases/getOneNote/GetOneNoteController'
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 
 const noteRouter = Router()
 
@@ -16,10 +17,10 @@ const deleteNoteController = new DeleteNoteController();
 const getOneNoteController = new GetOneNoteController();
 
 //chatRouter.use(ensureAuthenticated)
-noteRouter.post('/create_note/',getCreateNoteController.handle)
-noteRouter.get('/get_note/:id',getOneNoteController.handle)
-noteRouter.patch('/edit_note/:id',getUpdateNoteController.handle)
-noteRouter.delete('/delete_note/:id',deleteNoteController.handle)
+noteRouter.post('/create_note/',ensureAuthenticated,getCreateNoteController.handle)
+noteRouter.get('/get_note/:id',ensureAuthenticated,getOneNoteController.handle)
+noteRouter.patch('/edit_note/:id',ensureAuthenticated,getUpdateNoteController.handle)
+noteRouter.delete('/delete_note/:id',ensureAuthenticated,deleteNoteController.handle)
 
 
 // chatRouter.patch('/update_statusAttention/:id',(req,res)=>chatController.getUpdateStatusAttention(req,res))
