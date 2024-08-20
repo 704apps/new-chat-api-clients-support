@@ -45,11 +45,8 @@ messageRoutes.patch('/update_message/:id',ensureAuthenticated,updateMessageContr
 messageRoutes.delete('/delete_message/:id',ensureAuthenticated,deleteMessageController.handle)
 
 
-
-// // messageRoutes.use(ensureAuthenticated)
 messageRoutes.get('/newmessages',ensureAuthenticated, getNewMessagesController.handle)
 messageRoutes.get('/assisting/',ensureAuthenticated, getChatsRespondingToSupportController.handle)
-
 
 messageRoutes.get('/messages/:id',ensureAuthenticated, getOneMessagesClientController.handle)
 
