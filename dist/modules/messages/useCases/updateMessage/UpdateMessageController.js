@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateMessageController = void 0;
 var UpdateMessageUseCase_1 = require("./UpdateMessageUseCase");
 var tsyringe_1 = require("tsyringe");
+var AppError_1 = require("../../../../error/AppError");
 var UpdateMessageController = /** @class */ (function () {
     function UpdateMessageController() {
     }
@@ -51,6 +52,9 @@ var UpdateMessageController = /** @class */ (function () {
                         _a.trys.push([0, 3, , 4]);
                         id = request.params.id;
                         messages = request.body.messages;
+                        if (!messages) {
+                            throw new AppError_1.AppError('incorrect parameter');
+                        }
                         return [4 /*yield*/, tsyringe_1.container.resolve(UpdateMessageUseCase_1.UpdateMessageUseCase)];
                     case 1:
                         updateMessageUseCase = _a.sent();
@@ -60,7 +64,7 @@ var UpdateMessageController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(messageUpdade)];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(error_1);
+                        //    console.log(error)
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 4: return [2 /*return*/];
                 }

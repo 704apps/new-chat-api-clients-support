@@ -76,7 +76,7 @@ var ResetPasswordNoEmailUseCase = /** @class */ (function () {
                         return [2 /*return*/, passwordChange];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(error_1);
+                        //    console.log(error)
                         throw new AppError_1.AppError('Error creating user', 400, { error: error_1 });
                     case 4: return [2 /*return*/];
                 }

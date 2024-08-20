@@ -73,19 +73,18 @@ var AutenticateUserUseCase = /** @class */ (function () {
                         if (!userVerify) {
                             throw new AppError_1.AppError("Email or password incorrect!");
                         }
-                        console.log('veio aqui 1');
                         return [4 /*yield*/, (0, bcrypt_1.compare)(password, userVerify.password)];
                     case 2:
                         passwordMath = _c.sent();
                         if (!passwordMath) {
-                            console.log('veio aqui 2');
+                            //  console.log('veio aqui 2')
                             throw new AppError_1.AppError("Email or password incorrect!");
                         }
                         ;
                         secretKey = String(process.env.SECRET_JWT);
                         token = (0, jsonwebtoken_1.sign)({}, secretKey, {
                             subject: "".concat(userVerify.id), // Define o subject (assunto) do token
-                            expiresIn: '1h' // Define o tempo de expiração do token para 1 hora
+                            expiresIn: '24h' // Define o tempo de expiração do token para 1 hora
                         });
                         generateRefleshToken = tsyringe_2.container.resolve(GenerateRefreshToken_1.GenerateRefreshToken);
                         deleteRefleshToken = tsyringe_2.container.resolve(DeleteRefreshToken_1.DeleteRefreshToken);

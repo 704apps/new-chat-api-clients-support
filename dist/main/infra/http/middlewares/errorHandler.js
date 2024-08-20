@@ -3,18 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandler = errorHandler;
 var AppError_1 = require("../../../../error/AppError");
 function errorHandler(err, request, response, next) {
-    console.log('entrou aqui');
+    //console.log('entrou aqui');
+    // Verifica se o erro é uma instância do AppError
     if (err instanceof AppError_1.AppError) {
         return response.status(err.statusCode).json({
-            status: 'error',
+            status: err.statusCode,
             message: err.message,
-            error: err.error
+            error: err.error || null // Caso queira incluir mais detalhes
         });
     }
-    console.log('veio aqui error');
-    console.error(err);
+    // Para qualquer outro erro, que não seja AppError, exiba a mensagem original do erro.
+    console.error();
     return response.status(500).json({
-        status: 'error',
-        message: 'Internal Server Error'
+        status: 500,
+        message: 'internal error', // Aqui ele exibirá a mensagem do erro
     });
 }

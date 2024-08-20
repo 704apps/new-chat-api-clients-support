@@ -52,8 +52,7 @@ var ResetPasswordNoEmailController = /** @class */ (function () {
                         _a.trys.push([0, 3, , 4]);
                         id = request.params.id;
                         password = request.body.password;
-                        console.log(id);
-                        console.log(password);
+                        // console.log(id)
                         if (!password) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
                         }
@@ -66,7 +65,7 @@ var ResetPasswordNoEmailController = /** @class */ (function () {
                         return [2 /*return*/, response.status(201).json(resChanged)];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(error_1);
+                        //  console.log(error)
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 4: return [2 /*return*/];
                 }

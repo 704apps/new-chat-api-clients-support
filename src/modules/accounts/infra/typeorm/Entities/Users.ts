@@ -12,11 +12,14 @@ class Users {
     @Column({ nullable: false })
     name: string;
 
-    @Column()
+    @Column('varchar')
     email: string;
 
-    @Column()
+    @Column('varchar')
     password: string;
+
+    @Column('varchar')
+    role: string;
 
     @OneToMany(()=>RefreshToken,refleshtoken=>refleshtoken.userId)
     refreshTokens: RefreshToken[]

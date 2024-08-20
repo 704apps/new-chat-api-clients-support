@@ -4,6 +4,7 @@ import { GetCreateChatController } from '../../../../modules/chats/useCases/getC
 import {  UpdateStatusFinishedController} from '../../../../modules/chats/useCases/updateStatusFinished/UpdateStatusFinishedController'
 import {UpdateStatusOpenController } from '../../../../modules/chats/useCases/updateStatusOpen/UpdateStatusOpenController'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
+import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 const chatRouter = Router()
 

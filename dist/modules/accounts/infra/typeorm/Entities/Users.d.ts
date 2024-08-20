@@ -5,6 +5,7 @@ declare class Users {
     name: string;
     email: string;
     password: string;
+    role: string;
     refreshTokens: RefreshToken[];
     createdAt: Date;
     updatedAt: Date;

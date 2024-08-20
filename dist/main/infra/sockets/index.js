@@ -52,7 +52,7 @@ var SaveMessageController_1 = require("../../../modules/messages/useCases/saveMe
 var AppError_1 = require("../../../error/AppError");
 var server_1 = require("../http/server");
 var saveMessageController = new SaveMessageController_1.SaveMessageController();
-console.log("SocketIOServer created");
+//console.log("SocketIOServer created");
 function setupSocketIO() {
     var _this = this;
     server_1.io.on("connection", function (socket) {
@@ -131,7 +131,6 @@ function setupSocketIO() {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         socketProject = data.projectId;
-                        console.log(data);
                         return [4 /*yield*/, saveMessageController.saveMessage(data)];
                     case 1:
                         msg = (_a.sent());
@@ -147,9 +146,10 @@ function setupSocketIO() {
                             origin: data.origin,
                             createdAt: msg.createdAt
                         };
-                        console.log(dataClient);
+                        // console.log(dataClient)
                         return [4 /*yield*/, server_1.io.to(socketProject).emit('clientMessage', dataClient)];
                     case 2:
+                        // console.log(dataClient)
                         _a.sent();
                         //await io.to('support').emit('supportMessage', dataClient);
                         return [4 /*yield*/, server_1.io.to('support').emit('supportResponse', dataClient)];

@@ -58,10 +58,12 @@ var RefreshTokenRepostory = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.repositoryRefleshToken.createQueryBuilder('r')
                             .leftJoinAndSelect('r.userId', 'users')
                             .where('r.id=:refresh_token', { refresh_token: refresh_token })
-                            .getOne()];
+                            .getOne()
+                        // console.log(refreshToken)
+                    ];
                     case 1:
                         refreshToken = _a.sent();
-                        console.log(refreshToken);
+                        // console.log(refreshToken)
                         if (!refreshToken) {
                             throw new AppError_1.AppError('Missing token');
                         }
@@ -77,7 +79,6 @@ var RefreshTokenRepostory = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         expiriesIn = (0, dayjs_1.default)().add(20, 'seconds').unix();
-                        console.log(userId);
                         return [4 /*yield*/, this.repositoryUsers.findOneBy({ id: userId })];
                     case 1:
                         userAlreadyExist = _a.sent();

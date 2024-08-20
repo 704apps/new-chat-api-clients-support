@@ -57,10 +57,12 @@ var GetOneUserByEmailController = /** @class */ (function () {
                         return [4 /*yield*/, tsyringe_1.container.resolve(getOneUserByEmailUseCase_1.GetOneUserByEmailUseCase)];
                     case 1:
                         getOneUserByEmailUseCase = _a.sent();
-                        return [4 /*yield*/, getOneUserByEmailUseCase.getOneUserByEmail(String(email))];
+                        return [4 /*yield*/, getOneUserByEmailUseCase.getOneUserByEmail(String(email))
+                            //  console.log(user)
+                        ];
                     case 2:
                         user = _a.sent();
-                        console.log(user);
+                        //  console.log(user)
                         return [2 /*return*/, response.status(200).json({ user: user })];
                     case 3:
                         error_1 = _a.sent();

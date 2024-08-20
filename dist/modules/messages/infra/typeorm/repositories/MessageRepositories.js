@@ -59,36 +59,27 @@ var MessageRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 19, , 20]);
-                        console.log('111');
                         messageType = message.messageType, messages = message.messages, origin_1 = message.origin, projectId = message.projectId, supportId = message.supportId, userType = message.userType, urlImage = message.urlImage;
-                        console.log('222');
-                        console.log(projectId);
                         return [4 /*yield*/, this.repositoryContacts.findOneBy({ projectId: projectId })];
                     case 1:
                         nameProject = _a.sent();
-                        console.log('333', nameProject);
                         if (!!nameProject) return [3 /*break*/, 3];
-                        console.log('444');
                         project = this.repositoryContacts.create({ projectId: projectId });
                         return [4 /*yield*/, this.repositoryContacts.save(project)];
                     case 2:
                         _a.sent();
                         _a.label = 3;
-                    case 3:
-                        console.log('555');
-                        return [4 /*yield*/, this.repositoryChat
-                                .createQueryBuilder("chat")
-                                .where("chat.projectId = :projectId", { projectId: projectId })
-                                .andWhere("chat.statusAttention IN (:...status)", {
-                                status: ["OPEN", "RESPONDING"],
-                            })
-                                .getOne()];
+                    case 3: return [4 /*yield*/, this.repositoryChat
+                            .createQueryBuilder("chat")
+                            .where("chat.projectId = :projectId", { projectId: projectId })
+                            .andWhere("chat.statusAttention IN (:...status)", {
+                            status: ["OPEN", "RESPONDING"],
+                        })
+                            .getOne()];
                     case 4:
                         chat = _a.sent();
                         chatId = chat === null || chat === void 0 ? void 0 : chat.id;
-                        console.log('777', chatId);
                         if (!!chat) return [3 /*break*/, 6];
-                        console.log("veio aqui com a mensagem");
                         newChat = this.repositoryChat.create({
                             supportId: supportId,
                             projectId: projectId,
@@ -102,7 +93,7 @@ var MessageRepository = /** @class */ (function () {
                         return [3 /*break*/, 17];
                     case 6:
                         if (!(origin_1 === "support" && !chat.supportId)) return [3 /*break*/, 11];
-                        console.log('888');
+                        // console.log('888');
                         chat.supportId = supportId;
                         chat.statusAttention = "RESPONDING";
                         return [4 /*yield*/, this.repositoryChat.save(chat)];
@@ -148,7 +139,6 @@ var MessageRepository = /** @class */ (function () {
                         _a.sent();
                         _a.label = 17;
                     case 17:
-                        console.log('101010');
                         newMessage = this.repositoryMessage.create({
                             messageType: messageType,
                             chatId: chatId,
@@ -163,7 +153,7 @@ var MessageRepository = /** @class */ (function () {
                     case 18: return [2 /*return*/, _a.sent()];
                     case 19:
                         error_1 = _a.sent();
-                        console.log('131313131', error_1);
+                        // console.log('131313131', error);
                         this.next(error_1);
                         throw new AppError_1.AppError('error', 400, { error: error_1 });
                     case 20: return [2 /*return*/];
@@ -190,9 +180,10 @@ var MessageRepository = /** @class */ (function () {
                     case 2:
                         _a.sent();
                         if (!(getMessage.origin === 'support')) return [3 /*break*/, 4];
-                        console.log('veio aqui');
+                        //  console.log('veio aqui')
                         return [4 /*yield*/, server_1.io.to(getMessage.projectId).emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages })];
                     case 3:
+                        //  console.log('veio aqui')
                         _a.sent();
                         return [3 /*break*/, 6];
                     case 4: return [4 /*yield*/, server_1.io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages })];
@@ -234,8 +225,6 @@ var MessageRepository = /** @class */ (function () {
                                 .getRawMany()];
                     case 2:
                         result = _a.sent();
-                        console.log("selectIdClients");
-                        console.log(result);
                         newMessagens = result.map(function (item) { return ({
                             id: item.m_id,
                             projectId: item.m_projectId,
@@ -540,7 +529,6 @@ var MessageRepository = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log(data);
                         filename = data.filename, filecontent = data.filecontent, messages = data.messages, key = data.key, userType = data.userType, projectId = data.projectId, supportId = data.supportId, messageType = data.messageType, origin = data.origin;
                         return [4 /*yield*/, (0, aws_1.uploadToAws)(filename, filecontent)];
                     case 1:

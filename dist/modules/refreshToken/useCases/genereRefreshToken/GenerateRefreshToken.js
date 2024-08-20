@@ -68,8 +68,8 @@ var GenerateRefreshToken = /** @class */ (function () {
                         return [2 /*return*/, generateRefreshToken];
                     case 2:
                         error_1 = _a.sent();
-                        console.log('============================');
-                        console.log(error_1);
+                        // console.log('============================')
+                        // console.log(error)
                         throw new AppError_1.AppError("Error when generating reflesh token", 400);
                     case 3: return [2 /*return*/];
                 }

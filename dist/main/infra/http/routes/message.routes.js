@@ -29,11 +29,10 @@ var getFilterToStatusSidebarController = new GetFilterToStatusSidebarController_
 messageRoutes.post('/media_in_message/', upload_1.upload.single('file'), ensureAuthenticated_1.ensureAuthenticated, uploadMediaController.handle);
 messageRoutes.patch('/update_message/:id', ensureAuthenticated_1.ensureAuthenticated, updateMessageController.handle);
 messageRoutes.delete('/delete_message/:id', ensureAuthenticated_1.ensureAuthenticated, deleteMessageController.handle);
-// // messageRoutes.use(ensureAuthenticated)
-messageRoutes.get('/newmessages', getNewMessagesController.handle);
-messageRoutes.get('/assisting/', getChatsRespondingToSupportController.handle);
+messageRoutes.get('/newmessages', ensureAuthenticated_1.ensureAuthenticated, getNewMessagesController.handle);
+messageRoutes.get('/assisting/', ensureAuthenticated_1.ensureAuthenticated, getChatsRespondingToSupportController.handle);
 messageRoutes.get('/messages/:id', getOneMessagesClientController.handle);
-messageRoutes.get('/search_project/:id', getSearchProjectController.handle);
-messageRoutes.get('/search_word_phrase/', getSearchByWordOrPhraseController.handle);
-messageRoutes.get('/search_generaltosupport/', getSearchGenerationToSupportController.handle);
-messageRoutes.get('/filter_status_attention/', getFilterToStatusSidebarController.handle);
+messageRoutes.get('/search_project/:id', ensureAuthenticated_1.ensureAuthenticated, getSearchProjectController.handle);
+messageRoutes.get('/search_word_phrase/', ensureAuthenticated_1.ensureAuthenticated, getSearchByWordOrPhraseController.handle);
+messageRoutes.get('/search_generaltosupport/', ensureAuthenticated_1.ensureAuthenticated, getSearchGenerationToSupportController.handle);
+messageRoutes.get('/filter_status_attention/', ensureAuthenticated_1.ensureAuthenticated, getFilterToStatusSidebarController.handle);

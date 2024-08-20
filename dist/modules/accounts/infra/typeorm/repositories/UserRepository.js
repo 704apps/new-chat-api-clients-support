@@ -94,18 +94,15 @@ var UserRepository = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log('veio aqui');
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.repository.findOneBy({ id: id })];
-                    case 2:
+                    case 1:
                         user = _a.sent();
                         return [2 /*return*/, user];
-                    case 3:
+                    case 2:
                         error_1 = _a.sent();
                         throw new AppError_1.AppError('dfdfdf');
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -116,18 +113,15 @@ var UserRepository = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log('veio aqui');
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.repository.find()];
-                    case 2:
+                    case 1:
                         users = _a.sent();
                         return [2 /*return*/, users];
-                    case 3:
+                    case 2:
                         error_2 = _a.sent();
                         throw new AppError_1.AppError('dfdfdf');
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -138,25 +132,22 @@ var UserRepository = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log('veio aqui');
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _a.trys.push([0, 3, , 4]);
                         return [4 /*yield*/, this.repository.findOneBy({ id: id })];
-                    case 2:
+                    case 1:
                         user = _a.sent();
                         if (!user) {
                             throw new AppError_1.AppError('User Not Found');
                         }
                         user.password = newPassword;
                         return [4 /*yield*/, this.repository.save(user)];
-                    case 3:
+                    case 2:
                         _a.sent();
                         return [2 /*return*/, 'Password change successfully'];
-                    case 4:
+                    case 3:
                         error_3 = _a.sent();
                         throw new AppError_1.AppError('', 400, { error: error_3 });
-                    case 5: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

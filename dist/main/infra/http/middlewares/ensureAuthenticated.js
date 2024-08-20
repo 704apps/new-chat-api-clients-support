@@ -42,20 +42,29 @@ var AppError_1 = require("../../../../error/AppError");
 var UserRepository_1 = require("../../../../modules/accounts/infra/typeorm/repositories/UserRepository");
 var tsyringe_1 = require("tsyringe");
 var GetOneMessagesUseCase_1 = require("../../../../modules/messages/useCases/getOneMessage/GetOneMessagesUseCase");
-var bcrypt_1 = require("bcrypt");
+function compareToken(pc, tk) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (pc !== tk) {
+                return [2 /*return*/, false];
+            }
+            return [2 /*return*/, true];
+        });
+    });
+}
 function ensureAuthenticated(request, response, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var authHeader, _a, token, userId, userRepository, user, error_1, authHeader, _b, token, id, projectId_1, tokenMatches_1, getNewMessagesClientUseCase, messages, tokenMatches_2, projectId, tokenMatches, innerError_1;
+        var authHeader, _a, token, userId, userRepository, user, error_1, authHeader, _b, token, id, projectId_1, tokenMatches_1, error_2, getNewMessagesClientUseCase, messages, tokenMatches_2, error_3, projectId, tokenMatches, error_4;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    _c.trys.push([0, 2, , 14]);
+                    _c.trys.push([0, 2, , 18]);
                     authHeader = request.headers.authorization;
                     if (!authHeader) {
                         throw new AppError_1.AppError('Token missing', 401);
                     }
                     _a = authHeader.split(' '), token = _a[1];
-                    userId = (0, jsonwebtoken_1.verify)(token, 'e434b149e2f3c418268e23d778777dfc').sub;
+                    userId = (0, jsonwebtoken_1.verify)(token, process.env.SECRET_JWT).sub;
                     userRepository = new UserRepository_1.UserRepository();
                     return [4 /*yield*/, userRepository.findById(userId)];
                 case 1:
@@ -66,58 +75,69 @@ function ensureAuthenticated(request, response, next) {
                     return [2 /*return*/, next()];
                 case 2:
                     error_1 = _c.sent();
-                    if (!(error_1 instanceof jsonwebtoken_1.JsonWebTokenError)) return [3 /*break*/, 12];
+                    if (!(error_1 instanceof jsonwebtoken_1.JsonWebTokenError)) return [3 /*break*/, 16];
                     _c.label = 3;
                 case 3:
-                    _c.trys.push([3, 10, , 11]);
+                    _c.trys.push([3, 14, , 15]);
                     authHeader = request.headers.authorization;
                     if (!authHeader) {
+                        //console.log('veio aqui antes0')
                         throw new AppError_1.AppError('Token missing', 401);
                     }
                     _b = authHeader.split(' '), token = _b[1];
                     id = request.params.id;
-                    console.log('veio aqui antes');
-                    if (!!id) return [3 /*break*/, 5];
-                    console.log('veio aqui2222');
+                    if (!!id) return [3 /*break*/, 7];
                     projectId_1 = request.body.projectId;
-                    console.log(projectId_1);
-                    return [4 /*yield*/, (0, bcrypt_1.compare)(projectId_1, token)];
+                    _c.label = 4;
                 case 4:
+                    _c.trys.push([4, 6, , 7]);
+                    return [4 /*yield*/, compareToken(projectId_1, token)];
+                case 5:
                     tokenMatches_1 = _c.sent();
+                    console.log;
                     if (!tokenMatches_1) {
-                        console.log('veio aqui3:' + projectId_1);
+                        //       console.log('veio aqui3:' + projectId)
                         throw new AppError_1.AppError('Invalid or expired token', 401);
                     }
                     return [2 /*return*/, next()];
-                case 5:
+                case 6:
+                    error_2 = _c.sent();
+                    throw new AppError_1.AppError('Invalid or expired token', 401, { error: error_2 });
+                case 7:
                     getNewMessagesClientUseCase = tsyringe_1.container.resolve(GetOneMessagesUseCase_1.GetOneMessagesClientUseCase);
                     return [4 /*yield*/, getNewMessagesClientUseCase.getOneMessage(Number(id))];
-                case 6:
+                case 8:
                     messages = _c.sent();
-                    if (!(!messages || !messages.projectId)) return [3 /*break*/, 8];
-                    return [4 /*yield*/, (0, bcrypt_1.compare)(id, token)];
-                case 7:
+                    if (!(!messages || !messages.projectId)) return [3 /*break*/, 12];
+                    _c.label = 9;
+                case 9:
+                    _c.trys.push([9, 11, , 12]);
+                    return [4 /*yield*/, compareToken(id, token)];
+                case 10:
                     tokenMatches_2 = _c.sent();
                     if (!tokenMatches_2) {
                         throw new AppError_1.AppError('Invalid or expired token', 401);
                     }
                     return [2 /*return*/, next()];
-                case 8:
+                case 11:
+                    error_3 = _c.sent();
+                    throw new AppError_1.AppError('Invalid or expired token', 401, { error: error_3 });
+                case 12:
                     projectId = messages.projectId;
-                    return [4 /*yield*/, (0, bcrypt_1.compare)(projectId, token)];
-                case 9:
+                    return [4 /*yield*/, compareToken(projectId, token)];
+                case 13:
                     tokenMatches = _c.sent();
                     if (!tokenMatches) {
                         throw new AppError_1.AppError('Invalid or expired token', 401);
                     }
                     return [2 /*return*/, next()];
-                case 10:
-                    innerError_1 = _c.sent();
-                    return [2 /*return*/, next(innerError_1)];
-                case 11: return [3 /*break*/, 13];
-                case 12: return [2 /*return*/, next(error_1)];
-                case 13: return [3 /*break*/, 14];
-                case 14: return [2 /*return*/];
+                case 14:
+                    error_4 = _c.sent();
+                    return [2 /*return*/, next(error_4)];
+                case 15: return [3 /*break*/, 17];
+                case 16: return [2 /*return*/, next(error_1)];
+                case 17: return [3 /*break*/, 18];
+                case 18: return [2 /*return*/];
             }
         });
     });
