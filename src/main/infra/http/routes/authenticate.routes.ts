@@ -35,9 +35,9 @@ autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.hand
 
 autheticateRoutes.post("/reset_password/:id",ensureAuthenticated, resetPasswordNoEmailController.handle)
  
-autheticateRoutes.get("/users", getAllUsersController.handle)
+autheticateRoutes.get("/users", ensureAuthenticated,getAllUsersController.handle)
      
-autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle)
+autheticateRoutes.get("/search_user_byemail",ensureAuthenticated, getOneUserByEmailController.handle)
 
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle)
 

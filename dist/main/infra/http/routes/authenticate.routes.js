@@ -23,6 +23,6 @@ autheticateRoutes.post("/create_user", ensureAuthenticated_1.ensureAuthenticated
 autheticateRoutes.post("/sessions", authenticateUserController.handle);
 autheticateRoutes.get("/user/:id", ensureAuthenticated_1.ensureAuthenticated, getOneUserController.handle);
 autheticateRoutes.post("/reset_password/:id", ensureAuthenticated_1.ensureAuthenticated, resetPasswordNoEmailController.handle);
-autheticateRoutes.get("/users", getAllUsersController.handle);
-autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle);
+autheticateRoutes.get("/users", ensureAuthenticated_1.ensureAuthenticated, getAllUsersController.handle);
+autheticateRoutes.get("/search_user_byemail", ensureAuthenticated_1.ensureAuthenticated, getOneUserByEmailController.handle);
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle);
