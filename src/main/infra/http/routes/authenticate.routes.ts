@@ -10,6 +10,7 @@ import { GetAllUsersController } from "../../../../modules/accounts/useCases/get
 import { ResetPasswordNoEmailController } from "../../../../modules/accounts/useCases/resetPasswordNoEmail/ResetPasswordNoEmailController"
 
 import {ensureAuthenticated} from '../middlewares/ensureAuthenticated'
+import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 const autheticateRoutes = Router()
 
@@ -26,19 +27,16 @@ const refreshTokenUserController = new RefreshTokenUserController()
 
 
 
-autheticateRoutes.post("/create_user", createUserController.handle)
+autheticateRoutes.post("/create_user",ensureAuthenticated,createUserController.handle)
 
 autheticateRoutes.post("/sessions", authenticateUserController.handle)
 
 autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.handle)
 
-autheticateRoutes.post("/reset_password/:id", resetPasswordNoEmailController.handle)
-
-autheticateRoutes.post("/reset_password/:id", resetPasswordNoEmailController.handle)
-
-
+autheticateRoutes.post("/reset_password/:id",ensureAuthenticated, resetPasswordNoEmailController.handle)
+ 
 autheticateRoutes.get("/users", getAllUsersController.handle)
-
+     
 autheticateRoutes.get("/search_user_byemail", getOneUserByEmailController.handle)
 
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle)
