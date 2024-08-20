@@ -36,28 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateMessageController = void 0;
-var UpdateMessageUseCase_1 = require("./UpdateMessageUseCase");
+exports.ResetPasswordNoEmailController = void 0;
+require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var UpdateMessageController = /** @class */ (function () {
-    function UpdateMessageController() {
+var ResetPasswordNoEmailUseCase_1 = require("./ResetPasswordNoEmailUseCase");
+var ResetPasswordNoEmailController = /** @class */ (function () {
+    function ResetPasswordNoEmailController() {
     }
-    UpdateMessageController.prototype.handle = function (request, response) {
+    ResetPasswordNoEmailController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, messages, updateMessageUseCase, messageUpdade, error_1;
+            var id, password, resetPasswordNoEmailUseCase, resChanged, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         id = request.params.id;
-                        messages = request.body.messages;
-                        return [4 /*yield*/, tsyringe_1.container.resolve(UpdateMessageUseCase_1.UpdateMessageUseCase)];
+                        password = request.body.password;
+                        console.log(id);
+                        console.log(password);
+                        if (!password) {
+                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
+                        }
+                        return [4 /*yield*/, tsyringe_1.container.resolve(ResetPasswordNoEmailUseCase_1.ResetPasswordNoEmailUseCase)];
                     case 1:
-                        updateMessageUseCase = _a.sent();
-                        return [4 /*yield*/, updateMessageUseCase.updateMessage(id, messages)];
+                        resetPasswordNoEmailUseCase = _a.sent();
+                        return [4 /*yield*/, resetPasswordNoEmailUseCase.resetPassword(id, password)];
                     case 2:
-                        messageUpdade = _a.sent();
-                        return [2 /*return*/, response.status(200).json(messageUpdade)];
+                        resChanged = _a.sent();
+                        return [2 /*return*/, response.status(201).json(resChanged)];
                     case 3:
                         error_1 = _a.sent();
                         console.log(error_1);
@@ -67,6 +73,6 @@ var UpdateMessageController = /** @class */ (function () {
             });
         });
     };
-    return UpdateMessageController;
+    return ResetPasswordNoEmailController;
 }());
-exports.UpdateMessageController = UpdateMessageController;
+exports.ResetPasswordNoEmailController = ResetPasswordNoEmailController;

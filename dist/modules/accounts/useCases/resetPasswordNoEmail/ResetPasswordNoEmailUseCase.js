@@ -1,4 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,37 +48,46 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateMessageController = void 0;
-var UpdateMessageUseCase_1 = require("./UpdateMessageUseCase");
+exports.ResetPasswordNoEmailUseCase = void 0;
+require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var UpdateMessageController = /** @class */ (function () {
-    function UpdateMessageController() {
+var bcrypt_1 = require("bcrypt");
+var AppError_1 = require("../../../../error/AppError");
+var ResetPasswordNoEmailUseCase = /** @class */ (function () {
+    function ResetPasswordNoEmailUseCase(userRepository) {
+        this.userRepository = userRepository;
     }
-    UpdateMessageController.prototype.handle = function (request, response) {
+    ResetPasswordNoEmailUseCase.prototype.resetPassword = function (id, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, messages, updateMessageUseCase, messageUpdade, error_1;
+            var passwordHash, passwordChange, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        id = request.params.id;
-                        messages = request.body.messages;
-                        return [4 /*yield*/, tsyringe_1.container.resolve(UpdateMessageUseCase_1.UpdateMessageUseCase)];
+                        return [4 /*yield*/, (0, bcrypt_1.hash)(password, 8)];
                     case 1:
-                        updateMessageUseCase = _a.sent();
-                        return [4 /*yield*/, updateMessageUseCase.updateMessage(id, messages)];
+                        passwordHash = _a.sent();
+                        return [4 /*yield*/, this.userRepository.resetPasswordNoEmail(id, passwordHash)];
                     case 2:
-                        messageUpdade = _a.sent();
-                        return [2 /*return*/, response.status(200).json(messageUpdade)];
+                        passwordChange = _a.sent();
+                        if (!passwordChange) {
+                            throw new AppError_1.AppError("User already exists");
+                        }
+                        return [2 /*return*/, passwordChange];
                     case 3:
                         error_1 = _a.sent();
                         console.log(error_1);
-                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
+                        throw new AppError_1.AppError('Error creating user', 400, { error: error_1 });
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return UpdateMessageController;
+    ResetPasswordNoEmailUseCase = __decorate([
+        (0, tsyringe_1.injectable)(),
+        __param(0, (0, tsyringe_1.inject)("UserRepository")),
+        __metadata("design:paramtypes", [Object])
+    ], ResetPasswordNoEmailUseCase);
+    return ResetPasswordNoEmailUseCase;
 }());
-exports.UpdateMessageController = UpdateMessageController;
+exports.ResetPasswordNoEmailUseCase = ResetPasswordNoEmailUseCase;

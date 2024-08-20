@@ -3,6 +3,7 @@ import { injectable, inject } from "tsyringe";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
 import { sign } from "jsonwebtoken"
 import { compare } from "bcrypt"
+
 import { AppError } from "../../../../error/AppError";
 import { GenerateRefreshToken } from '../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken'
 import { container } from 'tsyringe'
@@ -53,7 +54,7 @@ class AutenticateUserUseCase {
 
         }, secretKey, {
             subject: `${userVerify.id}`, // Define o subject (assunto) do token
-            expiresIn: '20s' // Define o tempo de expiração do token para 1 hora
+            expiresIn: '1h' // Define o tempo de expiração do token para 1 hora
 
         })
          

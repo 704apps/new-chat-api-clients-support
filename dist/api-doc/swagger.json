@@ -1161,6 +1161,21 @@
                 "tags": [
                     "Rotas referente as Mensagens"
                 ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT",
+                            "description": "token normal quando for usuario e hash da url quando for monitor"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "file",

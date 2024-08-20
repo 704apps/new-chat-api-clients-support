@@ -110,6 +110,57 @@ var UserRepository = /** @class */ (function () {
             });
         });
     };
+    UserRepository.prototype.allUsers = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var users, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log('veio aqui');
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.repository.find()];
+                    case 2:
+                        users = _a.sent();
+                        return [2 /*return*/, users];
+                    case 3:
+                        error_2 = _a.sent();
+                        throw new AppError_1.AppError('dfdfdf');
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.resetPasswordNoEmail = function (id, newPassword) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log('veio aqui');
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 2:
+                        user = _a.sent();
+                        if (!user) {
+                            throw new AppError_1.AppError('User Not Found');
+                        }
+                        user.password = newPassword;
+                        return [4 /*yield*/, this.repository.save(user)];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/, 'Password change successfully'];
+                    case 4:
+                        error_3 = _a.sent();
+                        throw new AppError_1.AppError('', 400, { error: error_3 });
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     UserRepository = __decorate([
         (0, tsyringe_1.injectable)(),
         __metadata("design:paramtypes", [])

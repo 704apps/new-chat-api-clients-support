@@ -40,36 +40,84 @@ exports.ensureAuthenticated = ensureAuthenticated;
 var jsonwebtoken_1 = require("jsonwebtoken");
 var AppError_1 = require("../../../../error/AppError");
 var UserRepository_1 = require("../../../../modules/accounts/infra/typeorm/repositories/UserRepository");
+var tsyringe_1 = require("tsyringe");
+var GetOneMessagesUseCase_1 = require("../../../../modules/messages/useCases/getOneMessage/GetOneMessagesUseCase");
+var bcrypt_1 = require("bcrypt");
 function ensureAuthenticated(request, response, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var authHerder, _a, token, userId, userRepository, user, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var authHeader, _a, token, userId, userRepository, user, error_1, authHeader, _b, token, id, projectId_1, tokenMatches_1, getNewMessagesClientUseCase, messages, tokenMatches_2, projectId, tokenMatches, innerError_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _b.trys.push([0, 2, , 3]);
-                    authHerder = request.headers.authorization;
-                    console.log('veio pelo menos aqui');
-                    if (!authHerder) {
-                        throw new AppError_1.AppError("Token missing", 401);
+                    _c.trys.push([0, 2, , 14]);
+                    authHeader = request.headers.authorization;
+                    if (!authHeader) {
+                        throw new AppError_1.AppError('Token missing', 401);
                     }
-                    console.log('veio pelo menos aqui2');
-                    _a = authHerder.split(" "), token = _a[1];
-                    userId = (0, jsonwebtoken_1.verify)(token, "e434b149e2f3c418268e23d778777dfc").sub;
+                    _a = authHeader.split(' '), token = _a[1];
+                    userId = (0, jsonwebtoken_1.verify)(token, 'e434b149e2f3c418268e23d778777dfc').sub;
                     userRepository = new UserRepository_1.UserRepository();
                     return [4 /*yield*/, userRepository.findById(userId)];
                 case 1:
-                    user = _b.sent();
+                    user = _c.sent();
                     if (!user) {
-                        throw new AppError_1.AppError("User does not exists!", 401);
+                        throw new AppError_1.AppError('User does not exist!', 401);
                     }
-                    //Aqui foi sobrescrito uma tipagem no @types
-                    next();
-                    return [3 /*break*/, 3];
+                    return [2 /*return*/, next()];
                 case 2:
-                    error_1 = _b.sent();
-                    next(error_1);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    error_1 = _c.sent();
+                    if (!(error_1 instanceof jsonwebtoken_1.JsonWebTokenError)) return [3 /*break*/, 12];
+                    _c.label = 3;
+                case 3:
+                    _c.trys.push([3, 10, , 11]);
+                    authHeader = request.headers.authorization;
+                    if (!authHeader) {
+                        throw new AppError_1.AppError('Token missing', 401);
+                    }
+                    _b = authHeader.split(' '), token = _b[1];
+                    id = request.params.id;
+                    console.log('veio aqui antes');
+                    if (!!id) return [3 /*break*/, 5];
+                    console.log('veio aqui2222');
+                    projectId_1 = request.body.projectId;
+                    console.log(projectId_1);
+                    return [4 /*yield*/, (0, bcrypt_1.compare)(projectId_1, token)];
+                case 4:
+                    tokenMatches_1 = _c.sent();
+                    if (!tokenMatches_1) {
+                        console.log('veio aqui3:' + projectId_1);
+                        throw new AppError_1.AppError('Invalid or expired token', 401);
+                    }
+                    return [2 /*return*/, next()];
+                case 5:
+                    getNewMessagesClientUseCase = tsyringe_1.container.resolve(GetOneMessagesUseCase_1.GetOneMessagesClientUseCase);
+                    return [4 /*yield*/, getNewMessagesClientUseCase.getOneMessage(Number(id))];
+                case 6:
+                    messages = _c.sent();
+                    if (!(!messages || !messages.projectId)) return [3 /*break*/, 8];
+                    return [4 /*yield*/, (0, bcrypt_1.compare)(id, token)];
+                case 7:
+                    tokenMatches_2 = _c.sent();
+                    if (!tokenMatches_2) {
+                        throw new AppError_1.AppError('Invalid or expired token', 401);
+                    }
+                    return [2 /*return*/, next()];
+                case 8:
+                    projectId = messages.projectId;
+                    return [4 /*yield*/, (0, bcrypt_1.compare)(projectId, token)];
+                case 9:
+                    tokenMatches = _c.sent();
+                    if (!tokenMatches) {
+                        throw new AppError_1.AppError('Invalid or expired token', 401);
+                    }
+                    return [2 /*return*/, next()];
+                case 10:
+                    innerError_1 = _c.sent();
+                    return [2 /*return*/, next(innerError_1)];
+                case 11: return [3 /*break*/, 13];
+                case 12: return [2 /*return*/, next(error_1)];
+                case 13: return [3 /*break*/, 14];
+                case 14: return [2 /*return*/];
             }
         });
     });

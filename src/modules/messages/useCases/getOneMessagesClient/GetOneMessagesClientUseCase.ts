@@ -13,10 +13,10 @@ class GetOneMessagesClientUseCase {
         private messageRepository: IMessageRepository
     ){}
 
-    public async getOneMessagesClient(statusAttention: string,page:number, pageSize:number): Promise<Messages[]> {
+    public async getOneMessagesClient(projectId: string,page:number, pageSize:number): Promise<Messages[]> {
         try {
             
-            const newMessage = await this.messageRepository.getOneMessagesClient(statusAttention,page,pageSize)
+            const newMessage = await this.messageRepository.getOneMessagesClient(projectId,page,pageSize)
 
             return newMessage
 
