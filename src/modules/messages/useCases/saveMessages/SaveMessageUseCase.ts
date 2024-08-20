@@ -17,12 +17,12 @@ class SaveMessageUseCase {
 
     public async createMessage(message: MessageDTO){
         try {
-            console.log('===================')
+          //  console.log('===================')
 
             const project = await this.messageRepository.createMessage(message);
 
-            console.log(project)
-            console.log('MMMMMMMMMMMMMMMMMMM')
+         //   console.log(project)
+            //console.log('MMMMMMMMMMMMMMMMMMM')
             return project
 
         } catch (error) {

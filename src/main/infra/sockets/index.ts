@@ -7,7 +7,7 @@ const saveMessageController = new SaveMessageController();
 
 
 
-console.log("SocketIOServer created");
+//console.log("SocketIOServer created");
 
 function setupSocketIO() {
 
@@ -101,7 +101,7 @@ function setupSocketIO() {
 
 
                 const socketProject = data.projectId;
-                console.log(data)
+               // console.log(data)
                 const msg: MessageDTO = (await saveMessageController.saveMessage(
                     data
                 )) as MessageDTO;
@@ -120,7 +120,7 @@ function setupSocketIO() {
                     createdAt: msg.createdAt
                 }
 
-                console.log(dataClient)
+               // console.log(dataClient)
 
 
                 await io.to(socketProject).emit('clientMessage', dataClient);

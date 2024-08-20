@@ -28,7 +28,7 @@ class ResetPasswordNoEmailUseCase {
             return passwordChange
 
         } catch (error) {
-            console.log(error)
+        //    console.log(error)
             throw new AppError('Error creating user',400,{error})
         }
 

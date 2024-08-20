@@ -17,10 +17,10 @@ const deleteNoteController = new DeleteNoteController();
 const getOneNoteController = new GetOneNoteController();
 
 //chatRouter.use(ensureAuthenticated)
-noteRouter.post('/create_note/',getCreateNoteController.handle)
-noteRouter.get('/get_note/:id',getOneNoteController.handle)
-noteRouter.patch('/edit_note/:id',getUpdateNoteController.handle)
-noteRouter.delete('/delete_note/:id',deleteNoteController.handle)
+noteRouter.post('/create_note/',ensureAuthenticated,getCreateNoteController.handle)
+noteRouter.get('/get_note/:id',ensureAuthenticated,getOneNoteController.handle)
+noteRouter.patch('/edit_note/:id',ensureAuthenticated,getUpdateNoteController.handle)
+noteRouter.delete('/delete_note/:id',ensureAuthenticated,deleteNoteController.handle)
 
 
 // chatRouter.patch('/update_statusAttention/:id',(req,res)=>chatController.getUpdateStatusAttention(req,res))

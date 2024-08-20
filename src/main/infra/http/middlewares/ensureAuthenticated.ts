@@ -4,12 +4,16 @@ import { AppError } from '../../../../error/AppError';
 import { UserRepository } from '../../../../modules/accounts/infra/typeorm/repositories/UserRepository';
 import { container } from 'tsyringe';
 import { GetOneMessagesClientUseCase } from '../../../../modules/messages/useCases/getOneMessage/GetOneMessagesUseCase';
-import { compare } from 'bcrypt';
 
 interface IPayload {
     sub: string;
 }
-
+async function compareToken(pc,tk){
+    if(pc!==tk){
+        return false
+    }
+    return true
+}
 export async function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
     try {
         const authHeader = request.headers.authorization;
@@ -20,7 +24,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         const [, token] = authHeader.split(' ');
 
         // Verifica o token JWT
-        const { sub: userId } = verify(token, 'e434b149e2f3c418268e23d778777dfc') as IPayload;
+        const { sub: userId } = verify(token, process.env.SECRET_JWT) as IPayload;
 
         const userRepository = new UserRepository();
         const user = await userRepository.findById(userId);
@@ -34,50 +38,63 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         if (error instanceof JsonWebTokenError) {
             try {
                 const authHeader = request.headers.authorization;
+
                 if (!authHeader) {
+                    //console.log('veio aqui antes0')
                     throw new AppError('Token missing', 401);
                 }
 
                 const [, token] = authHeader.split(' ');
                 const id = request.params.id;
-                console.log('veio aqui antes')
+               
+               // console.log('veio aqui antes')
                 if (!id) {
-                    console.log('veio aqui2222')
-                    const {projectId} = request.body; // Obtendo projectId do body
-                    console.log(projectId)
+                  //  console.log('veio aqui2222')
+                    const { projectId } = request.body; // Obtendo projectId do body
+                   // console.log(projectId)
+                    try {
+                        const tokenMatches = await compareToken(projectId, token);
+                        console.log
+                        if (!tokenMatches) {
+                     //       console.log('veio aqui3:' + projectId)
 
-                    const tokenMatches = await compare(projectId, token);
+                            throw new AppError('Invalid or expired token', 401);
+                        }
+                        return next();
+                    } catch (error) {
 
-                    if (!tokenMatches) {
-                        console.log('veio aqui3:'+projectId)
-
-                        throw new AppError('Invalid or expired token', 401);
+                        throw new AppError('Invalid or expired token', 401,{error});
                     }
-                    return next();
- 
                 }
+
 
                 const getNewMessagesClientUseCase = container.resolve(GetOneMessagesClientUseCase);
                 const messages = await getNewMessagesClientUseCase.getOneMessage(Number(id));
 
                 if (!messages || !messages.projectId) {
 
+                    try {
+                        const tokenMatches = await compareToken(id, token);
+                        if (!tokenMatches) {
+                            
+                            throw new AppError('Invalid or expired token', 401);
+                        }
+                        return next();
+                      
+                    } catch (error) {
 
+                        throw new AppError('Invalid or expired token', 401,{error});
+                    }
 
                     // Comparação com bcrypt
-                    const tokenMatches = await compare(id, token);
-                    if (!tokenMatches) {
-
-                        throw new AppError('Invalid or expired token', 401);
-                    }
-                    return next();
+                 
                 }
 
                 const { projectId } = messages
 
 
                 // Comparação com bcrypt
-                const tokenMatches = await compare(projectId, token);
+                const tokenMatches = await compareToken(projectId, token);
 
                 if (!tokenMatches) {
 
@@ -85,8 +102,8 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 }
 
                 return next();
-            } catch (innerError) {
-                return next(innerError);
+            } catch (error) {
+                return next(error);
             }
         } else {
             return next(error);

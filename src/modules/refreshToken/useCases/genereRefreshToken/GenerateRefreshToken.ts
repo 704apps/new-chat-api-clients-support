@@ -19,9 +19,9 @@ class GenerateRefreshToken{
 
             return generateRefreshToken
         } catch (error) {
-            console.log('============================')
+           // console.log('============================')
 
-            console.log(error)
+           // console.log(error)
             throw new AppError("Error when generating reflesh token",400)
         }
      

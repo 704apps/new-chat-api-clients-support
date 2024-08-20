@@ -19,7 +19,7 @@ class GetOneUserByEmailController {
             const getOneUserByEmailUseCase = await container.resolve(GetOneUserByEmailUseCase)
 
             const user =  await getOneUserByEmailUseCase.getOneUserByEmail(String(email))
-            console.log(user)
+          //  console.log(user)
             return response.status(200).json({user})
             
         } catch (error) {
