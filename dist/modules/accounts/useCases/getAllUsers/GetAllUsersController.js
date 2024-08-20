@@ -59,7 +59,7 @@ var GetAllUsersController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(users)];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(error_1);
+                        // console.log(error)
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 4: return [2 /*return*/];
                 }

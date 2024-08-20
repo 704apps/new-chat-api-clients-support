@@ -55,14 +55,14 @@ var GetOneMessagesClientUseCase = /** @class */ (function () {
     function GetOneMessagesClientUseCase(messageRepository) {
         this.messageRepository = messageRepository;
     }
-    GetOneMessagesClientUseCase.prototype.getOneMessagesClient = function (statusAttention, page, pageSize) {
+    GetOneMessagesClientUseCase.prototype.getOneMessagesClient = function (projectId, page, pageSize) {
         return __awaiter(this, void 0, void 0, function () {
             var newMessage, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.messageRepository.getOneMessagesClient(statusAttention, page, pageSize)];
+                        return [4 /*yield*/, this.messageRepository.getOneMessagesClient(projectId, page, pageSize)];
                     case 1:
                         newMessage = _a.sent();
                         return [2 /*return*/, newMessage];

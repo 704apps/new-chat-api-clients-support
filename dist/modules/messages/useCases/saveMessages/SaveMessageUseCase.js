@@ -61,12 +61,11 @@ var SaveMessageUseCase = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        console.log('===================');
                         return [4 /*yield*/, this.messageRepository.createMessage(message)];
                     case 1:
                         project = _a.sent();
-                        console.log(project);
-                        console.log('MMMMMMMMMMMMMMMMMMM');
+                        //   console.log(project)
+                        //console.log('MMMMMMMMMMMMMMMMMMM')
                         return [2 /*return*/, project];
                     case 2:
                         error_1 = _a.sent();

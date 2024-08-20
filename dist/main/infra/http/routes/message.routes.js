@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.messageRoutes = void 0;
 var express_1 = require("express");
+var ensureAuthenticated_1 = require("../middlewares/ensureAuthenticated");
 var UploadMediaController_1 = require("../../../../modules/messages/useCases/uploadMedia/UploadMediaController");
 var UpdateMessageController_1 = require("../../../../modules/messages/useCases/updateMessage/UpdateMessageController");
 var DeleteMessageController_1 = require("../../../../modules/messages/useCases/deleteMessage/DeleteMessageController");
@@ -25,14 +26,13 @@ var getOneMessagesClientController = new GetOneMessagesClientController_1.GetOne
 var getSearchByWordOrPhraseController = new GetSearchByWordOrPhraseController_1.GetSearchByWordOrPhraseController();
 var getSearchGenerationToSupportController = new GetSearchGenerationToSupportController_1.GetSearchGenerationToSupportController();
 var getFilterToStatusSidebarController = new GetFilterToStatusSidebarController_1.GetFilterToStatusSidebarController();
-messageRoutes.post('/media_in_message/', upload_1.upload.single('file'), uploadMediaController.handle);
-messageRoutes.patch('/update_message/:id', updateMessageController.handle);
-messageRoutes.delete('/delete_message/:id', deleteMessageController.handle);
-// // messageRoutes.use(ensureAuthenticated)
-messageRoutes.get('/newmessages', getNewMessagesController.handle);
-messageRoutes.get('/assisting/', getChatsRespondingToSupportController.handle);
+messageRoutes.post('/media_in_message/', upload_1.upload.single('file'), ensureAuthenticated_1.ensureAuthenticated, uploadMediaController.handle);
+messageRoutes.patch('/update_message/:id', ensureAuthenticated_1.ensureAuthenticated, updateMessageController.handle);
+messageRoutes.delete('/delete_message/:id', ensureAuthenticated_1.ensureAuthenticated, deleteMessageController.handle);
+messageRoutes.get('/newmessages', ensureAuthenticated_1.ensureAuthenticated, getNewMessagesController.handle);
+messageRoutes.get('/assisting/', ensureAuthenticated_1.ensureAuthenticated, getChatsRespondingToSupportController.handle);
 messageRoutes.get('/messages/:id', getOneMessagesClientController.handle);
-messageRoutes.get('/search_project/:id', getSearchProjectController.handle);
-messageRoutes.get('/search_word_phrase/', getSearchByWordOrPhraseController.handle);
-messageRoutes.get('/search_generaltosupport/', getSearchGenerationToSupportController.handle);
-messageRoutes.get('/filter_status_attention/', getFilterToStatusSidebarController.handle);
+messageRoutes.get('/search_project/:id', ensureAuthenticated_1.ensureAuthenticated, getSearchProjectController.handle);
+messageRoutes.get('/search_word_phrase/', ensureAuthenticated_1.ensureAuthenticated, getSearchByWordOrPhraseController.handle);
+messageRoutes.get('/search_generaltosupport/', ensureAuthenticated_1.ensureAuthenticated, getSearchGenerationToSupportController.handle);
+messageRoutes.get('/filter_status_attention/', ensureAuthenticated_1.ensureAuthenticated, getFilterToStatusSidebarController.handle);

@@ -57,7 +57,7 @@ var GetCreateNoteController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(note)];
                     case 2:
                         error_1 = _a.sent();
-                        console.log(error_1);
+                        //  console.log(error)
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 3: return [2 /*return*/];
                 }

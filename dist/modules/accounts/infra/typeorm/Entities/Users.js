@@ -25,13 +25,17 @@ var Users = /** @class */ (function () {
         __metadata("design:type", String)
     ], Users.prototype, "name", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)('varchar'),
         __metadata("design:type", String)
     ], Users.prototype, "email", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)('varchar'),
         __metadata("design:type", String)
     ], Users.prototype, "password", void 0);
+    __decorate([
+        (0, typeorm_1.Column)('varchar'),
+        __metadata("design:type", String)
+    ], Users.prototype, "role", void 0);
     __decorate([
         (0, typeorm_1.OneToMany)(function () { return RefreshToken_1.RefreshToken; }, function (refleshtoken) { return refleshtoken.userId; }),
         __metadata("design:type", Array)

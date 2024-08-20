@@ -65,19 +65,20 @@ var CreateUserUseCase = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         _c.trys.push([0, 4, , 5]);
-                        console.log('a senha é ' + password);
-                        return [4 /*yield*/, (0, bcrypt_1.hash)(password, 8)];
+                        return [4 /*yield*/, (0, bcrypt_1.hash)(password, 8)
+                            // console.log('veio no antes de ver email'+passwordHash)
+                        ];
                     case 1:
                         passwordHash = _c.sent();
-                        console.log('veio no antes de ver email' + passwordHash);
-                        return [4 /*yield*/, this.userRepository.findByEmail(email)];
+                        return [4 /*yield*/, this.userRepository.findByEmail(email)
+                            //  console.log('veio no depois de ver email')
+                        ];
                     case 2:
                         isuseralreadyExist = _c.sent();
-                        console.log('veio no depois de ver email');
+                        //  console.log('veio no depois de ver email')
                         if (isuseralreadyExist) {
                             throw new AppError_1.AppError("User already exists");
                         }
-                        console.log('veio no antes de salvar');
                         return [4 /*yield*/, this.userRepository.create({
                                 name: name,
                                 email: email,

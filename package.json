@@ -11,7 +11,7 @@
     "dev": "nodemon   -r tsconfig-paths/register  src/main/infra/http/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     
-    "migrations:run": "typeorm migrations:run src/main/infra/typeorm/connection/app-data-source.ts "
+    "migration:run": "typeorm migrations:run -- -d src/main/infra/typeorm/connection/app-data-source.ts "
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.614.0",

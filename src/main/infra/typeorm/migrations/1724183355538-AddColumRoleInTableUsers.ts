@@ -11,7 +11,7 @@ export class AddColumRoleInTableUsers1724183355538 implements MigrationInterface
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropColumn('messages','projectId');
+        await queryRunner.dropColumn('users','role');
 
     }
 

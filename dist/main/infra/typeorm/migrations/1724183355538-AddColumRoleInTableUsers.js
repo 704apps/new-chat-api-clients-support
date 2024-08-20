@@ -36,34 +36,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetOneNoteController = void 0;
-var GetOneNoteUseCase_1 = require("./GetOneNoteUseCase");
-var tsyringe_1 = require("tsyringe");
-var GetOneNoteController = /** @class */ (function () {
-    function GetOneNoteController() {
+exports.AddColumRoleInTableUsers1724183355538 = void 0;
+var typeorm_1 = require("typeorm");
+var AddColumRoleInTableUsers1724183355538 = /** @class */ (function () {
+    function AddColumRoleInTableUsers1724183355538() {
     }
-    GetOneNoteController.prototype.handle = function (request, response) {
+    AddColumRoleInTableUsers1724183355538.prototype.up = function (queryRunner) {
         return __awaiter(this, void 0, void 0, function () {
-            var idNote, getOneNoteUseCase, note, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        idNote = request.params.id;
-                        getOneNoteUseCase = tsyringe_1.container.resolve(GetOneNoteUseCase_1.GetOneNoteUseCase);
-                        return [4 /*yield*/, getOneNoteUseCase.getOneNote(Number(idNote))];
+                    case 0: return [4 /*yield*/, queryRunner.addColumn('users', new typeorm_1.TableColumn({
+                            name: 'role',
+                            type: 'varchar',
+                            isNullable: false
+                        }))];
                     case 1:
-                        note = _a.sent();
-                        return [2 /*return*/, response.status(200).json(note)];
-                    case 2:
-                        error_1 = _a.sent();
-                        // console.log(error)
-                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 3: return [2 /*return*/];
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    return GetOneNoteController;
+    AddColumRoleInTableUsers1724183355538.prototype.down = function (queryRunner) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, queryRunner.dropColumn('users', 'role')];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return AddColumRoleInTableUsers1724183355538;
 }());
-exports.GetOneNoteController = GetOneNoteController;
+exports.AddColumRoleInTableUsers1724183355538 = AddColumRoleInTableUsers1724183355538;
