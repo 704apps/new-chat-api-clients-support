@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Messages = void 0;
+var OldMessages_1 = require("./OldMessages");
 var typeorm_1 = require("typeorm");
 var Messages = /** @class */ (function () {
     function Messages() {
@@ -46,6 +47,14 @@ var Messages = /** @class */ (function () {
         (0, typeorm_1.Column)('varchar'),
         __metadata("design:type", String)
     ], Messages.prototype, "messages", void 0);
+    __decorate([
+        (0, typeorm_1.OneToMany)(function () { return OldMessages_1.OldMessages; }, function (refleshtoken) { return refleshtoken.idMessage; }),
+        __metadata("design:type", Array)
+    ], Messages.prototype, "message", void 0);
+    __decorate([
+        (0, typeorm_1.Column)('text'),
+        __metadata("design:type", String)
+    ], Messages.prototype, "oldMessages", void 0);
     __decorate([
         (0, typeorm_1.Column)('boolean', { nullable: true }),
         __metadata("design:type", Boolean)

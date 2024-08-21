@@ -54,11 +54,11 @@ function compareToken(pc, tk) {
 }
 function ensureAuthenticated(request, response, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var authHeader, _a, token, userId, userRepository, user, error_1, authHeader, _b, token, id, projectId_1, tokenMatches_1, error_2, getNewMessagesClientUseCase, messages, tokenMatches_2, error_3, projectId, tokenMatches, error_4;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var authHeader, _a, token, userId, userRepository, user, error_1, authHeader, _b, token, id, projectId_1, tokenMatches_1, error_2, getNewMessagesClientUseCase, messages, projectId, tokenMatches, error_3, authHeader, _c, token, id, tokenMatches, error_4;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
-                    _c.trys.push([0, 2, , 18]);
+                    _d.trys.push([0, 2, , 18]);
                     authHeader = request.headers.authorization;
                     if (!authHeader) {
                         throw new AppError_1.AppError('Token missing', 401);
@@ -68,17 +68,17 @@ function ensureAuthenticated(request, response, next) {
                     userRepository = new UserRepository_1.UserRepository();
                     return [4 /*yield*/, userRepository.findById(userId)];
                 case 1:
-                    user = _c.sent();
+                    user = _d.sent();
                     if (!user) {
                         throw new AppError_1.AppError('User does not exist!', 401);
                     }
                     return [2 /*return*/, next()];
                 case 2:
-                    error_1 = _c.sent();
+                    error_1 = _d.sent();
                     if (!(error_1 instanceof jsonwebtoken_1.JsonWebTokenError)) return [3 /*break*/, 16];
-                    _c.label = 3;
+                    _d.label = 3;
                 case 3:
-                    _c.trys.push([3, 14, , 15]);
+                    _d.trys.push([3, 10, , 15]);
                     authHeader = request.headers.authorization;
                     if (!authHeader) {
                         //console.log('veio aqui antes0')
@@ -88,12 +88,12 @@ function ensureAuthenticated(request, response, next) {
                     id = request.params.id;
                     if (!!id) return [3 /*break*/, 7];
                     projectId_1 = request.body.projectId;
-                    _c.label = 4;
+                    _d.label = 4;
                 case 4:
-                    _c.trys.push([4, 6, , 7]);
+                    _d.trys.push([4, 6, , 7]);
                     return [4 /*yield*/, compareToken(projectId_1, token)];
                 case 5:
-                    tokenMatches_1 = _c.sent();
+                    tokenMatches_1 = _d.sent();
                     console.log;
                     if (!tokenMatches_1) {
                         //       console.log('veio aqui3:' + projectId)
@@ -101,39 +101,46 @@ function ensureAuthenticated(request, response, next) {
                     }
                     return [2 /*return*/, next()];
                 case 6:
-                    error_2 = _c.sent();
+                    error_2 = _d.sent();
                     throw new AppError_1.AppError('Invalid or expired token', 401, { error: error_2 });
                 case 7:
                     getNewMessagesClientUseCase = tsyringe_1.container.resolve(GetOneMessagesUseCase_1.GetOneMessagesClientUseCase);
                     return [4 /*yield*/, getNewMessagesClientUseCase.getOneMessage(Number(id))];
                 case 8:
-                    messages = _c.sent();
-                    if (!(!messages || !messages.projectId)) return [3 /*break*/, 12];
-                    _c.label = 9;
-                case 9:
-                    _c.trys.push([9, 11, , 12]);
-                    return [4 /*yield*/, compareToken(id, token)];
-                case 10:
-                    tokenMatches_2 = _c.sent();
-                    if (!tokenMatches_2) {
-                        throw new AppError_1.AppError('Invalid or expired token', 401);
-                    }
-                    return [2 /*return*/, next()];
-                case 11:
-                    error_3 = _c.sent();
-                    throw new AppError_1.AppError('Invalid or expired token', 401, { error: error_3 });
-                case 12:
+                    messages = _d.sent();
                     projectId = messages.projectId;
                     return [4 /*yield*/, compareToken(projectId, token)];
-                case 13:
-                    tokenMatches = _c.sent();
+                case 9:
+                    tokenMatches = _d.sent();
                     if (!tokenMatches) {
                         throw new AppError_1.AppError('Invalid or expired token', 401);
                     }
                     return [2 /*return*/, next()];
+                case 10:
+                    error_3 = _d.sent();
+                    _d.label = 11;
+                case 11:
+                    _d.trys.push([11, 13, , 14]);
+                    authHeader = request.headers.authorization;
+                    if (!authHeader) {
+                        //console.log('veio aqui antes0')
+                        throw new AppError_1.AppError('Token missing', 401);
+                    }
+                    _c = authHeader.split(' '), token = _c[1];
+                    id = request.params.id;
+                    return [4 /*yield*/, compareToken(id, token)];
+                case 12:
+                    tokenMatches = _d.sent();
+                    if (!tokenMatches) {
+                        throw new AppError_1.AppError('Invalid or expired token', 401);
+                    }
+                    return [2 /*return*/, next()];
+                case 13:
+                    error_4 = _d.sent();
+                    throw new AppError_1.AppError('Invalid or expired token', 401, { error: error_4 });
                 case 14:
-                    error_4 = _c.sent();
-                    return [2 /*return*/, next(error_4)];
+                    ;
+                    return [3 /*break*/, 15];
                 case 15: return [3 /*break*/, 17];
                 case 16: return [2 /*return*/, next(error_1)];
                 case 17: return [3 /*break*/, 18];

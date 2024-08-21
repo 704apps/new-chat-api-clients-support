@@ -36,39 +36,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserController = void 0;
-require("reflect-metadata");
-var tsyringe_1 = require("tsyringe");
-var CreateUserUseCase_1 = require("./CreateUserUseCase");
-var CreateUserController = /** @class */ (function () {
-    function CreateUserController() {
+exports.AddColumnOldMessageInTableMessages1724190872698 = void 0;
+var typeorm_1 = require("typeorm");
+var AddColumnOldMessageInTableMessages1724190872698 = /** @class */ (function () {
+    function AddColumnOldMessageInTableMessages1724190872698() {
     }
-    CreateUserController.prototype.handle = function (request, response) {
+    AddColumnOldMessageInTableMessages1724190872698.prototype.up = function (queryRunner) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name_1, email, password, role, createUseCase, user, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        _b.trys.push([0, 3, , 4]);
-                        _a = request.body, name_1 = _a.name, email = _a.email, password = _a.password, role = _a.role;
-                        if (!name_1 || !email || !password || !role) {
-                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
-                        }
-                        return [4 /*yield*/, tsyringe_1.container.resolve(CreateUserUseCase_1.CreateUserUseCase)];
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, queryRunner.addColumn('messages', new typeorm_1.TableColumn({
+                            name: 'oldMessages',
+                            type: 'text',
+                            length: "100000",
+                            isNullable: false
+                        }))];
                     case 1:
-                        createUseCase = _b.sent();
-                        return [4 /*yield*/, createUseCase.execute({ name: name_1, email: email, password: password, role: role })];
-                    case 2:
-                        user = _b.sent();
-                        return [2 /*return*/, response.status(201).json({ message: 'User created successfully', user: user })];
-                    case 3:
-                        error_1 = _b.sent();
-                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 4: return [2 /*return*/];
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    return CreateUserController;
+    AddColumnOldMessageInTableMessages1724190872698.prototype.down = function (queryRunner) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, queryRunner.dropColumn('messages', 'oldMessage')];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return AddColumnOldMessageInTableMessages1724190872698;
 }());
-exports.CreateUserController = CreateUserController;
+exports.AddColumnOldMessageInTableMessages1724190872698 = AddColumnOldMessageInTableMessages1724190872698;

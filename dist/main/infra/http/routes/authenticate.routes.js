@@ -10,6 +10,7 @@ var GetOneUserByEmailController_1 = require("../../../../modules/accounts/useCas
 var GetAllUsersController_1 = require("../../../../modules/accounts/useCases/getAllUsers/GetAllUsersController");
 var ResetPasswordNoEmailController_1 = require("../../../../modules/accounts/useCases/resetPasswordNoEmail/ResetPasswordNoEmailController");
 var ensureAuthenticated_1 = require("../middlewares/ensureAuthenticated");
+var ensureAdmin_1 = require("../middlewares/ensureAdmin");
 var autheticateRoutes = (0, express_1.Router)();
 exports.autheticateRoutes = autheticateRoutes;
 var createUserController = new CreateUserController_1.CreateUserController();
@@ -19,10 +20,10 @@ var resetPasswordNoEmailController = new ResetPasswordNoEmailController_1.ResetP
 var getOneUserByEmailController = new GetOneUserByEmailController_1.GetOneUserByEmailController();
 var authenticateUserController = new AutenticateUserController_1.AuthenticateUserController();
 var refreshTokenUserController = new RefreshTokenUserController_1.RefreshTokenUserController();
-autheticateRoutes.post("/create_user", ensureAuthenticated_1.ensureAuthenticated, createUserController.handle);
+autheticateRoutes.post("/create_user", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, createUserController.handle);
 autheticateRoutes.post("/sessions", authenticateUserController.handle);
 autheticateRoutes.get("/user/:id", ensureAuthenticated_1.ensureAuthenticated, getOneUserController.handle);
 autheticateRoutes.post("/reset_password/:id", ensureAuthenticated_1.ensureAuthenticated, resetPasswordNoEmailController.handle);
-autheticateRoutes.get("/users", ensureAuthenticated_1.ensureAuthenticated, getAllUsersController.handle);
-autheticateRoutes.get("/search_user_byemail", ensureAuthenticated_1.ensureAuthenticated, getOneUserByEmailController.handle);
+autheticateRoutes.get("/users", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, getAllUsersController.handle);
+autheticateRoutes.get("/search_user_byemail", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, getOneUserByEmailController.handle);
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle);

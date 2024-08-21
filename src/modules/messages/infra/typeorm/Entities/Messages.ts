@@ -1,5 +1,5 @@
-import { Chats } from "./../../../../chats/infra/typeorm/Entities/Chats";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { OldMessages } from "./OldMessages";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 
 @Entity({ name: 'messages' })
  class  Messages {
@@ -30,7 +30,9 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 
     @Column('varchar')
     messages: string;
-
+    
+    @OneToMany(()=>OldMessages,refleshtoken=>refleshtoken.idMessage)
+    message: OldMessages[]
     
     @Column('text')
     oldMessages:  string;

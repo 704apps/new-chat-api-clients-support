@@ -433,6 +433,55 @@
                 }
             }
         },
+        "/oldMessages/{id}": {
+            "get": {
+                "summary": "Lista atualização de uma mensagem",
+                "description": "Lista atualização de uma mensagem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da mensagem"
+                    }
+                ],
+                "tags": [
+                    "Rotas referente as Mensagens"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Message not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "oldMessage": "Penhor preciso que vc faça isso, seu burro"
+                                            },
+                                            {
+                                                "oldMessage": "Senhor preciso que vc faça isso, seu burro"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/update_message/{id}": {
             "patch": {
                 "summary": "Atualiza uma message",

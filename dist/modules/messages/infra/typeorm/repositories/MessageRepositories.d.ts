@@ -3,12 +3,15 @@ import { Messages } from "../Entities/Messages";
 import { MessageDTO } from "../../../../../modules/messages/DTOs/messageDTO";
 import { DtoNewMessages } from "../../../../../modules/messages/DTOs/newMessagesDTO";
 import { UploadDataDTO } from "../../../../../modules/messages/DTOs/querysparamsDTO";
+import { OldMessages } from "../Entities/OldMessages";
 declare class MessageRepository implements IMessageRepository {
     private repositoryMessage;
     private repositoryChat;
     private repositoryContacts;
+    private repositoryOldMessage;
     private next;
     constructor();
+    getOldMessages(id: number): Promise<OldMessages[]>;
     createMessage(message: MessageDTO): Promise<Messages>;
     update(id: number, message: string): Promise<Messages>;
     getFilterToStatusSidebar(statusAttention: string): Promise<DtoNewMessages[]>;

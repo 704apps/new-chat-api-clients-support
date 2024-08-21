@@ -1,4 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,39 +48,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserController = void 0;
-require("reflect-metadata");
+exports.GetOldMessagesUseCase = void 0;
+var AppError_1 = require("../../../../error/AppError");
 var tsyringe_1 = require("tsyringe");
-var CreateUserUseCase_1 = require("./CreateUserUseCase");
-var CreateUserController = /** @class */ (function () {
-    function CreateUserController() {
+var GetOldMessagesUseCase = /** @class */ (function () {
+    function GetOldMessagesUseCase(messageRepository) {
+        this.messageRepository = messageRepository;
     }
-    CreateUserController.prototype.handle = function (request, response) {
+    GetOldMessagesUseCase.prototype.getOldMessages = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name_1, email, password, role, createUseCase, user, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var newMessage, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 3, , 4]);
-                        _a = request.body, name_1 = _a.name, email = _a.email, password = _a.password, role = _a.role;
-                        if (!name_1 || !email || !password || !role) {
-                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
-                        }
-                        return [4 /*yield*/, tsyringe_1.container.resolve(CreateUserUseCase_1.CreateUserUseCase)];
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.messageRepository.getOldMessages(id)];
                     case 1:
-                        createUseCase = _b.sent();
-                        return [4 /*yield*/, createUseCase.execute({ name: name_1, email: email, password: password, role: role })];
+                        newMessage = _a.sent();
+                        return [2 /*return*/, newMessage];
                     case 2:
-                        user = _b.sent();
-                        return [2 /*return*/, response.status(201).json({ message: 'User created successfully', user: user })];
-                    case 3:
-                        error_1 = _b.sent();
-                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 4: return [2 /*return*/];
+                        error_1 = _a.sent();
+                        throw new AppError_1.AppError('Unexpected error', 400, { error: error_1 });
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return CreateUserController;
+    GetOldMessagesUseCase = __decorate([
+        (0, tsyringe_1.injectable)(),
+        __param(0, (0, tsyringe_1.inject)("MessageRepository")),
+        __metadata("design:paramtypes", [Object])
+    ], GetOldMessagesUseCase);
+    return GetOldMessagesUseCase;
 }());
-exports.CreateUserController = CreateUserController;
+exports.GetOldMessagesUseCase = GetOldMessagesUseCase;

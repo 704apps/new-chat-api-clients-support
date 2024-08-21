@@ -52,8 +52,8 @@ messageRoutes.delete('/delete_message/:id',ensureAuthenticated,deleteMessageCont
 messageRoutes.get('/newmessages',ensureAuthenticated, getNewMessagesController.handle)
 messageRoutes.get('/assisting/',ensureAuthenticated, getChatsRespondingToSupportController.handle)
 
-messageRoutes.get('/messages/:id', getOneMessagesClientController.handle)
-messageRoutes.get('/oldMessages/:id', getOldMessagesController.handle)
+messageRoutes.get('/messages/:id',ensureAuthenticated, getOneMessagesClientController.handle)
+messageRoutes.get('/oldMessages/:id', ensureAuthenticated,getOldMessagesController.handle)
 
 messageRoutes.get('/search_project/:id',ensureAuthenticated, getSearchProjectController.handle)
 messageRoutes.get('/search_word_phrase/',ensureAuthenticated, getSearchByWordOrPhraseController.handle)

@@ -45,12 +45,36 @@ var Contacts_1 = require("../../../../../modules/contacts/infra/typeorm/Entities
 var server_1 = require("../../../../../main/infra/http/server");
 var AppError_1 = require("../../../../../error/AppError");
 var aws_1 = require("../../../../../main/infra/upload/aws");
+var OldMessages_1 = require("../Entities/OldMessages");
 var MessageRepository = /** @class */ (function () {
     function MessageRepository() {
         this.repositoryMessage = app_data_source_1.myDataSource.getRepository(Messages_1.Messages);
+        this.repositoryOldMessage = app_data_source_1.myDataSource.getRepository(OldMessages_1.OldMessages);
         this.repositoryChat = app_data_source_1.myDataSource.getRepository(Chats_1.Chats);
         this.repositoryContacts = app_data_source_1.myDataSource.getRepository(Contacts_1.Contacts);
     }
+    MessageRepository.prototype.getOldMessages = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var message, oldMessages;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repositoryOldMessage.find({
+                            where: { idMessage: { id: id },
+                            }
+                        })];
+                    case 1:
+                        message = _a.sent();
+                        if (message.length === 0) {
+                            throw new AppError_1.AppError("Messages not found");
+                        }
+                        oldMessages = message.map(function (item) { return ({
+                            oldMessage: item.oldMessage,
+                        }); });
+                        return [2 /*return*/, oldMessages];
+                }
+            });
+        });
+    };
     //Salva as mensagens enviada
     MessageRepository.prototype.createMessage = function (message) {
         return __awaiter(this, void 0, void 0, function () {
@@ -163,7 +187,7 @@ var MessageRepository = /** @class */ (function () {
     };
     MessageRepository.prototype.update = function (id, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var getMessage;
+            var getMessage, oldMessage, idMessage, newOldMessage;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.repositoryMessage.findOneBy({
@@ -174,23 +198,34 @@ var MessageRepository = /** @class */ (function () {
                         if (!getMessage) {
                             throw new AppError_1.AppError("Message not found!");
                         }
+                        oldMessage = getMessage.messages;
                         getMessage.messages = message;
                         getMessage.msgEdt = true;
                         return [4 /*yield*/, this.repositoryMessage.save(getMessage)];
                     case 2:
                         _a.sent();
-                        if (!(getMessage.origin === 'support')) return [3 /*break*/, 4];
+                        idMessage = getMessage.id;
+                        return [4 /*yield*/, this.repositoryOldMessage.create({
+                                oldMessage: oldMessage,
+                                idMessage: { id: idMessage },
+                            })];
+                    case 3:
+                        newOldMessage = _a.sent();
+                        return [4 /*yield*/, this.repositoryOldMessage.save(newOldMessage)];
+                    case 4:
+                        _a.sent();
+                        if (!(getMessage.origin === 'support')) return [3 /*break*/, 6];
                         //  console.log('veio aqui')
                         return [4 /*yield*/, server_1.io.to(getMessage.projectId).emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages })];
-                    case 3:
+                    case 5:
                         //  console.log('veio aqui')
                         _a.sent();
-                        return [3 /*break*/, 6];
-                    case 4: return [4 /*yield*/, server_1.io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages })];
-                    case 5:
+                        return [3 /*break*/, 8];
+                    case 6: return [4 /*yield*/, server_1.io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages })];
+                    case 7:
                         _a.sent();
-                        _a.label = 6;
-                    case 6: return [2 /*return*/, getMessage];
+                        _a.label = 8;
+                    case 8: return [2 /*return*/, getMessage];
                 }
             });
         });

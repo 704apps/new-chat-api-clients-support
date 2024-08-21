@@ -57,13 +57,14 @@ var UserRepository = /** @class */ (function () {
     UserRepository.prototype.create = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
             var user, userCreated;
-            var name = _b.name, email = _b.email, password = _b.password;
+            var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, this.repository.create({
                             name: name,
                             email: email,
-                            password: password
+                            password: password,
+                            role: role
                         })];
                     case 1:
                         user = _c.sent();

@@ -36,39 +36,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserController = void 0;
-require("reflect-metadata");
+exports.GetOldMessagesController = void 0;
+var GetOldMessagesUseCase_1 = require("./GetOldMessagesUseCase");
 var tsyringe_1 = require("tsyringe");
-var CreateUserUseCase_1 = require("./CreateUserUseCase");
-var CreateUserController = /** @class */ (function () {
-    function CreateUserController() {
+var GetOldMessagesController = /** @class */ (function () {
+    function GetOldMessagesController() {
     }
-    CreateUserController.prototype.handle = function (request, response) {
+    GetOldMessagesController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name_1, email, password, role, createUseCase, user, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var idMessage, getOldMessagesUseCase, messages, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 3, , 4]);
-                        _a = request.body, name_1 = _a.name, email = _a.email, password = _a.password, role = _a.role;
-                        if (!name_1 || !email || !password || !role) {
-                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
-                        }
-                        return [4 /*yield*/, tsyringe_1.container.resolve(CreateUserUseCase_1.CreateUserUseCase)];
+                        _a.trys.push([0, 2, , 3]);
+                        idMessage = request.params.id;
+                        console.log("aqui1");
+                        getOldMessagesUseCase = tsyringe_1.container.resolve(GetOldMessagesUseCase_1.GetOldMessagesUseCase);
+                        console.log("aqui2");
+                        return [4 /*yield*/, getOldMessagesUseCase.getOldMessages(idMessage)];
                     case 1:
-                        createUseCase = _b.sent();
-                        return [4 /*yield*/, createUseCase.execute({ name: name_1, email: email, password: password, role: role })];
+                        messages = _a.sent();
+                        console.log("aqui3");
+                        return [2 /*return*/, response.status(200).json(messages)];
                     case 2:
-                        user = _b.sent();
-                        return [2 /*return*/, response.status(201).json({ message: 'User created successfully', user: user })];
-                    case 3:
-                        error_1 = _b.sent();
+                        error_1 = _a.sent();
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 4: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return CreateUserController;
+    return GetOldMessagesController;
 }());
-exports.CreateUserController = CreateUserController;
+exports.GetOldMessagesController = GetOldMessagesController;

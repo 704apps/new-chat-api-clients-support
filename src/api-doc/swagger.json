@@ -461,16 +461,19 @@
                         "content": {
                             "application/json": {
                                 "schemas": {
-                                    "type": "array",
+                                    "type": "object",
                                     "$ref": "#/components/schemas/Messages"
                                 },
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
                                         "value": [
-                                            "Ota tudo pem",
-                                            "Ola ppu bem",
-                                            "Olá tudo cem"
+                                            {
+                                                "oldMessage": "Penhor preciso que vc faça isso, seu burro"
+                                            },
+                                            {
+                                                "oldMessage": "Senhor preciso que vc faça isso, seu burro"
+                                            }
                                         ]
                                     }
                                 }

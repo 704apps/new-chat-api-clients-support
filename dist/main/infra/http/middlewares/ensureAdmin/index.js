@@ -62,7 +62,8 @@ function ensureAdmin(request, response, next) {
                     if (!user) {
                         throw new AppError_1.AppError('User does not exist!', 401);
                     }
-                    if (user.role !== 'admin') {
+                    console.log(user);
+                    if (user.role !== 'MASTER') {
                         return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     }
                     next();
@@ -96,7 +97,7 @@ function ensureAdminAndSubadmin(request, response, next) {
                     if (!user) {
                         throw new AppError_1.AppError('User does not exist!', 401);
                     } // Supondo que o usuário autenticado é armazenado em request.user
-                    if (user.role !== 'subadmin' && user.role !== 'admin') {
+                    if (user.role !== 'SUBMASTER' && user.role !== 'MASTER') {
                         return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     }
                     next();

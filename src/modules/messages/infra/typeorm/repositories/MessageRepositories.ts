@@ -11,32 +11,39 @@ import { io } from '../../../../../main/infra/http/server'
 import { AppError } from "../../../../../error/AppError";
 import { uploadToAws } from "../../../../../main/infra/upload/aws";
 import { NextFunction } from "express";
+import { OldMessages } from "../Entities/OldMessages";
 
 class MessageRepository implements IMessageRepository {
     private repositoryMessage: Repository<Messages>
     private repositoryChat: Repository<Chats>
     private repositoryContacts: Repository<Contacts>
-
+    private repositoryOldMessage:  Repository<OldMessages>
     private next: NextFunction
 
     constructor() {
         this.repositoryMessage = myDataSource.getRepository(Messages)
+        this.repositoryOldMessage = myDataSource.getRepository(OldMessages)
+
         this.repositoryChat = myDataSource.getRepository(Chats)
         this.repositoryContacts = myDataSource.getRepository(Contacts)
 
     }
-    async getOldMessages(id: number): Promise<String[]> {
-        const message = await this.repositoryMessage.findOneBy({
-            id,
-        });
-        if (!message) {
-            throw new AppError("Message not found")
+    async getOldMessages(id: number): Promise<OldMessages[]> {
+        const message = await this.repositoryOldMessage.find({
+            where: { idMessage: { id } ,
+        
         }
+        });
 
-        const oldMessage =  message.oldMessages.split(",")
+        if (message.length === 0) {
+            throw new AppError("Messages not found");
+        }
+        const oldMessages = message.map((item) => ({
+            oldMessage: item.oldMessage,
+           
+        })) as unknown as OldMessages[]
 
-
-        return oldMessage;
+        return oldMessages;
     }
 
 
@@ -149,18 +156,19 @@ class MessageRepository implements IMessageRepository {
             throw new AppError("Message not found!")
         }
 
-
-        if (getMessage.oldMessages !== "") {
-            getMessage.oldMessages = `${getMessage.messages},${getMessage.oldMessages}`
-
-        }else{
-            getMessage.oldMessages = getMessage.messages
-        }
-        
+       
+        const oldMessage = getMessage.messages
         getMessage.messages = message;
         getMessage.msgEdt = true;
 
         await this.repositoryMessage.save(getMessage);
+        const idMessage = getMessage.id
+        const newOldMessage = await this.repositoryOldMessage.create({
+            oldMessage,
+            idMessage: {id:idMessage},
+        });
+
+        await this.repositoryOldMessage.save(newOldMessage);
 
         if (getMessage.origin === 'support') {
             //  console.log('veio aqui')
