@@ -5,6 +5,7 @@ import {myDataSource} from "../../../../../main/infra/typeorm/connection/app-dat
 import { Users } from "../Entities/Users";
 import { AppError } from "../../../../../error/AppError";
 import { injectable } from "tsyringe";
+import { IUpdateUserDTOS } from "../../../DTOs/IUpdateUserDTOS";
 
 @injectable()
 class UserRepository implements IUserRepository {
@@ -14,6 +15,31 @@ class UserRepository implements IUserRepository {
     constructor() {
         this.repository = myDataSource.getRepository(Users)
     }
+
+    async edit( data: IUpdateUserDTOS): Promise<Users> {
+
+        const {id,email,name} = data
+
+        const user = await this.repository.findOneBy({id})
+        console.log(email)
+        user.name = name
+        user.email = email
+
+        const updateUser = await this.repository.save(user)
+        
+        return updateUser
+
+    }
+    async updateUserToSubMaster(id: string,role:string): Promise<Users> {
+        const user = await this.repository.findOneBy({id})
+
+        user.role = role;
+
+        const updateuser = await this.repository.save(user)
+
+        return updateuser
+
+    }
     
     async create({ name,  email, password ,role}: ICreateUserDTO): Promise<Users> {
 
@@ -21,7 +47,8 @@ class UserRepository implements IUserRepository {
             name, 
             email, 
             password,
-            role
+            role,
+            active:true
             
         })
         
@@ -40,17 +67,41 @@ class UserRepository implements IUserRepository {
         
         return user
     }
-    async findById(id: string): Promise<Users | null> {
+    async findById(id: string): Promise<Users > {
       //  console.log('veio aqui')
-        try{
-        const user = await this.repository.findOneBy({id})
         
+        const user = await this.repository.findOneBy({id})
+        console.log(user)
         return user   
-        }catch(error){
-            throw new AppError('dfdfdf')
-        }
+        
+    }
+    async deleteUser(id: string): Promise<String > {
+        //  console.log('veio aqui')
+          
+          const user = await this.repository.findOneBy({id})
+
+          if(!user){
+            throw new AppError('User Not Found')
+          }
+          await this.repository.delete(id)
+          return 'User deleted successfully '   
+          
     }
 
+    async disableUser(id: string,action:boolean): Promise<String > {
+        //  console.log('veio aqui')
+          
+          const user = await this.repository.findOneBy({id})
+
+          if(!user){
+            throw new AppError('User Not Found')
+          }
+          user.active = action
+
+          await this.repository.save(user)
+          return 'User successfully deactivated!'   
+          
+    }
     async allUsers(): Promise<Users[]> {
      //   console.log('veio aqui')
         try{

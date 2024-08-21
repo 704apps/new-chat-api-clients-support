@@ -16,6 +16,7 @@ import {GetSearchProjectController} from '../../../../modules/messages/useCases/
 import {GetSearchByWordOrPhraseController} from '../../../../modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController'
 import {GetSearchGenerationToSupportController} from '../../../../modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController'
 import {GetFilterToStatusSidebarController} from '../../../../modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController'
+import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 
 
@@ -53,7 +54,7 @@ messageRoutes.get('/newmessages',ensureAuthenticated, getNewMessagesController.h
 messageRoutes.get('/assisting/',ensureAuthenticated, getChatsRespondingToSupportController.handle)
 
 messageRoutes.get('/messages/:id',ensureAuthenticated, getOneMessagesClientController.handle)
-messageRoutes.get('/oldMessages/:id', ensureAuthenticated,getOldMessagesController.handle)
+messageRoutes.get('/oldMessages/:id',ensureAdmin, ensureAuthenticated,getOldMessagesController.handle)
 
 messageRoutes.get('/search_project/:id',ensureAuthenticated, getSearchProjectController.handle)
 messageRoutes.get('/search_word_phrase/',ensureAuthenticated, getSearchByWordOrPhraseController.handle)

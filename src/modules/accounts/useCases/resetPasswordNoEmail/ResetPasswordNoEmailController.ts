@@ -21,7 +21,7 @@ class ResetPasswordNoEmailController {
 
             const resChanged=  await resetPasswordNoEmailUseCase.resetPassword( id, password )
       
-            return response.status(201).json(resChanged)
+            return response.status(200).json(resChanged)
             
         } catch (error) {
           //  console.log(error)

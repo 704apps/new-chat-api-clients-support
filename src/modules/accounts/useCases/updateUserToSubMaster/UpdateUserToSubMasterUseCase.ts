@@ -2,35 +2,31 @@ import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
 import { AppError } from "../../../../error/AppError";
-import { Users } from "../../infra/typeorm/Entities/Users";
 
 @injectable()
-class GetAllUsersUseCase {
+class UpdateUserToSubMasterUseCase {
   constructor(
     @inject("UserRepository")
     private userRepository: IUserRepository
   ) {}
 
-  async getAllUser():Promise<Users> {
-    const users = await this.userRepository.allUsers();
+  async updateUserToSubMaster(id: string,role:string) {
+    const user = await this.userRepository.updateUserToSubMaster(id,role);
 
-    if (!users) {
+    if (!user) {
       throw new AppError('User not found', 400);
     }
 
-    const usersData = users.map(user => ({
+    const userData = {
       id: user.id,
       name: user.name,
-      email: user.email,
       role: user.role,
-      active: user.active,
+      email: user.email,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-    })) as unknown as Users
-
-    return usersData;
-
+    };
+    return userData;
   }
 }
 
-export { GetAllUsersUseCase };
+export { UpdateUserToSubMasterUseCase };

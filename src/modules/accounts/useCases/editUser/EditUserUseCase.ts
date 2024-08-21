@@ -5,9 +5,10 @@ import { ICreateUserDTO } from "../../../../modules/accounts/DTOs/ICreateUserDTO
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
 import { hash } from 'bcrypt'
 import { AppError } from "../../../../error/AppError";
+import { IUpdateUserDTOS } from "../../DTOs/IUpdateUserDTOS";
 
 @injectable()
-class CreateUserUseCase {
+class EditUserUseCase {
 
     constructor(
         @inject("UserRepository")
@@ -15,37 +16,36 @@ class CreateUserUseCase {
     ) { }
 
 
-    async execute({ name, email, password ,role}: ICreateUserDTO) {
+    async execute(data: IUpdateUserDTOS) {
         try {
            
-            const passwordHash = await hash(password, 8)
+            const { id} = data
+           
            // console.log('veio no antes de ver email'+passwordHash)
             
-            const isuseralreadyExist = await this.userRepository.findByEmail(email)
+            const isuseralreadyExist = await this.userRepository.findById(id)
 
           //  console.log('veio no depois de ver email')
 
-            if (isuseralreadyExist) {
+            if (!isuseralreadyExist) {
+                console.log('veio aqui')
                 throw new AppError("User already exists")
             }
 
            // console.log('veio no antes de salvar')
 
-            const user = await this.userRepository.create({
-                name,
-                email,
-                password: passwordHash,
-                role
-            })
-            const userCreated = {
+            const user = await this.userRepository.edit(data)   
+            console.log(user)
+
+            const userUpdate = {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                role : user.role,
-                active : user.active
+                role : user.role
             }
-          
-            return userCreated
+            console.log(userUpdate)
+            return userUpdate
+
         } catch (error) {
             console.log(error)
             throw new AppError('Error creating user',400,{error})
@@ -55,4 +55,4 @@ class CreateUserUseCase {
 
 }
 
-export { CreateUserUseCase }
+export { EditUserUseCase }
