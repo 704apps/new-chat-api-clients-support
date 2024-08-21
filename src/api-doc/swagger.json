@@ -435,8 +435,8 @@
         },
         "/oldMessages/{id}": {
             "get": {
-                "summary": "Lista todas as messagens que foram editadas",
-                "description": "Lista todas as messagens que foram editadas",
+                "summary": "Lista atualização de uma mensagem",
+                "description": "Lista atualização de uma mensagem",
                 "parameters": [
                     {
                         "name": "id",
