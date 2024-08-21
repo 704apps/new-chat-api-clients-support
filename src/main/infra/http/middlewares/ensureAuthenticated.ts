@@ -54,7 +54,6 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                    // console.log(projectId)
                     try {
                         const tokenMatches = await compareToken(projectId, token);
-                        console.log
                         if (!tokenMatches) {
                      //       console.log('veio aqui3:' + projectId)
 

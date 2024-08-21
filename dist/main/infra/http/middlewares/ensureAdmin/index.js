@@ -62,7 +62,6 @@ function ensureAdmin(request, response, next) {
                     if (!user) {
                         throw new AppError_1.AppError('User does not exist!', 401);
                     }
-                    console.log(user);
                     if (user.role !== 'MASTER') {
                         return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     }

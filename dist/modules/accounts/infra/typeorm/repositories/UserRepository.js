@@ -163,7 +163,7 @@ var UserRepository = /** @class */ (function () {
     };
     UserRepository.prototype.disableUser = function (id, action) {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            var user, seeAction;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
@@ -173,10 +173,14 @@ var UserRepository = /** @class */ (function () {
                             throw new AppError_1.AppError('User Not Found');
                         }
                         user.active = action;
+                        seeAction = 'deactivated';
+                        if (action) {
+                            seeAction = 'reactivated';
+                        }
                         return [4 /*yield*/, this.repository.save(user)];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, 'User successfully deactivated!'];
+                        return [2 /*return*/, "User successfully ".concat(seeAction, "!")];
                 }
             });
         });

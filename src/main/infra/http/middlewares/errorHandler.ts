@@ -18,7 +18,6 @@ function errorHandler(
   }
 
   // Para qualquer outro erro, que não seja AppError, exiba a mensagem original do erro.
-  console.error();
 
   return response.status(500).json({
     status: 500,

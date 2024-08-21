@@ -26,7 +26,6 @@ async function ensureAdmin(request: Request, response: Response, next: NextFunct
         if (!user) {
             throw new AppError('User does not exist!', 401);
         }
-        console.log(user)
 
         if (user.role !== 'MASTER') {
             return next(new AppError('Access denied', 403));

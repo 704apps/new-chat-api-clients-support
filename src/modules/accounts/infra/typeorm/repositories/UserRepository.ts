@@ -97,9 +97,12 @@ class UserRepository implements IUserRepository {
             throw new AppError('User Not Found')
           }
           user.active = action
-
+          let seeAction = 'deactivated'
+          if(action){
+            seeAction = 'reactivated'
+          }
           await this.repository.save(user)
-          return 'User successfully deactivated!'   
+          return `User successfully ${seeAction}!`   
           
     }
     async allUsers(): Promise<Users[]> {

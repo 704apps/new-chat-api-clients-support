@@ -94,7 +94,6 @@ function ensureAuthenticated(request, response, next) {
                     return [4 /*yield*/, compareToken(projectId_1, token)];
                 case 5:
                     tokenMatches_1 = _d.sent();
-                    console.log;
                     if (!tokenMatches_1) {
                         //       console.log('veio aqui3:' + projectId)
                         throw new AppError_1.AppError('Invalid or expired token', 401);
