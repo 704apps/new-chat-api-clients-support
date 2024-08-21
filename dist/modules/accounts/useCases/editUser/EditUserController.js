@@ -36,42 +36,46 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResetPasswordNoEmailController = void 0;
+exports.EditUserController = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var ResetPasswordNoEmailUseCase_1 = require("./ResetPasswordNoEmailUseCase");
-var ResetPasswordNoEmailController = /** @class */ (function () {
-    function ResetPasswordNoEmailController() {
+var EditUserUseCase_1 = require("./EditUserUseCase");
+var EditUserController = /** @class */ (function () {
+    function EditUserController() {
     }
-    ResetPasswordNoEmailController.prototype.handle = function (request, response) {
+    EditUserController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, password, resetPasswordNoEmailUseCase, resChanged, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var id, _a, name_1, email, data, editUserUseCase, user, error_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _b.trys.push([0, 3, , 4]);
                         id = request.params.id;
-                        password = request.body.password;
-                        // console.log(id)
-                        if (!password) {
+                        _a = request.body, name_1 = _a.name, email = _a.email;
+                        if (!name_1 || !email || !id) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
                         }
-                        return [4 /*yield*/, tsyringe_1.container.resolve(ResetPasswordNoEmailUseCase_1.ResetPasswordNoEmailUseCase)];
+                        data = {
+                            id: id,
+                            email: email,
+                            name: name_1
+                        };
+                        return [4 /*yield*/, tsyringe_1.container.resolve(EditUserUseCase_1.EditUserUseCase)];
                     case 1:
-                        resetPasswordNoEmailUseCase = _a.sent();
-                        return [4 /*yield*/, resetPasswordNoEmailUseCase.resetPassword(id, password)];
+                        editUserUseCase = _b.sent();
+                        console.log(data);
+                        return [4 /*yield*/, editUserUseCase.execute(data)];
                     case 2:
-                        resChanged = _a.sent();
-                        return [2 /*return*/, response.status(200).json(resChanged)];
+                        user = _b.sent();
+                        return [2 /*return*/, response.status(200).json({ message: 'User update successfully', user: user })];
                     case 3:
-                        error_1 = _a.sent();
-                        //  console.log(error)
+                        error_1 = _b.sent();
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return ResetPasswordNoEmailController;
+    return EditUserController;
 }());
-exports.ResetPasswordNoEmailController = ResetPasswordNoEmailController;
+exports.EditUserController = EditUserController;

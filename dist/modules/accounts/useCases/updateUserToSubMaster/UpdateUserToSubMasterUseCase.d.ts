@@ -1,15 +1,15 @@
 import "reflect-metadata";
-import { ICreateUserDTO } from "../../../../modules/accounts/DTOs/ICreateUserDTOS";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
-declare class CreateUserUseCase {
+declare class UpdateUserToSubMasterUseCase {
     private userRepository;
     constructor(userRepository: IUserRepository);
-    execute({ name, email, password, role }: ICreateUserDTO): Promise<{
+    updateUserToSubMaster(id: string, role: string): Promise<{
         id: string;
         name: string;
-        email: string;
         role: string;
-        active: boolean;
+        email: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
 }
-export { CreateUserUseCase };
+export { UpdateUserToSubMasterUseCase };

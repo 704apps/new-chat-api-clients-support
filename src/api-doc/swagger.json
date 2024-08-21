@@ -283,8 +283,8 @@
         },
         "/disable_user/{id}": {
             "patch": {
-                "summary": "Desativar usuário pelo id",
-                "description": "Essa rota Desativa um usuário pelo seu id",
+                "summary": "Ativa ou desaativa usuário pelo id",
+                "description": "Essa rota Ativa ou Desativa um usuário pelo seu id",
                 "tags": [
                     "Rotas de Autenticação"
                 ],

@@ -48,67 +48,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserUseCase = void 0;
+exports.EditUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var bcrypt_1 = require("bcrypt");
 var AppError_1 = require("../../../../error/AppError");
-var CreateUserUseCase = /** @class */ (function () {
-    function CreateUserUseCase(userRepository) {
+var EditUserUseCase = /** @class */ (function () {
+    function EditUserUseCase(userRepository) {
         this.userRepository = userRepository;
     }
-    CreateUserUseCase.prototype.execute = function (_a) {
-        return __awaiter(this, arguments, void 0, function (_b) {
-            var passwordHash, isuseralreadyExist, user, userCreated, error_1;
-            var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+    EditUserUseCase.prototype.execute = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, isuseralreadyExist, user, userUpdate, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _c.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, (0, bcrypt_1.hash)(password, 8)
-                            // console.log('veio no antes de ver email'+passwordHash)
-                        ];
-                    case 1:
-                        passwordHash = _c.sent();
-                        return [4 /*yield*/, this.userRepository.findByEmail(email)
+                        _a.trys.push([0, 3, , 4]);
+                        id = data.id;
+                        return [4 /*yield*/, this.userRepository.findById(id)
                             //  console.log('veio no depois de ver email')
                         ];
-                    case 2:
-                        isuseralreadyExist = _c.sent();
+                    case 1:
+                        isuseralreadyExist = _a.sent();
                         //  console.log('veio no depois de ver email')
-                        if (isuseralreadyExist) {
+                        if (!isuseralreadyExist) {
+                            console.log('veio aqui');
                             throw new AppError_1.AppError("User already exists");
                         }
-                        return [4 /*yield*/, this.userRepository.create({
-                                name: name,
-                                email: email,
-                                password: passwordHash,
-                                role: role
-                            })];
-                    case 3:
-                        user = _c.sent();
-                        userCreated = {
+                        return [4 /*yield*/, this.userRepository.edit(data)];
+                    case 2:
+                        user = _a.sent();
+                        console.log(user);
+                        userUpdate = {
                             id: user.id,
                             name: user.name,
                             email: user.email,
-                            role: user.role,
-                            active: user.active
+                            role: user.role
                         };
-                        return [2 /*return*/, userCreated];
-                    case 4:
-                        error_1 = _c.sent();
+                        console.log(userUpdate);
+                        return [2 /*return*/, userUpdate];
+                    case 3:
+                        error_1 = _a.sent();
                         console.log(error_1);
                         throw new AppError_1.AppError('Error creating user', 400, { error: error_1 });
-                    case 5: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    CreateUserUseCase = __decorate([
+    EditUserUseCase = __decorate([
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("UserRepository")),
         __metadata("design:paramtypes", [Object])
-    ], CreateUserUseCase);
-    return CreateUserUseCase;
+    ], EditUserUseCase);
+    return EditUserUseCase;
 }());
-exports.CreateUserUseCase = CreateUserUseCase;
+exports.EditUserUseCase = EditUserUseCase;

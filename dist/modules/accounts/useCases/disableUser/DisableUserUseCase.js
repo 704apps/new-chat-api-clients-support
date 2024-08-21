@@ -48,67 +48,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserUseCase = void 0;
+exports.DisableUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var bcrypt_1 = require("bcrypt");
 var AppError_1 = require("../../../../error/AppError");
-var CreateUserUseCase = /** @class */ (function () {
-    function CreateUserUseCase(userRepository) {
+var DisableUserUseCase = /** @class */ (function () {
+    function DisableUserUseCase(userRepository) {
         this.userRepository = userRepository;
     }
-    CreateUserUseCase.prototype.execute = function (_a) {
-        return __awaiter(this, arguments, void 0, function (_b) {
-            var passwordHash, isuseralreadyExist, user, userCreated, error_1;
-            var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _c.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, (0, bcrypt_1.hash)(password, 8)
-                            // console.log('veio no antes de ver email'+passwordHash)
-                        ];
+    DisableUserUseCase.prototype.disableUser = function (id, action) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.userRepository.disableUser(id, action)];
                     case 1:
-                        passwordHash = _c.sent();
-                        return [4 /*yield*/, this.userRepository.findByEmail(email)
-                            //  console.log('veio no depois de ver email')
-                        ];
-                    case 2:
-                        isuseralreadyExist = _c.sent();
-                        //  console.log('veio no depois de ver email')
-                        if (isuseralreadyExist) {
-                            throw new AppError_1.AppError("User already exists");
+                        user = _a.sent();
+                        if (!user) {
+                            throw new AppError_1.AppError('User not found', 400);
                         }
-                        return [4 /*yield*/, this.userRepository.create({
-                                name: name,
-                                email: email,
-                                password: passwordHash,
-                                role: role
-                            })];
-                    case 3:
-                        user = _c.sent();
-                        userCreated = {
-                            id: user.id,
-                            name: user.name,
-                            email: user.email,
-                            role: user.role,
-                            active: user.active
-                        };
-                        return [2 /*return*/, userCreated];
-                    case 4:
-                        error_1 = _c.sent();
-                        console.log(error_1);
-                        throw new AppError_1.AppError('Error creating user', 400, { error: error_1 });
-                    case 5: return [2 /*return*/];
+                        return [2 /*return*/, user];
                 }
             });
         });
     };
-    CreateUserUseCase = __decorate([
+    DisableUserUseCase = __decorate([
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("UserRepository")),
         __metadata("design:paramtypes", [Object])
-    ], CreateUserUseCase);
-    return CreateUserUseCase;
+    ], DisableUserUseCase);
+    return DisableUserUseCase;
 }());
-exports.CreateUserUseCase = CreateUserUseCase;
+exports.DisableUserUseCase = DisableUserUseCase;

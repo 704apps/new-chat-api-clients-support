@@ -14,6 +14,7 @@ var GetSearchProjectController_1 = require("../../../../modules/messages/useCase
 var GetSearchByWordOrPhraseController_1 = require("../../../../modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController");
 var GetSearchGenerationToSupportController_1 = require("../../../../modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController");
 var GetFilterToStatusSidebarController_1 = require("../../../../modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController");
+var ensureAdmin_1 = require("../middlewares/ensureAdmin");
 var upload_1 = require("../../upload");
 var messageRoutes = (0, express_1.Router)();
 exports.messageRoutes = messageRoutes;
@@ -34,7 +35,7 @@ messageRoutes.delete('/delete_message/:id', ensureAuthenticated_1.ensureAuthenti
 messageRoutes.get('/newmessages', ensureAuthenticated_1.ensureAuthenticated, getNewMessagesController.handle);
 messageRoutes.get('/assisting/', ensureAuthenticated_1.ensureAuthenticated, getChatsRespondingToSupportController.handle);
 messageRoutes.get('/messages/:id', ensureAuthenticated_1.ensureAuthenticated, getOneMessagesClientController.handle);
-messageRoutes.get('/oldMessages/:id', ensureAuthenticated_1.ensureAuthenticated, getOldMessagesController.handle);
+messageRoutes.get('/oldMessages/:id', ensureAdmin_1.ensureAdmin, ensureAuthenticated_1.ensureAuthenticated, getOldMessagesController.handle);
 messageRoutes.get('/search_project/:id', ensureAuthenticated_1.ensureAuthenticated, getSearchProjectController.handle);
 messageRoutes.get('/search_word_phrase/', ensureAuthenticated_1.ensureAuthenticated, getSearchByWordOrPhraseController.handle);
 messageRoutes.get('/search_generaltosupport/', ensureAuthenticated_1.ensureAuthenticated, getSearchGenerationToSupportController.handle);

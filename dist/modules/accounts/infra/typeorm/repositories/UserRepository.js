@@ -54,6 +54,44 @@ var UserRepository = /** @class */ (function () {
     function UserRepository() {
         this.repository = app_data_source_1.myDataSource.getRepository(Users_1.Users);
     }
+    UserRepository.prototype.edit = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, email, name, user, updateUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = data.id, email = data.email, name = data.name;
+                        return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 1:
+                        user = _a.sent();
+                        console.log(email);
+                        user.name = name;
+                        user.email = email;
+                        return [4 /*yield*/, this.repository.save(user)];
+                    case 2:
+                        updateUser = _a.sent();
+                        return [2 /*return*/, updateUser];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.updateUserToSubMaster = function (id, role) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user, updateuser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 1:
+                        user = _a.sent();
+                        user.role = role;
+                        return [4 /*yield*/, this.repository.save(user)];
+                    case 2:
+                        updateuser = _a.sent();
+                        return [2 /*return*/, updateuser];
+                }
+            });
+        });
+    };
     UserRepository.prototype.create = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
             var user, userCreated;
@@ -64,7 +102,8 @@ var UserRepository = /** @class */ (function () {
                             name: name,
                             email: email,
                             password: password,
-                            role: role
+                            role: role,
+                            active: true
                         })];
                     case 1:
                         user = _c.sent();
@@ -91,26 +130,60 @@ var UserRepository = /** @class */ (function () {
     };
     UserRepository.prototype.findById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, error_1;
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
                     case 1:
                         user = _a.sent();
+                        console.log(user);
                         return [2 /*return*/, user];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.deleteUser = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            throw new AppError_1.AppError('User Not Found');
+                        }
+                        return [4 /*yield*/, this.repository.delete(id)];
                     case 2:
-                        error_1 = _a.sent();
-                        throw new AppError_1.AppError('dfdfdf');
-                    case 3: return [2 /*return*/];
+                        _a.sent();
+                        return [2 /*return*/, 'User deleted successfully '];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.disableUser = function (id, action) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            throw new AppError_1.AppError('User Not Found');
+                        }
+                        user.active = action;
+                        return [4 /*yield*/, this.repository.save(user)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, 'User successfully deactivated!'];
                 }
             });
         });
     };
     UserRepository.prototype.allUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var users, error_2;
+            var users, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -120,7 +193,7 @@ var UserRepository = /** @class */ (function () {
                         users = _a.sent();
                         return [2 /*return*/, users];
                     case 2:
-                        error_2 = _a.sent();
+                        error_1 = _a.sent();
                         throw new AppError_1.AppError('dfdfdf');
                     case 3: return [2 /*return*/];
                 }
@@ -129,7 +202,7 @@ var UserRepository = /** @class */ (function () {
     };
     UserRepository.prototype.resetPasswordNoEmail = function (id, newPassword) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, error_3;
+            var user, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -146,8 +219,8 @@ var UserRepository = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, 'Password change successfully'];
                     case 3:
-                        error_3 = _a.sent();
-                        throw new AppError_1.AppError('', 400, { error: error_3 });
+                        error_2 = _a.sent();
+                        throw new AppError_1.AppError('', 400, { error: error_2 });
                     case 4: return [2 /*return*/];
                 }
             });

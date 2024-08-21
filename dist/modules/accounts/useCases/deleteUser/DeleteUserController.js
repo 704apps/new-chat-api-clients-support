@@ -36,42 +36,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResetPasswordNoEmailController = void 0;
+exports.DeleteUserController = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var ResetPasswordNoEmailUseCase_1 = require("./ResetPasswordNoEmailUseCase");
-var ResetPasswordNoEmailController = /** @class */ (function () {
-    function ResetPasswordNoEmailController() {
+var DeleteUserUseCase_1 = require("./DeleteUserUseCase");
+var DeleteUserController = /** @class */ (function () {
+    function DeleteUserController() {
     }
-    ResetPasswordNoEmailController.prototype.handle = function (request, response) {
+    DeleteUserController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, password, resetPasswordNoEmailUseCase, resChanged, error_1;
+            var userId, deleteUserUseCase, user, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        id = request.params.id;
-                        password = request.body.password;
-                        // console.log(id)
-                        if (!password) {
+                        userId = request.params.id;
+                        if (!userId) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
                         }
-                        return [4 /*yield*/, tsyringe_1.container.resolve(ResetPasswordNoEmailUseCase_1.ResetPasswordNoEmailUseCase)];
+                        return [4 /*yield*/, tsyringe_1.container.resolve(DeleteUserUseCase_1.DeleteUserUseCase)];
                     case 1:
-                        resetPasswordNoEmailUseCase = _a.sent();
-                        return [4 /*yield*/, resetPasswordNoEmailUseCase.resetPassword(id, password)];
+                        deleteUserUseCase = _a.sent();
+                        return [4 /*yield*/, deleteUserUseCase.deleteUser(userId)];
                     case 2:
-                        resChanged = _a.sent();
-                        return [2 /*return*/, response.status(200).json(resChanged)];
+                        user = _a.sent();
+                        return [2 /*return*/, response.status(200).json(user)];
                     case 3:
                         error_1 = _a.sent();
-                        //  console.log(error)
-                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
+                        return [2 /*return*/, response.status(400).json(error_1)];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return ResetPasswordNoEmailController;
+    return DeleteUserController;
 }());
-exports.ResetPasswordNoEmailController = ResetPasswordNoEmailController;
+exports.DeleteUserController = DeleteUserController;
