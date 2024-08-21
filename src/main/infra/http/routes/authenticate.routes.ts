@@ -27,7 +27,7 @@ const refreshTokenUserController = new RefreshTokenUserController()
 
 
 
-autheticateRoutes.post("/create_user",ensureAuthenticated,createUserController.handle)
+autheticateRoutes.post("/create_user",ensureAuthenticated,ensureAdmin,createUserController.handle)
 
 autheticateRoutes.post("/sessions", authenticateUserController.handle)
 
@@ -35,9 +35,9 @@ autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.hand
 
 autheticateRoutes.post("/reset_password/:id",ensureAuthenticated, resetPasswordNoEmailController.handle)
  
-autheticateRoutes.get("/users", ensureAuthenticated,getAllUsersController.handle)
+autheticateRoutes.get("/users",ensureAuthenticated, ensureAdminAndSubadmin,getAllUsersController.handle)
      
-autheticateRoutes.get("/search_user_byemail",ensureAuthenticated, getOneUserByEmailController.handle)
+autheticateRoutes.get("/search_user_byemail",ensureAuthenticated,ensureAdminAndSubadmin, getOneUserByEmailController.handle)
 
 autheticateRoutes.post("/refresh_token", refreshTokenUserController.handle)
 

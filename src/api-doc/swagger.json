@@ -433,6 +433,53 @@
                 }
             }
         },
+        "/oldMessages/{id}": {
+            "get": {
+                "summary": "Lista todas as messagens que foram editadas",
+                "description": "Lista todas as messagens que foram editadas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da mensagem"
+                    }
+                   
+                ],
+                "tags": [
+                    "Rotas referente as Mensagens"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Message not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "array",
+                                    "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            "Ota tudo pem",
+                                            "Ola ppu bem",
+                                            "Olá tudo cem"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/update_message/{id}": {
             "patch": {
                 "summary": "Atualiza uma message",

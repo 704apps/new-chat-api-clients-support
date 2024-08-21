@@ -18,7 +18,7 @@ class UpdateMessageUseCase {
             return project
 
         } catch (error) {
-
+            console.log(error)
             throw new AppError('An error occurred while updating!', 400, { error })
 
         }

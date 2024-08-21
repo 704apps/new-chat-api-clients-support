@@ -26,8 +26,9 @@ async function ensureAdmin(request: Request, response: Response, next: NextFunct
         if (!user) {
             throw new AppError('User does not exist!', 401);
         }
+        console.log(user)
 
-        if (user.role !== 'admin') {
+        if (user.role !== 'MASTER') {
             return next(new AppError('Access denied', 403));
         }
 
@@ -59,7 +60,7 @@ async function ensureAdminAndSubadmin(request: Request, response: Response, next
             throw new AppError('User does not exist!', 401);
         }// Supondo que o usuário autenticado é armazenado em request.user
 
-        if (user.role !== 'subadmin' && user.role !== 'admin') {
+        if (user.role !== 'SUBMASTER' && user.role !== 'MASTER') {
             return next(new AppError('Access denied', 403));
         }
 

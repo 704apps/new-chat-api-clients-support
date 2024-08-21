@@ -31,6 +31,10 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
     @Column('varchar')
     messages: string;
 
+    
+    @Column('text')
+    oldMessages:  string;
+
     @Column('boolean',{ nullable: true })
     msgEdt: boolean;
 
