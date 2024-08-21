@@ -9,12 +9,14 @@ import {GetNewMessagesController} from '../../../../modules/messages/useCases/ge
 
 import {GetChatsRespondingToSupportController} from '../../../../modules/messages/useCases/getChatsRespondingToSupport/getChatsRespondingToSupportController'
 import {GetOneMessagesClientController} from '../../../../modules/messages/useCases/getOneMessagesClient/GetOneMessagesClientController'
+import {GetOldMessagesController} from '../../../../modules/messages/useCases/getOldMessages/GetOldMessagesController'
 
 import {GetSearchProjectController} from '../../../../modules/messages/useCases/getSearchProject/GetSearchProjectController'
 
 import {GetSearchByWordOrPhraseController} from '../../../../modules/messages/useCases/getSearchByWordOrPhrase/GetSearchByWordOrPhraseController'
 import {GetSearchGenerationToSupportController} from '../../../../modules/messages/useCases/getSearchGenerationToSupport/GetSearchGenerationToSupportController'
 import {GetFilterToStatusSidebarController} from '../../../../modules/messages/useCases/getFilterToStatusSidebar/GetFilterToStatusSidebarController'
+import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 
 
@@ -32,6 +34,9 @@ const getNewMessagesController = new GetNewMessagesController();
 const getChatsRespondingToSupportController = new GetChatsRespondingToSupportController();
 const getSearchProjectController = new GetSearchProjectController();
 const getOneMessagesClientController = new GetOneMessagesClientController();
+const getOldMessagesController = new GetOldMessagesController();
+
+
 const getSearchByWordOrPhraseController = new GetSearchByWordOrPhraseController();
 const getSearchGenerationToSupportController = new GetSearchGenerationToSupportController()
 const getFilterToStatusSidebarController = new GetFilterToStatusSidebarController()
@@ -48,7 +53,8 @@ messageRoutes.delete('/delete_message/:id',ensureAuthenticated,deleteMessageCont
 messageRoutes.get('/newmessages',ensureAuthenticated, getNewMessagesController.handle)
 messageRoutes.get('/assisting/',ensureAuthenticated, getChatsRespondingToSupportController.handle)
 
-messageRoutes.get('/messages/:id', getOneMessagesClientController.handle)
+messageRoutes.get('/messages/:id',ensureAuthenticated, getOneMessagesClientController.handle)
+messageRoutes.get('/oldMessages/:id',ensureAdmin, ensureAuthenticated,getOldMessagesController.handle)
 
 messageRoutes.get('/search_project/:id',ensureAuthenticated, getSearchProjectController.handle)
 messageRoutes.get('/search_word_phrase/',ensureAuthenticated, getSearchByWordOrPhraseController.handle)

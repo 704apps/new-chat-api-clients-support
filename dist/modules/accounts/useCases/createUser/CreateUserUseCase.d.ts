@@ -4,10 +4,12 @@ import { IUserRepository } from "../../../../modules/accounts/repositories/IUser
 declare class CreateUserUseCase {
     private userRepository;
     constructor(userRepository: IUserRepository);
-    execute({ name, email, password }: ICreateUserDTO): Promise<{
+    execute({ name, email, password, role }: ICreateUserDTO): Promise<{
         id: string;
         name: string;
         email: string;
+        role: string;
+        active: boolean;
     }>;
 }
 export { CreateUserUseCase };

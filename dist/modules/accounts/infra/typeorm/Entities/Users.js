@@ -37,6 +37,10 @@ var Users = /** @class */ (function () {
         __metadata("design:type", String)
     ], Users.prototype, "role", void 0);
     __decorate([
+        (0, typeorm_1.Column)('boolean'),
+        __metadata("design:type", Boolean)
+    ], Users.prototype, "active", void 0);
+    __decorate([
         (0, typeorm_1.OneToMany)(function () { return RefreshToken_1.RefreshToken; }, function (refleshtoken) { return refleshtoken.userId; }),
         __metadata("design:type", Array)
     ], Users.prototype, "refreshTokens", void 0);

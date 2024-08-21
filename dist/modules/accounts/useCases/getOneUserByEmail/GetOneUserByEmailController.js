@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetOneUserByEmailController = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
-var getOneUserByEmailUseCase_1 = require("./getOneUserByEmailUseCase");
+var GetOneUserByEmailUseCase_1 = require("./GetOneUserByEmailUseCase");
 var GetOneUserByEmailController = /** @class */ (function () {
     function GetOneUserByEmailController() {
     }
@@ -54,7 +54,7 @@ var GetOneUserByEmailController = /** @class */ (function () {
                         if (!email) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
                         }
-                        return [4 /*yield*/, tsyringe_1.container.resolve(getOneUserByEmailUseCase_1.GetOneUserByEmailUseCase)];
+                        return [4 /*yield*/, tsyringe_1.container.resolve(GetOneUserByEmailUseCase_1.GetOneUserByEmailUseCase)];
                     case 1:
                         getOneUserByEmailUseCase = _a.sent();
                         return [4 /*yield*/, getOneUserByEmailUseCase.getOneUserByEmail(String(email))

@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 import { Request, Response } from "express"
 import { container } from "tsyringe"
-import { GetOneUserByEmailUseCase } from "./getOneUserByEmailUseCase"
+import { GetOneUserByEmailUseCase } from "./GetOneUserByEmailUseCase"
 
 class GetOneUserByEmailController {
 

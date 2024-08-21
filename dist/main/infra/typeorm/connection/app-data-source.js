@@ -58,15 +58,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.myDataSource = void 0;
 var typeorm_1 = require("typeorm");
 var dotenv = __importStar(require("dotenv"));
 dotenv.config();
+var path_1 = __importDefault(require("path"));
 var Contacts_1 = require("../../../../modules/contacts/infra/typeorm/Entities/Contacts");
 var Chats_1 = require("../../../../modules/chats/infra/typeorm/Entities/Chats");
 var Users_1 = require("../../../../modules/accounts/infra/typeorm/Entities/Users");
 var Messages_1 = require("../../../../modules/messages/infra/typeorm/Entities/Messages");
+var OldMessages_1 = require("../../../../modules/messages/infra/typeorm/Entities/OldMessages");
 var RefreshToken_1 = require("../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken");
 var Notes_1 = require("../../../../modules/notes/infra/typeorm/Entities/Notes");
 // async function getMigrationFiles(): Promise<string[]> {
@@ -85,6 +90,14 @@ var Notes_1 = require("../../../../modules/notes/infra/typeorm/Entities/Notes");
 // }
 // const migrationFiles = await getMigrationFiles();
 // Verifica a extensão do primeiro arquivo de migração para decidir o caminho
+var fileExtension = path_1.default.extname(__filename).slice(1).toLowerCase();
+var adressFile = '';
+if (fileExtension === 'js') {
+    adressFile = "dist/main/infra/typeorm/migrations/*.js";
+}
+else if (fileExtension === 'ts') {
+    adressFile = "src/main/infra/typeorm/migrations/*.ts";
+}
 exports.myDataSource = new typeorm_1.DataSource({
     type: "mysql",
     host: process.env.DB_HOST,
@@ -92,8 +105,8 @@ exports.myDataSource = new typeorm_1.DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    entities: [Messages_1.Messages, Contacts_1.Contacts, Chats_1.Chats, Users_1.Users, RefreshToken_1.RefreshToken, Notes_1.Notes], // Ajuste o caminho conforme necessário
-    migrations: ["dist/main/infra/typeorm/migrations/*.js"],
+    entities: [Messages_1.Messages, OldMessages_1.OldMessages, Contacts_1.Contacts, Chats_1.Chats, Users_1.Users, RefreshToken_1.RefreshToken, Notes_1.Notes], // Ajuste o caminho conforme necessário
+    migrations: [adressFile],
     synchronize: true,
     timezone: 'Z', // Para UTC
     //: true, // Ative o registro para ver as consultas SQL

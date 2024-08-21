@@ -60,7 +60,7 @@ var CreateUserUseCase = /** @class */ (function () {
     CreateUserUseCase.prototype.execute = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
             var passwordHash, isuseralreadyExist, user, userCreated, error_1;
-            var name = _b.name, email = _b.email, password = _b.password;
+            var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
@@ -83,13 +83,16 @@ var CreateUserUseCase = /** @class */ (function () {
                                 name: name,
                                 email: email,
                                 password: passwordHash,
+                                role: role
                             })];
                     case 3:
                         user = _c.sent();
                         userCreated = {
                             id: user.id,
                             name: user.name,
-                            email: user.email
+                            email: user.email,
+                            role: user.role,
+                            active: user.active
                         };
                         return [2 /*return*/, userCreated];
                     case 4:

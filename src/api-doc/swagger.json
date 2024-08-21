@@ -18,10 +18,24 @@
     "paths": {
         "/create_user": {
             "post": {
-                "summary": "Cadastro  de Usuário.",
+                "summary": "Cadastro  de Usuário. ROTA RESTRITA USUARIOS MASTER",
                 "description": "Essa rota faz o Cadastro do Usuário.",
                 "tags": [
                     "Rotas de Autenticação"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "requestBody": {
                     "required": true,
@@ -41,6 +55,7 @@
                                     }
                                 },
                                 "required": [
+                                    "name",
                                     "email",
                                     "password"
                                 ]
@@ -84,6 +99,20 @@
                 "tags": [
                     "Rotas de Autenticação"
                 ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -122,12 +151,454 @@
                 }
             }
         },
+        "/users": {
+            "get": {
+                "summary": "Exibe todos usuários. Rota exclusiva para usuarios MASTER E SUBMASTER",
+                "description": "Essa rota exiber exibe",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Users not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "id": "224e7dc1-261c-4edb-8985-ce27d7d96b77",
+                                                "name": "Jonshon",
+                                                "email": "jonshon@gmail.com",
+                                                "role": "SUBMASTER",
+                                                "active": false,
+                                                "createdAt": "2024-07-30T18:08:04.655Z",
+                                                "updatedAt": "2024-08-21T15:32:15.000Z"
+                                            },
+                                            {
+                                                "id": "30046470-8973-4e41-b1af-24e9d962406a",
+                                                "name": "Jeferson",
+                                                "email": "jeferson@704.com",
+                                                "role": "SUPPORT",
+                                                "active": false,
+                                                "createdAt": "2024-07-28T17:15:06.458Z",
+                                                "updatedAt": "2024-08-20T21:32:58.343Z"
+                                            },
+                                            {
+                                                "id": "5a756f07-4b95-4a3f-b16b-4fb42aed961d",
+                                                "name": "joao123",
+                                                "email": "joao@gmail.com",
+                                                "role": "SUPPORT",
+                                                "active": false,
+                                                "createdAt": "2024-07-29T13:32:18.301Z",
+                                                "updatedAt": "2024-08-20T21:32:58.574Z"
+                                            }
+                                        ]     
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/delete_user/{id}": {
+            "delete": {
+                "summary": "Deletar usuário pelo id",
+                "description": "Essa rota Deleta um usuário pelo seu id",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":"User deleted successfully"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disable_user/{id}": {
+            "patch": {
+                "summary": "Ativa ou desaativa usuário pelo id",
+                "description": "Essa rota Ativa ou Desativa um usuário pelo seu id",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "action": {
+                                        "type": "boolean"
+                                    }
+                                 
+                                },
+                                "required": [
+                                    "action"
+                                  
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":"User successfully deactivated!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/edit_user/{id}": {
+            "patch": {
+                "summary": "Update do nome e email do usuário.",
+                "description": "Update do nome e email do usuário.",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name","email"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+              
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":{
+                                            "id": "224e7dc1-261c-4edb-8985-ce27d7d96b77",
+                                            "name": "Jonshon",
+                                            "role": "SUBMASTER",
+                                            "email": "jonshon@gmail.com",
+                                            "createdAt": "2024-07-30T18:08:04.655Z",
+                                            "updatedAt": "2024-08-21T15:32:15.000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/update_role_user/{id}": {
+            "patch": {
+                "summary": "Pesquisa usuário pelo id. Rota exclusiva para usuario MASTER",
+                "description": "Essa rota Pesquisa um usuário pelo seu id",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "role"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":{
+                                            "id": "224e7dc1-261c-4edb-8985-ce27d7d96b77",
+                                            "name": "Jonshon",
+                                            "role": "SUBMASTER",
+                                            "active": true,
+                                            "email": "jonshon@gmail.com",
+                                            "createdAt": "2024-07-30T18:08:04.655Z",
+                                            "updatedAt": "2024-08-21T15:32:15.000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reset_password/{id}": {
+            "patch": {
+                "summary": "Pesquisa usuário pelo id.",
+                "description": "Essa rota Pesquisa um usuário pelo seu id",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID do Usuário"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value":"Password change successfully"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/search_user_byemail": {
             "get": {
-                "summary": "Pesquisa usuário pelo email",
+                "summary": "Pesquisa usuário pelo email.ROTA RESTRITA USUARIOS MASTER E SUBMASTER",
                 "description": "Essa rota Pesquisa um usuário pelo seu EMAIL",
                 "tags": [
                     "Rotas de Autenticação"
+                ],
+                
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -234,6 +705,7 @@
                 "tags": [
                     "Rotas de Autenticação"
                 ],
+                
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -294,6 +766,20 @@
                 "description": "Essa rota carrega a lista que de clientes que enviaram mensagens",
                 "tags": [
                     "Rota do Sidebar"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -381,6 +867,20 @@
                         "description": "pagina"
                     }
                 ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "tags": [
                     "Rotas referente as Mensagens"
                 ],
@@ -433,6 +933,69 @@
                 }
             }
         },
+        "/oldMessages/{id}": {
+            "get": {
+                "summary": "Lista atualização de uma mensagem, ROTA RESTRITA USUARIOS MASTER",
+                "description": "Lista atualização de uma mensagem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da mensagem"
+                    }
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Rotas referente as Mensagens"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Message not found."
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schemas": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Messages"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": [
+                                            {
+                                                "oldMessage": "Penhor preciso que vc faça isso, seu burro"
+                                            },
+                                            {
+                                                "oldMessage": "Senhor preciso que vc faça isso, seu burro"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/update_message/{id}": {
             "patch": {
                 "summary": "Atualiza uma message",
@@ -450,6 +1013,20 @@
                 ],
                 "tags": [
                     "Rotas referente as Mensagens"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "requestBody": {
                     "required": true,
@@ -511,6 +1088,20 @@
                 "tags": [
                     "Rotas referente as Mensagens"
                 ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -538,6 +1129,20 @@
                 "description": "Essa rota atualiza o status do atendimento para FINISHED",
                 "tags": [
                     "Rotas para Atualizar Status dos Chats"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -574,6 +1179,20 @@
                 "description": "Essa rota atualiza o status do atendimento para OPEN",
                 "tags": [
                     "Rotas para Atualizar Status dos Chats"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -619,6 +1238,20 @@
                 "description": "Traz um cliente",
                 "tags": [
                     "Rotas referente as Mensagens"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -672,6 +1305,20 @@
                 "description": "Criação de Notas",
                 "tags": [
                     "Rotas referente as Notas"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "requestBody": {
                     "required": true,
@@ -736,6 +1383,20 @@
                 "description": "Atualização de Notas",
                 "tags": [
                     "Rotas referente as Notas"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -804,6 +1465,20 @@
                 "tags": [
                     "Rotas referente as Notas"
                 ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -852,6 +1527,20 @@
                 "description": "Deletar uma Notas",
                 "tags": [
                     "Rotas referente as Notas"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -904,6 +1593,20 @@
                         "description": "Coloque o supportId"
                     }
                 ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "responses": {
                     "400": {
                         "description": "Bad Request"
@@ -951,6 +1654,21 @@
                 "description": "Essa rota faz o filtro de status de atendimento",
                 "tags": [
                     "Rotas referente as Mensagens"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT",
+                            "description": "token normal quando for usuario e hash da url quando for monitor"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -1010,6 +1728,20 @@
                 "description": "Essa rota traz as mensagens com as palavras e/ou frase conforme colocada na pesquisa",
                 "tags": [
                     "Rotas referente as Mensagens"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -1085,6 +1817,21 @@
                 "description": "Essa rota traz as mensagens com as palavras e/ou frase e/ou projeto conforme colocada na pesquisa",
                 "tags": [
                     "Rotas referente as Mensagens"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                           
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {

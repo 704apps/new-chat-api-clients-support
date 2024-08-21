@@ -21,6 +21,9 @@ class Users {
     @Column('varchar')
     role: string;
 
+    @Column('boolean')
+    active: boolean;
+
     @OneToMany(()=>RefreshToken,refleshtoken=>refleshtoken.userId)
     refreshTokens: RefreshToken[]
 

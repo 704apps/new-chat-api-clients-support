@@ -1,3 +1,4 @@
+import { OldMessages } from "./OldMessages";
 declare class Messages {
     id: number;
     userType: string;
@@ -7,6 +8,8 @@ declare class Messages {
     messageType: string;
     urlImage: string;
     messages: string;
+    message: OldMessages[];
+    oldMessages: string;
     msgEdt: boolean;
     origin: string;
     createdAt: Date;

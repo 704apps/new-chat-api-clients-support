@@ -70,25 +70,6 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 const getNewMessagesClientUseCase = container.resolve(GetOneMessagesClientUseCase);
                 const messages = await getNewMessagesClientUseCase.getOneMessage(Number(id));
 
-                if (!messages || !messages.projectId) {
-
-                    try {
-                        const tokenMatches = await compareToken(id, token);
-                        if (!tokenMatches) {
-                            
-                            throw new AppError('Invalid or expired token', 401);
-                        }
-                        return next();
-                      
-                    } catch (error) {
-
-                        throw new AppError('Invalid or expired token', 401,{error});
-                    }
-
-                    // Comparação com bcrypt
-                 
-                }
-
                 const { projectId } = messages
 
 
@@ -102,7 +83,27 @@ export async function ensureAuthenticated(request: Request, response: Response, 
 
                 return next();
             } catch (error) {
-                return next(error);
+                try {
+                    const authHeader = request.headers.authorization;
+
+                    if (!authHeader) {
+                        //console.log('veio aqui antes0')
+                        throw new AppError('Token missing', 401);
+                    }
+    
+                    const [, token] = authHeader.split(' ');
+                    const id = request.params.id;
+                    const tokenMatches = await compareToken(id, token);
+                    if (!tokenMatches) {
+                        
+                        throw new AppError('Invalid or expired token', 401);
+                    }
+                    return next();
+                  
+                } catch (error) {
+
+                    throw new AppError('Invalid or expired token', 401,{error});
+                };
             }
         } else {
             return next(error);

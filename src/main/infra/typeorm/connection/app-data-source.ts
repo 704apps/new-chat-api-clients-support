@@ -8,6 +8,8 @@ import { Contacts } from '../../../../modules/contacts/infra/typeorm/Entities/Co
 import { Chats } from '../../../../modules/chats/infra/typeorm/Entities/Chats';
 import { Users } from '../../../../modules/accounts/infra/typeorm/Entities/Users';
 import { Messages } from '../../../../modules/messages/infra/typeorm/Entities/Messages';
+import { OldMessages } from '../../../../modules/messages/infra/typeorm/Entities/OldMessages';
+
 import { RefreshToken } from '../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken'
 import { Notes } from "../../../../modules/notes/infra/typeorm/Entities/Notes";
 
@@ -31,6 +33,17 @@ import { Notes } from "../../../../modules/notes/infra/typeorm/Entities/Notes";
 // const migrationFiles = await getMigrationFiles();
         
 // Verifica a extensão do primeiro arquivo de migração para decidir o caminho
+const fileExtension = path.extname(__filename).slice(1).toLowerCase();
+let adressFile = ''
+
+if(fileExtension==='js'){
+    adressFile ="dist/main/infra/typeorm/migrations/*.js"
+
+}else if(fileExtension==='ts'){
+    adressFile ="src/main/infra/typeorm/migrations/*.ts"
+
+
+}
 
 export const myDataSource = new DataSource(
     {
@@ -40,11 +53,12 @@ export const myDataSource = new DataSource(
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
-        entities: [Messages, Contacts, Chats, Users, RefreshToken,Notes], // Ajuste o caminho conforme necessário
-        migrations: ["dist/main/infra/typeorm/migrations/*.js"],
+        entities: [Messages, OldMessages,Contacts, Chats, Users, RefreshToken,Notes], // Ajuste o caminho conforme necessário
+        migrations: [adressFile],
         synchronize: true,
         timezone: 'Z',  // Para UTC
 
+        
         //: true, // Ative o registro para ver as consultas SQL
         // logger: 'debug',
     },
@@ -55,7 +69,9 @@ async function initializeDataSource() {
     try {
 
         await myDataSource.initialize();
+      
         console.log("Data Source has been initialized!");
+        
     } catch (err) {
         // console.log(process.env.DB_HOST,process.env.DB_USER,process.env.DB_PASS, process.env.DB_NAME)
         console.error("Error during Data Source initialization:", err);

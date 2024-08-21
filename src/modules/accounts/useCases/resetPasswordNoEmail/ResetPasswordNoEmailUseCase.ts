@@ -24,6 +24,7 @@ class ResetPasswordNoEmailUseCase {
             if (!passwordChange) {
                 throw new AppError("User already exists")
             }
+            
            
             return passwordChange
 

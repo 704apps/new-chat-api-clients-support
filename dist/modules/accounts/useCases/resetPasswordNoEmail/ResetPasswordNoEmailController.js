@@ -62,7 +62,7 @@ var ResetPasswordNoEmailController = /** @class */ (function () {
                         return [4 /*yield*/, resetPasswordNoEmailUseCase.resetPassword(id, password)];
                     case 2:
                         resChanged = _a.sent();
-                        return [2 /*return*/, response.status(201).json(resChanged)];
+                        return [2 /*return*/, response.status(200).json(resChanged)];
                     case 3:
                         error_1 = _a.sent();
                         //  console.log(error)

@@ -15,7 +15,7 @@ class CreateUserUseCase {
     ) { }
 
 
-    async execute({ name, email, password }: ICreateUserDTO) {
+    async execute({ name, email, password ,role}: ICreateUserDTO) {
         try {
            
             const passwordHash = await hash(password, 8)
@@ -35,11 +35,14 @@ class CreateUserUseCase {
                 name,
                 email,
                 password: passwordHash,
+                role
             })
             const userCreated = {
                 id: user.id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                role : user.role,
+                active : user.active
             }
           
             return userCreated

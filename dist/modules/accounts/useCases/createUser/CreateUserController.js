@@ -45,19 +45,19 @@ var CreateUserController = /** @class */ (function () {
     }
     CreateUserController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name_1, email, password, createUseCase, user, error_1;
+            var _a, name_1, email, password, role, createUseCase, user, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 3, , 4]);
-                        _a = request.body, name_1 = _a.name, email = _a.email, password = _a.password;
-                        if (!name_1 || !email || !password) {
+                        _a = request.body, name_1 = _a.name, email = _a.email, password = _a.password, role = _a.role;
+                        if (!name_1 || !email || !password || !role) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
                         }
                         return [4 /*yield*/, tsyringe_1.container.resolve(CreateUserUseCase_1.CreateUserUseCase)];
                     case 1:
                         createUseCase = _b.sent();
-                        return [4 /*yield*/, createUseCase.execute({ name: name_1, email: email, password: password })];
+                        return [4 /*yield*/, createUseCase.execute({ name: name_1, email: email, password: password, role: role })];
                     case 2:
                         user = _b.sent();
                         return [2 /*return*/, response.status(201).json({ message: 'User created successfully', user: user })];

@@ -5,7 +5,8 @@ import { IUserRepository } from "../../../../modules/accounts/repositories/IUser
 import { AppError } from "../../../../error/AppError";
 
 @injectable()
-class GetOneUserByEmailUseCase {
+class GetOneUserByEmailUseCase
+ {
 
     constructor(
         @inject("UserRepository")
@@ -35,4 +36,4 @@ class GetOneUserByEmailUseCase {
 
 }
 
-export { GetOneUserByEmailUseCase }
+export { GetOneUserByEmailUseCase}
