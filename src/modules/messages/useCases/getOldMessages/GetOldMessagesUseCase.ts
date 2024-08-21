@@ -24,6 +24,7 @@ class GetOldMessagesUseCase {
             throw new AppError('Unexpected error', 400, { error })
 
         }
+        
     }
 
 

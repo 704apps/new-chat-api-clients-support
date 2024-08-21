@@ -156,6 +156,7 @@ class MessageRepository implements IMessageRepository {
         }else{
             getMessage.oldMessages = getMessage.messages
         }
+        
         getMessage.messages = message;
         getMessage.msgEdt = true;
 
