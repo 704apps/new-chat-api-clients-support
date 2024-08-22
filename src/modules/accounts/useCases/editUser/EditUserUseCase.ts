@@ -16,7 +16,7 @@ class EditUserUseCase {
     ) { }
 
 
-    async execute(data: IUpdateUserDTOS, file?: IUploadDTOS) {
+    async execute(data: IUpdateUserDTOS) {
         try {
 
             const { id } = data
@@ -32,14 +32,7 @@ class EditUserUseCase {
                 console.log('veio aqui')
                 throw new AppError("User already exists")
             }
-            if (file) {
-                if (file.filecontent) {
-                    console.log('veiop')
-                    const { filecontent, filename } = file
-                    const urlImage = await uploadToAws(filename, filecontent)
-                    data.avatar = urlImage
-                }
-            }
+          
             const user = await this.userRepository.edit(data)
 
             const userUpdate = {

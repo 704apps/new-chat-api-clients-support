@@ -15,7 +15,6 @@ import { UploadDataDTO } from '../../../../modules/messages/DTOs/querysparamsDTO
             const uploadMediaUseCase = container.resolve(UploadMediaUseCase)
             
             if (file) {
-                console.log('dfdfdfdf')
                 dataBody.filecontent = file.buffer
                 dataBody.filename = file.originalname
                 await uploadMediaUseCase.uploadMedia(dataBody)

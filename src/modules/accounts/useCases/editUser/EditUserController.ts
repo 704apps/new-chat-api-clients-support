@@ -23,16 +23,18 @@ class EditUserController {
             if (!name || !email || !id ) {
                 return response.status(400).json({ error: "Missing required fields" });
             }
-            let dataFile:IUploadDTOS
+           // let dataFile:IUploadDTOS
             console.log('33')
-            console.log(file)
-            console.log('macho')
-            if(file.originalname){
-                console.log('44')
+            //console.log(file)
+           
+            // if(file.originalname){
+            //     console.log('44')
 
-                dataFile.filename = file.originalname;
-                dataFile.filecontent = file.buffer
-            }
+            //      dataFile.filename = String(file.originalname);
+            //      dataFile.filecontent = file.buffer
+            // }
+            // console.log(dataFile.filename)
+            // console.log('55')
             const data: IUpdateUserDTOS = {
                 id,
                 email,
@@ -40,8 +42,8 @@ class EditUserController {
                
             }
             const editUserUseCase = await container.resolve(EditUserUseCase)
-            console.log(data)
-            const user =  await editUserUseCase.execute(data,dataFile)
+            //console.log(data)
+            const user =  await editUserUseCase.execute(data)
       
             return response.status(200).json({message:'User update successfully',user})
             
