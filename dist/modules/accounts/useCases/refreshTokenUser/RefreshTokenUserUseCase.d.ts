@@ -18,8 +18,15 @@ declare class RefreshTokenUserUseCase {
         };
     } | {
         token: string;
+        user: {
+            userid: string;
+            userName: string;
+            supportId: string;
+            email: string;
+            createdAt: Date;
+            updatedAt: Date;
+        };
         newRefreshToken?: undefined;
-        user?: undefined;
     }>;
 }
 export { RefreshTokenUserUseCase };
