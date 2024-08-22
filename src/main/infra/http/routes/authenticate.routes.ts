@@ -18,6 +18,7 @@ import { DisableUserController } from "../../../../modules/accounts/useCases/dis
 import { DeleteUserController } from "../../../../modules/accounts/useCases/deleteUser/DeleteUserController"
 import { GetLoggedInUserController } from "../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController"
 import { upload } from '../../upload';
+import { UploadMediaController } from "../../../../modules/accounts/useCases/uploadMedia/UploadMediaController"
 
 const autheticateRoutes = Router()
 
@@ -43,6 +44,7 @@ const getOneUserByEmailController= new GetOneUserByEmailController()
 
 const authenticateUserController = new AuthenticateUserController()
 const refreshTokenUserController = new RefreshTokenUserController()
+const uploadMediaController = new UploadMediaController();
 
 
 
@@ -53,6 +55,7 @@ autheticateRoutes.post("/sessions", authenticateUserController.handle)
 autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.handle)
 
 autheticateRoutes.get("/logged_in_user",ensureAuthenticated, getLoggedInUserController.handle)
+autheticateRoutes.post('/uploadavatar/',upload.single('file'),ensureAuthenticated,uploadMediaController.handle)
 
 
 autheticateRoutes.delete("/delete_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,deleteUserController.handle)

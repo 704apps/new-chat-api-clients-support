@@ -5,7 +5,7 @@ import { ICreateUserDTO } from "../../../../modules/accounts/DTOs/ICreateUserDTO
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
 import { hash } from 'bcrypt'
 import { AppError } from "../../../../error/AppError";
-
+import {alterNameForSupporId} from '../../util/alterNameForSupporId'
 @injectable()
 class CreateUserUseCase {
 
@@ -37,10 +37,12 @@ class CreateUserUseCase {
                 password: passwordHash,
                 role
             })
+            const supportId = alterNameForSupporId(user.name);
+            
             const userCreated = {
                 id: user.id,
                 name: user.name,
-                supportId: user.name,
+                supportId,
                 email: user.email,
                 avatar: user.avatar,
                 active: user.active,

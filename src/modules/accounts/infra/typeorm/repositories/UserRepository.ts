@@ -90,6 +90,34 @@ class UserRepository implements IUserRepository {
        // console.log(user)
         return user
 
+
+    }
+    async uploadMedia(data: IUploadDTOS): Promise<String> {
+        try {
+            
+            const { filename, filecontent,id} = data;
+
+            const user = await  this.repository.findOneBy({id});
+
+            if(!user){
+                throw new AppError('User not found!');
+            }
+            const urlImage = await uploadToAws(filename, filecontent)
+
+            user.avatar = urlImage
+            
+            await this.repository.save(user)
+
+            return 'Avatar updated successfully!'
+
+        } catch (error) {
+            console.log('veio error')
+
+            console.log(error)
+
+            return
+        }
+
     }
     async deleteUser(id: string): Promise<String> {
         //  console.log('veio aqui')
