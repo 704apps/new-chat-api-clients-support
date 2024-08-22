@@ -72,6 +72,10 @@ function ensureAuthenticated(request, response, next) {
                     if (!user) {
                         throw new AppError_1.AppError('User does not exist!', 401);
                     }
+                    if (user.active === false) {
+                        throw new AppError_1.AppError('This User has been deactivated!', 401);
+                    }
+                    response.locals.userId = userId;
                     return [2 /*return*/, next()];
                 case 2:
                     error_1 = _d.sent();

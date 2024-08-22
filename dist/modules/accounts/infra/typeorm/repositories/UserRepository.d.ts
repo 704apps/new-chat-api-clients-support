@@ -11,6 +11,7 @@ declare class UserRepository implements IUserRepository {
     findByEmail(email: string): Promise<Users | null>;
     findById(id: string): Promise<Users>;
     deleteUser(id: string): Promise<String>;
+    getLoggedInUser(id: string): Promise<String>;
     disableUser(id: string, action: boolean): Promise<String>;
     allUsers(): Promise<Users[]>;
     resetPasswordNoEmail(id: string, newPassword: string): Promise<string>;

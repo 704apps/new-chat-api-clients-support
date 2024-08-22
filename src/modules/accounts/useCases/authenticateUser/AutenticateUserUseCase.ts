@@ -76,6 +76,8 @@ class AutenticateUserUseCase {
             userName: returrefreshToken?.userId.name,
             supportId: returrefreshToken?.userId.name,
             email: returrefreshToken?.userId.email,
+            role: returrefreshToken?.userId.role,
+            active: returrefreshToken?.userId.active,
             createdAt: returrefreshToken?.userId.createdAt,
             updatedAt: returrefreshToken?.userId.updatedAt
         }

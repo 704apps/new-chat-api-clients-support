@@ -82,9 +82,9 @@ var EditUserUseCase = /** @class */ (function () {
                             id: user.id,
                             name: user.name,
                             email: user.email,
-                            role: user.role
+                            role: user.role,
+                            active: user.active
                         };
-                        console.log(userUpdate);
                         return [2 /*return*/, userUpdate];
                     case 3:
                         error_1 = _a.sent();

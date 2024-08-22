@@ -16,6 +16,7 @@ import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 import { DisableUserController } from "../../../../modules/accounts/useCases/disableUser/DisableUserController"
 import { DeleteUserController } from "../../../../modules/accounts/useCases/deleteUser/DeleteUserController"
+import { GetLoggedInUserController } from "../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController"
 
 const autheticateRoutes = Router()
 
@@ -25,6 +26,9 @@ const updateUserToSubMasterController = new UpdateUserToSubMasterController()
 
 
 const getOneUserController= new GetOneUserController()
+
+const getLoggedInUserController= new GetLoggedInUserController()
+
 
 const deleteUserController= new DeleteUserController()
 const disableUserController= new DisableUserController()
@@ -46,6 +50,9 @@ autheticateRoutes.post("/create_user",ensureAuthenticated,ensureAdmin,createUser
 autheticateRoutes.post("/sessions", authenticateUserController.handle)
 
 autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.handle)
+
+autheticateRoutes.get("/logged_in_user",ensureAuthenticated, getLoggedInUserController.handle)
+
 
 autheticateRoutes.delete("/delete_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,deleteUserController.handle)
 

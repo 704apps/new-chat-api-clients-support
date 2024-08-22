@@ -103,6 +103,8 @@ var AutenticateUserUseCase = /** @class */ (function () {
                             userName: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.name,
                             supportId: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.name,
                             email: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.email,
+                            role: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.role,
+                            active: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.active,
                             createdAt: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.createdAt,
                             updatedAt: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.updatedAt
                         };

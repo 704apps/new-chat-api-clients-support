@@ -87,7 +87,18 @@ class UserRepository implements IUserRepository {
           return 'User deleted successfully '   
           
     }
+    async getLoggedInUser(id: string): Promise<String > {
+        //  console.log('veio aqui')
+          
+          const user = await this.repository.findOneBy({id})
 
+          if(!user){
+            throw new AppError('User Not Found')
+          }
+          await this.repository.delete(id)
+          return 'User deleted successfully '   
+          
+    }
     async disableUser(id: string,action:boolean): Promise<String > {
         //  console.log('veio aqui')
           

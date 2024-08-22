@@ -41,9 +41,10 @@ class EditUserUseCase {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                role : user.role
+                role : user.role,
+                active : user.active
+
             }
-            console.log(userUpdate)
             return userUpdate
 
         } catch (error) {

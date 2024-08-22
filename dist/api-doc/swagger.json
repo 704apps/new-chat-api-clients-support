@@ -151,6 +151,56 @@
                 }
             }
         },
+        "/logged_in_user/": {
+            "get": {
+                "summary": "Exibir o usario logado",
+                "description": "Exibir o usario logado",
+                "tags": [
+                    "Rotas de Autenticação"
+                ],
+                "components": {
+                    "securitySchemes": {
+                        "bearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "JWT"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "User not found."
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "example-1": {
+                                        "summary": "Example response",
+                                        "value": {
+                                            "user": {
+                                                "id": "b0fddc71-71d5-4426-b9e9-730a15d0c7a0",
+                                                "name": "Luan Santana",
+                                                "email": "luansantana@704.com",
+                                                "role": "MASTER",
+                                                "active": true,
+                                                "createdAt": "2024-07-26T23:01:30.508Z",
+                                                "updatedAt": "2024-07-26T23:01:30.508Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "summary": "Exibe todos usuários. Rota exclusiva para usuarios MASTER E SUBMASTER",

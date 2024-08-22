@@ -161,6 +161,25 @@ var UserRepository = /** @class */ (function () {
             });
         });
     };
+    UserRepository.prototype.getLoggedInUser = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 1:
+                        user = _a.sent();
+                        if (!user) {
+                            throw new AppError_1.AppError('User Not Found');
+                        }
+                        return [4 /*yield*/, this.repository.delete(id)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, 'User deleted successfully '];
+                }
+            });
+        });
+    };
     UserRepository.prototype.disableUser = function (id, action) {
         return __awaiter(this, void 0, void 0, function () {
             var user, seeAction;

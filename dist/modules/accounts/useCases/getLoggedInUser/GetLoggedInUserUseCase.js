@@ -48,22 +48,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetOneUserByEmailUseCase = void 0;
+exports.GetLoggedInUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
-var GetOneUserByEmailUseCase = /** @class */ (function () {
-    function GetOneUserByEmailUseCase(userRepository) {
+var GetLoggedInUserUseCase = /** @class */ (function () {
+    function GetLoggedInUserUseCase(userRepository) {
         this.userRepository = userRepository;
     }
-    GetOneUserByEmailUseCase.prototype.getOneUserByEmail = function (email) {
+    GetLoggedInUserUseCase.prototype.getOneUserById = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
             var user, userData, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.userRepository.findByEmail(email)];
+                        return [4 /*yield*/, this.userRepository.findById(userId)];
                     case 1:
                         user = _a.sent();
                         userData = {
@@ -85,11 +85,11 @@ var GetOneUserByEmailUseCase = /** @class */ (function () {
             });
         });
     };
-    GetOneUserByEmailUseCase = __decorate([
+    GetLoggedInUserUseCase = __decorate([
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("UserRepository")),
         __metadata("design:paramtypes", [Object])
-    ], GetOneUserByEmailUseCase);
-    return GetOneUserByEmailUseCase;
+    ], GetLoggedInUserUseCase);
+    return GetLoggedInUserUseCase;
 }());
-exports.GetOneUserByEmailUseCase = GetOneUserByEmailUseCase;
+exports.GetLoggedInUserUseCase = GetLoggedInUserUseCase;

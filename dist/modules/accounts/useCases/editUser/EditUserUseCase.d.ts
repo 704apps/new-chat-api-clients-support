@@ -9,6 +9,7 @@ declare class EditUserUseCase {
         name: string;
         email: string;
         role: string;
+        active: boolean;
     }>;
 }
 export { EditUserUseCase };

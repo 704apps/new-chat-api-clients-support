@@ -5,7 +5,7 @@ import { IUserRepository } from "../../../../modules/accounts/repositories/IUser
 import { AppError } from "../../../../error/AppError";
 
 @injectable()
-class GetOneUserByEmailUseCase
+class GetLoggedInUserUseCase
  {
 
     constructor(
@@ -14,10 +14,10 @@ class GetOneUserByEmailUseCase
     ) { }
 
 
-    async getOneUserByEmail(email: string) {
+    async getOneUserById(userId: string) {
         try {
 
-            const user = await this.userRepository.findByEmail(email)
+            const user = await this.userRepository.findById(userId)
             const userData = {
                 id: user?.id,
                 name: user?.name,
@@ -38,4 +38,4 @@ class GetOneUserByEmailUseCase
 
 }
 
-export { GetOneUserByEmailUseCase}
+export { GetLoggedInUserUseCase}

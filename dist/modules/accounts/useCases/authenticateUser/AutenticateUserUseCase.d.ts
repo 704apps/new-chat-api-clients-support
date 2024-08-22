@@ -18,6 +18,8 @@ declare class AutenticateUserUseCase {
             userName: string;
             supportId: string;
             email: string;
+            role: string;
+            active: boolean;
             createdAt: Date;
             updatedAt: Date;
         };

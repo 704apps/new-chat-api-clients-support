@@ -36,24 +36,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GenerateTokenProvider = void 0;
-var jsonwebtoken_1 = require("jsonwebtoken");
-var GenerateTokenProvider = /** @class */ (function () {
-    function GenerateTokenProvider() {
+exports.GetLoggedInUserController = void 0;
+require("reflect-metadata");
+var tsyringe_1 = require("tsyringe");
+var GetLoggedInUserUseCase_1 = require("./GetLoggedInUserUseCase");
+var GetLoggedInUserController = /** @class */ (function () {
+    function GetLoggedInUserController() {
     }
-    GenerateTokenProvider.prototype.execute = function (userId) {
+    GetLoggedInUserController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var secretKey, token;
+            var userId, getLoggedInUserUseCase, user, error_1;
             return __generator(this, function (_a) {
-                secretKey = String(process.env.SECRET_JWT);
-                token = (0, jsonwebtoken_1.sign)({}, secretKey, {
-                    subject: "".concat(userId), // Define o subject (assunto) do token
-                    expiresIn: '24h' // Define a expiração do token para 24 hora
-                });
-                return [2 /*return*/, token];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        userId = response.locals.userId;
+                        if (!userId) {
+                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
+                        }
+                        return [4 /*yield*/, tsyringe_1.container.resolve(GetLoggedInUserUseCase_1.GetLoggedInUserUseCase)];
+                    case 1:
+                        getLoggedInUserUseCase = _a.sent();
+                        return [4 /*yield*/, getLoggedInUserUseCase.getOneUserById(String(userId))
+                            //  console.log(user)
+                        ];
+                    case 2:
+                        user = _a.sent();
+                        //  console.log(user)
+                        return [2 /*return*/, response.status(200).json({ user: user })];
+                    case 3:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };
-    return GenerateTokenProvider;
+    return GetLoggedInUserController;
 }());
-exports.GenerateTokenProvider = GenerateTokenProvider;
+exports.GetLoggedInUserController = GetLoggedInUserController;

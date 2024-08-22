@@ -32,8 +32,13 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         if (!user) {
             throw new AppError('User does not exist!', 401);
         }
+        if (user.active===false) {
+            throw new AppError('This User has been deactivated!', 401);
+        }
+        response.locals.userId = userId;
 
         return next();
+
     } catch (error) {
         if (error instanceof JsonWebTokenError) {
             try {
