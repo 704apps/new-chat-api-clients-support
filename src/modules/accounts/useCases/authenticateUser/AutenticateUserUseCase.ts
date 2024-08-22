@@ -39,6 +39,9 @@ class AutenticateUserUseCase {
             throw new AppError("Email or password incorrect!",)
         }
 
+        if (!userVerify.active) {
+            throw new AppError('This User has been deactivated!', 400);        
+        }
    //     console.log('veio aqui 1')
 
         const passwordMath = await compare(password, userVerify.password)
