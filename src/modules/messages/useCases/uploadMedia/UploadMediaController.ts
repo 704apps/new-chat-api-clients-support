@@ -15,6 +15,7 @@ import { UploadDataDTO } from '../../../../modules/messages/DTOs/querysparamsDTO
             const uploadMediaUseCase = container.resolve(UploadMediaUseCase)
             
             if (file) {
+                console.log('dfdfdfdf')
                 dataBody.filecontent = file.buffer
                 dataBody.filename = file.originalname
                 await uploadMediaUseCase.uploadMedia(dataBody)
@@ -24,7 +25,7 @@ import { UploadDataDTO } from '../../../../modules/messages/DTOs/querysparamsDTO
             return response.status(200).json({ message: 'Upload completed successfully!' })
             
         } catch (error) {
-
+            console.log(error)
             return response.status(400).json({ error })
 
         }

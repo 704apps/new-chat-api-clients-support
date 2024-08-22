@@ -25,8 +25,9 @@ class EditUserController {
             }
             let dataFile:IUploadDTOS
             console.log('33')
-
-            if(file){
+            console.log(file)
+            console.log('macho')
+            if(file.originalname){
                 console.log('44')
 
                 dataFile.filename = file.originalname;

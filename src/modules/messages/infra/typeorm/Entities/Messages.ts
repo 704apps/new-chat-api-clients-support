@@ -34,7 +34,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
     @OneToMany(()=>OldMessages,refleshtoken=>refleshtoken.idMessage)
     message: OldMessages[]
     
-    @Column('text')
+    @Column('text',{ nullable: true })
     oldMessages:  string;
 
     @Column('boolean',{ nullable: true })
