@@ -41,8 +41,15 @@ class RefreshTokenUserUseCase{
             }
             return {token,newRefreshToken,user}
         }
-
-        return {token}
+        const user = {
+            userid: refreshToken?.userId.id,
+            userName: refreshToken?.userId.name,
+            supportId: refreshToken?.userId.name,
+            email: refreshToken?.userId.email,
+            createdAt: refreshToken?.userId.createdAt,
+            updatedAt: refreshToken?.userId.updatedAt
+        }
+        return {token,user}
 
     }
 }
