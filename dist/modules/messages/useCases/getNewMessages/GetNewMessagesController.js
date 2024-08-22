@@ -58,7 +58,7 @@ var GetNewMessagesController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(messages)];
                     case 2:
                         error_1 = _a.sent();
-                        return [2 /*return*/, response.status(400).json(error_1)];
+                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 3: return [2 /*return*/];
                 }
             });

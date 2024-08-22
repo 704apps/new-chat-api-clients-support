@@ -7,9 +7,13 @@ declare class CreateUserUseCase {
     execute({ name, email, password, role }: ICreateUserDTO): Promise<{
         id: string;
         name: string;
+        supportId: string;
         email: string;
-        role: string;
+        avatar: string;
         active: boolean;
+        role: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
 }
 export { CreateUserUseCase };

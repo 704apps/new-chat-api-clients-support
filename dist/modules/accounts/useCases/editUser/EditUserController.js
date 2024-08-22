@@ -45,33 +45,49 @@ var EditUserController = /** @class */ (function () {
     }
     EditUserController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, name_1, email, data, editUserUseCase, user, error_1;
+            var id, _a, name_1, email, file, dataFile, data, editUserUseCase, user, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 3, , 4]);
+                        _b.trys.push([0, 5, , 6]);
+                        console.log('11');
                         id = request.params.id;
-                        _a = request.body, name_1 = _a.name, email = _a.email;
+                        console.log('22');
+                        return [4 /*yield*/, request.body];
+                    case 1:
+                        _a = _b.sent(), name_1 = _a.name, email = _a.email;
+                        return [4 /*yield*/, request.file];
+                    case 2:
+                        file = _b.sent();
+                        console.log('33');
                         if (!name_1 || !email || !id) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
+                        }
+                        dataFile = void 0;
+                        console.log('33');
+                        if (file) {
+                            console.log('44');
+                            dataFile.filename = file.originalname;
+                            dataFile.filecontent = file.buffer;
                         }
                         data = {
                             id: id,
                             email: email,
-                            name: name_1
+                            name: name_1,
                         };
                         return [4 /*yield*/, tsyringe_1.container.resolve(EditUserUseCase_1.EditUserUseCase)];
-                    case 1:
+                    case 3:
                         editUserUseCase = _b.sent();
                         console.log(data);
-                        return [4 /*yield*/, editUserUseCase.execute(data)];
-                    case 2:
+                        return [4 /*yield*/, editUserUseCase.execute(data, dataFile)];
+                    case 4:
                         user = _b.sent();
                         return [2 /*return*/, response.status(200).json({ message: 'User update successfully', user: user })];
-                    case 3:
+                    case 5:
                         error_1 = _b.sent();
+                        console.log(error_1);
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 4: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

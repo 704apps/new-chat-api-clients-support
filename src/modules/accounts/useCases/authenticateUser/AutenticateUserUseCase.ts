@@ -40,14 +40,14 @@ class AutenticateUserUseCase {
         }
 
         if (!userVerify.active) {
-            throw new AppError('This User has been deactivated!', 400);        
+            throw new AppError('This User has been deactivated!', 400);
         }
-   //     console.log('veio aqui 1')
+        //     console.log('veio aqui 1')
 
         const passwordMath = await compare(password, userVerify.password)
 
         if (!passwordMath) {
-          //  console.log('veio aqui 2')
+            //  console.log('veio aqui 2')
             throw new AppError("Email or password incorrect!")
         }
         ;
@@ -60,23 +60,24 @@ class AutenticateUserUseCase {
             expiresIn: '24h' // Define o tempo de expiração do token para 1 hora
 
         })
-         
+
+        
         const generateRefleshToken = container.resolve(GenerateRefreshToken)
         const deleteRefleshToken = container.resolve(DeleteRefreshToken)
 
-        await  deleteRefleshToken.deleteMany(userVerify.id)
+        await deleteRefleshToken.deleteMany(userVerify.id)
 
         const returrefreshToken: RefreshToken = await generateRefleshToken.execute(userVerify.id) as unknown as RefreshToken
 
         const refreshToken = {
-          
-            id: returrefreshToken?.id ,
-            expiriesIn:returrefreshToken?.expiriesIn,
-      
+
+            id: returrefreshToken?.id,
+            expiriesIn: returrefreshToken?.expiriesIn,
+
         }
         const user = {
-            userid: returrefreshToken?.userId.id,
-            userName: returrefreshToken?.userId.name,
+            id: returrefreshToken?.userId.id,
+            name: returrefreshToken?.userId.name,
             supportId: returrefreshToken?.userId.name,
             email: returrefreshToken?.userId.email,
             role: returrefreshToken?.userId.role,
@@ -84,7 +85,7 @@ class AutenticateUserUseCase {
             createdAt: returrefreshToken?.userId.createdAt,
             updatedAt: returrefreshToken?.userId.updatedAt
         }
-        return {token,refreshToken,user}
+        return { token, refreshToken, user }
     }
 }
 

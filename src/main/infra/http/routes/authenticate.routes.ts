@@ -17,6 +17,7 @@ import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 import { DisableUserController } from "../../../../modules/accounts/useCases/disableUser/DisableUserController"
 import { DeleteUserController } from "../../../../modules/accounts/useCases/deleteUser/DeleteUserController"
 import { GetLoggedInUserController } from "../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController"
+import { upload } from '../../upload';
 
 const autheticateRoutes = Router()
 
@@ -59,7 +60,7 @@ autheticateRoutes.delete("/delete_user/:id",ensureAuthenticated, ensureAdminAndS
 autheticateRoutes.patch("/disable_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,disableUserController.handle)
 
 
-autheticateRoutes.patch("/edit_user/:id",ensureAuthenticated, editUserController.handle)
+autheticateRoutes.patch("/edit_user/:id",upload.single('file'),ensureAuthenticated, editUserController.handle)
 
 autheticateRoutes.patch("/update_role_user/:id",ensureAdmin,ensureAuthenticated, updateUserToSubMasterController.handle)
 

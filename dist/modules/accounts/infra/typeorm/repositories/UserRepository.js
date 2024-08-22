@@ -67,6 +67,9 @@ var UserRepository = /** @class */ (function () {
                         console.log(email);
                         user.name = name;
                         user.email = email;
+                        if (data.avatar) {
+                            user.avatar = data.avatar;
+                        }
                         return [4 /*yield*/, this.repository.save(user)];
                     case 2:
                         updateUser = _a.sent();
@@ -94,7 +97,7 @@ var UserRepository = /** @class */ (function () {
     };
     UserRepository.prototype.create = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
-            var user, userCreated;
+            var user, userCreated, returnCreatedUser;
             var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -110,7 +113,18 @@ var UserRepository = /** @class */ (function () {
                         return [4 /*yield*/, this.repository.save(user)];
                     case 2:
                         userCreated = _c.sent();
-                        return [2 /*return*/, userCreated];
+                        returnCreatedUser = {
+                            id: userCreated.id,
+                            name: userCreated.name,
+                            supportId: userCreated.name,
+                            email: userCreated.email,
+                            avatar: userCreated.avatar,
+                            active: userCreated.active,
+                            role: userCreated.role,
+                            createdAt: userCreated.createdAt,
+                            updatedAt: userCreated.updatedAt,
+                        };
+                        return [2 /*return*/, returnCreatedUser];
                 }
             });
         });
@@ -133,10 +147,12 @@ var UserRepository = /** @class */ (function () {
             var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 0: return [4 /*yield*/, this.repository.findOneBy({ id: id })
+                        // console.log(user)
+                    ];
                     case 1:
                         user = _a.sent();
-                        console.log(user);
+                        // console.log(user)
                         return [2 /*return*/, user];
                 }
             });

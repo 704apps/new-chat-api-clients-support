@@ -91,6 +91,7 @@ var RefreshTokenUserUseCase = /** @class */ (function () {
                             userName: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
                             supportId: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
                             email: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.email,
+                            avatar: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.avatar,
                             createdAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.createdAt,
                             updatedAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.updatedAt
                         };
@@ -101,6 +102,7 @@ var RefreshTokenUserUseCase = /** @class */ (function () {
                             userName: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
                             supportId: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
                             email: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.email,
+                            avatar: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.avatar,
                             createdAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.createdAt,
                             updatedAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.updatedAt
                         };

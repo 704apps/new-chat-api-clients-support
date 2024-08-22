@@ -7,8 +7,10 @@ declare class GetLoggedInUserUseCase {
         id: string;
         name: string;
         email: string;
+        supportId: string;
         role: string;
         active: boolean;
+        avatar: string;
         createdAt: Date;
         updatedAt: Date;
     }>;

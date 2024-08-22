@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer';
+
 interface IUpdateUserDTOS{
     name:string,
     

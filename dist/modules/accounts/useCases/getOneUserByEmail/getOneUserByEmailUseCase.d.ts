@@ -8,7 +8,9 @@ declare class GetOneUserByEmailUseCase {
         name: string;
         email: string;
         role: string;
+        supportId: string;
         active: boolean;
+        avatar: string;
         createdAt: Date;
         updatedAt: Date;
     }>;

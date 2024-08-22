@@ -70,8 +70,10 @@ var GetLoggedInUserUseCase = /** @class */ (function () {
                             id: user === null || user === void 0 ? void 0 : user.id,
                             name: user === null || user === void 0 ? void 0 : user.name,
                             email: user === null || user === void 0 ? void 0 : user.email,
+                            supportId: user === null || user === void 0 ? void 0 : user.name,
                             role: user.role,
                             active: user.active,
+                            avatar: user.avatar,
                             createdAt: user === null || user === void 0 ? void 0 : user.createdAt,
                             updatedAt: user === null || user === void 0 ? void 0 : user.updatedAt,
                         };

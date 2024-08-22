@@ -106,7 +106,7 @@ exports.myDataSource = new typeorm_1.DataSource({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     entities: [Messages_1.Messages, OldMessages_1.OldMessages, Contacts_1.Contacts, Chats_1.Chats, Users_1.Users, RefreshToken_1.RefreshToken, Notes_1.Notes], // Ajuste o caminho conforme necessário
-    migrations: [adressFile],
+    migrations: ['src/main/infra/typeorm/migrations/*.ts'],
     synchronize: true,
     timezone: 'Z', // Para UTC
     //: true, // Ative o registro para ver as consultas SQL

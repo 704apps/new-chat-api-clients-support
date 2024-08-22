@@ -16,6 +16,7 @@ var ensureAdmin_1 = require("../middlewares/ensureAdmin");
 var DisableUserController_1 = require("../../../../modules/accounts/useCases/disableUser/DisableUserController");
 var DeleteUserController_1 = require("../../../../modules/accounts/useCases/deleteUser/DeleteUserController");
 var GetLoggedInUserController_1 = require("../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController");
+var upload_1 = require("../../upload");
 var autheticateRoutes = (0, express_1.Router)();
 exports.autheticateRoutes = autheticateRoutes;
 var createUserController = new CreateUserController_1.CreateUserController();
@@ -36,7 +37,7 @@ autheticateRoutes.get("/user/:id", ensureAuthenticated_1.ensureAuthenticated, ge
 autheticateRoutes.get("/logged_in_user", ensureAuthenticated_1.ensureAuthenticated, getLoggedInUserController.handle);
 autheticateRoutes.delete("/delete_user/:id", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, deleteUserController.handle);
 autheticateRoutes.patch("/disable_user/:id", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, disableUserController.handle);
-autheticateRoutes.patch("/edit_user/:id", ensureAuthenticated_1.ensureAuthenticated, editUserController.handle);
+autheticateRoutes.patch("/edit_user/:id", upload_1.upload.single('file'), ensureAuthenticated_1.ensureAuthenticated, editUserController.handle);
 autheticateRoutes.patch("/update_role_user/:id", ensureAdmin_1.ensureAdmin, ensureAuthenticated_1.ensureAuthenticated, updateUserToSubMasterController.handle);
 autheticateRoutes.patch("/reset_password/:id", ensureAuthenticated_1.ensureAuthenticated, resetPasswordNoEmailController.handle);
 autheticateRoutes.get("/users", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, getAllUsersController.handle);

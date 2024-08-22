@@ -71,7 +71,9 @@ var GetOneUserByEmailUseCase = /** @class */ (function () {
                             name: user === null || user === void 0 ? void 0 : user.name,
                             email: user === null || user === void 0 ? void 0 : user.email,
                             role: user.role,
+                            supportId: user.name,
                             active: user.active,
+                            avatar: user === null || user === void 0 ? void 0 : user.avatar,
                             createdAt: user === null || user === void 0 ? void 0 : user.createdAt,
                             updatedAt: user === null || user === void 0 ? void 0 : user.updatedAt,
                         };

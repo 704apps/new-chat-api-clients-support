@@ -15,6 +15,9 @@ class Users {
     @Column('varchar')
     email: string;
 
+    @Column({ nullable: true })
+    avatar: string;
+
     @Column('varchar')
     password: string;
 

@@ -13,6 +13,7 @@ declare class RefreshTokenUserUseCase {
             userName: string;
             supportId: string;
             email: string;
+            avatar: string;
             createdAt: Date;
             updatedAt: Date;
         };
@@ -23,6 +24,7 @@ declare class RefreshTokenUserUseCase {
             userName: string;
             supportId: string;
             email: string;
+            avatar: string;
             createdAt: Date;
             updatedAt: Date;
         };

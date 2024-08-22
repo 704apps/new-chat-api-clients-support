@@ -14,8 +14,8 @@ declare class AutenticateUserUseCase {
             expiriesIn: number;
         };
         user: {
-            userid: string;
-            userName: string;
+            id: string;
+            name: string;
             supportId: string;
             email: string;
             role: string;

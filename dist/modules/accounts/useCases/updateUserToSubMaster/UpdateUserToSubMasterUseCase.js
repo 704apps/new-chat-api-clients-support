@@ -72,7 +72,9 @@ var UpdateUserToSubMasterUseCase = /** @class */ (function () {
                             name: user.name,
                             email: user.email,
                             role: user.role,
+                            supportId: user.name,
                             active: user.active,
+                            avatar: user.avatar,
                             createdAt: user.createdAt,
                             updatedAt: user.updatedAt,
                         };

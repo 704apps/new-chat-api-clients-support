@@ -1,16 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,46 +36,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetOneUserUseCase = void 0;
-require("reflect-metadata");
-var tsyringe_1 = require("tsyringe");
-var AppError_1 = require("../../../../error/AppError");
-var GetOneUserUseCase = /** @class */ (function () {
-    function GetOneUserUseCase(userRepository) {
-        this.userRepository = userRepository;
+exports.AddColumnAvatarInTableUser1724333813461 = void 0;
+var typeorm_1 = require("typeorm");
+var AddColumnAvatarInTableUser1724333813461 = /** @class */ (function () {
+    function AddColumnAvatarInTableUser1724333813461() {
     }
-    GetOneUserUseCase.prototype.getOneUser = function (id) {
+    AddColumnAvatarInTableUser1724333813461.prototype.up = function (queryRunner) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, userData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userRepository.findById(id)];
+                    case 0: return [4 /*yield*/, queryRunner.addColumn('users', new typeorm_1.TableColumn({
+                            name: 'avatar',
+                            type: 'varchar',
+                            isNullable: true
+                        }))];
                     case 1:
-                        user = _a.sent();
-                        if (!user) {
-                            throw new AppError_1.AppError('User not found', 400);
-                        }
-                        userData = {
-                            id: user.id,
-                            name: user.name,
-                            email: user.email,
-                            role: user.role,
-                            supportId: user.name,
-                            active: user.active,
-                            avatar: user.avatar,
-                            createdAt: user.createdAt,
-                            updatedAt: user.updatedAt
-                        };
-                        return [2 /*return*/, userData];
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    GetOneUserUseCase = __decorate([
-        (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("UserRepository")),
-        __metadata("design:paramtypes", [Object])
-    ], GetOneUserUseCase);
-    return GetOneUserUseCase;
+    AddColumnAvatarInTableUser1724333813461.prototype.down = function (queryRunner) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, queryRunner.dropColumn('users', 'avatar')];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return AddColumnAvatarInTableUser1724333813461;
 }());
-exports.GetOneUserUseCase = GetOneUserUseCase;
+exports.AddColumnAvatarInTableUser1724333813461 = AddColumnAvatarInTableUser1724333813461;
