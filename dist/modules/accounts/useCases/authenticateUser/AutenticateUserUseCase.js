@@ -73,6 +73,9 @@ var AutenticateUserUseCase = /** @class */ (function () {
                         if (!userVerify) {
                             throw new AppError_1.AppError("Email or password incorrect!");
                         }
+                        if (!userVerify.active) {
+                            throw new AppError_1.AppError('This User has been deactivated!', 400);
+                        }
                         return [4 /*yield*/, (0, bcrypt_1.compare)(password, userVerify.password)];
                     case 2:
                         passwordMath = _c.sent();
