@@ -5,7 +5,7 @@ import { ICreateUserDTO } from "../../../../modules/accounts/DTOs/ICreateUserDTO
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
 import { hash } from 'bcrypt'
 import { AppError } from "../../../../error/AppError";
-
+import {alterNameForSupporId} from '../../util/alterNameForSupporId'
 @injectable()
 class CreateUserUseCase {
 
@@ -15,21 +15,21 @@ class CreateUserUseCase {
     ) { }
 
 
-    async execute({ name, email, password ,role}: ICreateUserDTO) {
+    async execute({ name, email, password, role }: ICreateUserDTO) {
         try {
-           
+
             const passwordHash = await hash(password, 8)
-           // console.log('veio no antes de ver email'+passwordHash)
-            
+            // console.log('veio no antes de ver email'+passwordHash)
+
             const isuseralreadyExist = await this.userRepository.findByEmail(email)
 
-          //  console.log('veio no depois de ver email')
+            //  console.log('veio no depois de ver email')
 
             if (isuseralreadyExist) {
                 throw new AppError("User already exists")
             }
 
-           // console.log('veio no antes de salvar')
+            // console.log('veio no antes de salvar')
 
             const user = await this.userRepository.create({
                 name,
@@ -37,18 +37,24 @@ class CreateUserUseCase {
                 password: passwordHash,
                 role
             })
+            const supportId = alterNameForSupporId(user.name);
+            
             const userCreated = {
                 id: user.id,
                 name: user.name,
+                supportId,
                 email: user.email,
-                role : user.role,
-                active : user.active
+                avatar: user.avatar,
+                active: user.active,
+                role: user.role,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
             }
-          
+
             return userCreated
         } catch (error) {
             console.log(error)
-            throw new AppError('Error creating user',400,{error})
+            throw new AppError('Error creating user', 400, { error })
         }
 
     }

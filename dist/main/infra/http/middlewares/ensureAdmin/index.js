@@ -44,34 +44,51 @@ var UserRepository_1 = require("../../../../../modules/accounts/infra/typeorm/re
 // Middleware para verificar se o usuário é admin
 function ensureAdmin(request, response, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var authHeader, _a, token, userId, userRepository, user, error_1;
+        var authHeader, _a, token, userId, userRepository, user, error_1, error_2;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    _b.trys.push([0, 2, , 3]);
+                    _b.trys.push([0, 5, , 6]);
                     authHeader = request.headers.authorization;
+                    console.log('veio aqui no admin');
                     if (!authHeader) {
                         throw new AppError_1.AppError('Token missing', 401);
                     }
+                    console.log('veio aqui no admin2');
                     _a = authHeader.split(' '), token = _a[1];
-                    userId = (0, jsonwebtoken_1.verify)(token, process.env.SECRET_JWT).sub;
-                    userRepository = new UserRepository_1.UserRepository();
-                    return [4 /*yield*/, userRepository.findById(userId)];
+                    console.log('veio aqui no admin3');
+                    _b.label = 1;
                 case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    userId = (0, jsonwebtoken_1.verify)(token, process.env.SECRET_JWT).sub;
+                    console.log('veio aqui no admin4');
+                    userRepository = new UserRepository_1.UserRepository();
+                    console.log('veio aqui no admin5');
+                    return [4 /*yield*/, userRepository.findById(userId)];
+                case 2:
                     user = _b.sent();
+                    console.log('veio aqui no admin6');
                     if (!user) {
-                        throw new AppError_1.AppError('User does not exist!', 401);
+                        console.log('veio aqui no erro user');
+                        return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     }
-                    console.log(user);
                     if (user.role !== 'MASTER') {
                         return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     }
                     next();
-                    return [3 /*break*/, 3];
-                case 2:
+                    return [3 /*break*/, 4];
+                case 3:
                     error_1 = _b.sent();
-                    return [2 /*return*/, next(error_1)];
-                case 3: return [2 /*return*/];
+                    if (error_1 instanceof jsonwebtoken_1.TokenExpiredError) {
+                        throw new AppError_1.AppError('Invalid token', 401);
+                    }
+                    // Outros erros podem ser tratados aqui
+                    throw new AppError_1.AppError('Invalid token.', 401);
+                case 4: return [3 /*break*/, 6];
+                case 5:
+                    error_2 = _b.sent();
+                    return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
+                case 6: return [2 /*return*/];
             }
         });
     });
@@ -79,7 +96,7 @@ function ensureAdmin(request, response, next) {
 // Middleware para verificar se o usuário é subadmin
 function ensureAdminAndSubadmin(request, response, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var authHeader, _a, token, userId, userRepository, user, error_2;
+        var authHeader, _a, token, userId, userRepository, user, error_3;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -95,7 +112,7 @@ function ensureAdminAndSubadmin(request, response, next) {
                 case 1:
                     user = _b.sent();
                     if (!user) {
-                        throw new AppError_1.AppError('User does not exist!', 401);
+                        return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     } // Supondo que o usuário autenticado é armazenado em request.user
                     if (user.role !== 'SUBMASTER' && user.role !== 'MASTER') {
                         return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
@@ -103,8 +120,8 @@ function ensureAdminAndSubadmin(request, response, next) {
                     next();
                     return [3 /*break*/, 3];
                 case 2:
-                    error_2 = _b.sent();
-                    return [2 /*return*/, next(error_2)];
+                    error_3 = _b.sent();
+                    return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                 case 3: return [2 /*return*/];
             }
         });

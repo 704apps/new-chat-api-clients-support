@@ -48,7 +48,7 @@ var GenerateTokenProvider = /** @class */ (function () {
                 secretKey = String(process.env.SECRET_JWT);
                 token = (0, jsonwebtoken_1.sign)({}, secretKey, {
                     subject: "".concat(userId), // Define o subject (assunto) do token
-                    expiresIn: '24h' // Define a expiração do token para 1 hora
+                    expiresIn: '24h' // Define a expiração do token para 24 hora
                 });
                 return [2 /*return*/, token];
             });

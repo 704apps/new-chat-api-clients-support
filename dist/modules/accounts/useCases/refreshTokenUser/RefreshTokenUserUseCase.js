@@ -63,7 +63,7 @@ var RefreshTokenUserUseCase = /** @class */ (function () {
     }
     RefreshTokenUserUseCase.prototype.execute = function (refresh_token) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshToken, refreshTokenExpired, generateRefleshToken, token, generateRefleshTokenProvider, nRefreshToken, newRefreshToken, user;
+            var refreshToken, refreshTokenExpired, generateRefleshToken, token, generateRefleshTokenProvider, nRefreshToken, newRefreshToken, user_1, user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.repositoryRefreshToken.getOne(refresh_token)];
@@ -85,17 +85,28 @@ var RefreshTokenUserUseCase = /** @class */ (function () {
                         newRefreshToken = {
                             id: nRefreshToken === null || nRefreshToken === void 0 ? void 0 : nRefreshToken.id
                         };
-                        user = {
+                        user_1 = {
                             expiriesIn: nRefreshToken === null || nRefreshToken === void 0 ? void 0 : nRefreshToken.expiriesIn,
                             userid: nRefreshToken === null || nRefreshToken === void 0 ? void 0 : nRefreshToken.userId.id,
                             userName: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
                             supportId: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
                             email: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.email,
+                            avatar: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.avatar,
                             createdAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.createdAt,
                             updatedAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.updatedAt
                         };
-                        return [2 /*return*/, { token: token, newRefreshToken: newRefreshToken, user: user }];
-                    case 4: return [2 /*return*/, { token: token }];
+                        return [2 /*return*/, { token: token, newRefreshToken: newRefreshToken, user: user_1 }];
+                    case 4:
+                        user = {
+                            userid: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.id,
+                            userName: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
+                            supportId: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.name,
+                            email: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.email,
+                            avatar: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.avatar,
+                            createdAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.createdAt,
+                            updatedAt: refreshToken === null || refreshToken === void 0 ? void 0 : refreshToken.userId.updatedAt
+                        };
+                        return [2 /*return*/, { token: token, user: user }];
                 }
             });
         });

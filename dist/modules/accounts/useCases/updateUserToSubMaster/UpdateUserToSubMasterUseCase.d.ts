@@ -6,8 +6,11 @@ declare class UpdateUserToSubMasterUseCase {
     updateUserToSubMaster(id: string, role: string): Promise<{
         id: string;
         name: string;
-        role: string;
         email: string;
+        role: string;
+        supportId: string;
+        active: boolean;
+        avatar: string;
         createdAt: Date;
         updatedAt: Date;
     }>;

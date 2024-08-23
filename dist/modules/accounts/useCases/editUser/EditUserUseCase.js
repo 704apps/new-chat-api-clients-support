@@ -52,17 +52,18 @@ exports.EditUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
+var aws_1 = require("../../../../main/infra/upload/aws");
 var EditUserUseCase = /** @class */ (function () {
     function EditUserUseCase(userRepository) {
         this.userRepository = userRepository;
     }
-    EditUserUseCase.prototype.execute = function (data) {
+    EditUserUseCase.prototype.execute = function (data, file) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, isuseralreadyExist, user, userUpdate, error_1;
+            var id, isuseralreadyExist, filecontent, filename, urlImage, user, userUpdate, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 5, , 6]);
                         id = data.id;
                         return [4 /*yield*/, this.userRepository.findById(id)
                             //  console.log('veio no depois de ver email')
@@ -74,23 +75,35 @@ var EditUserUseCase = /** @class */ (function () {
                             console.log('veio aqui');
                             throw new AppError_1.AppError("User already exists");
                         }
-                        return [4 /*yield*/, this.userRepository.edit(data)];
+                        if (!file) return [3 /*break*/, 3];
+                        if (!file.filecontent) return [3 /*break*/, 3];
+                        console.log('veiop');
+                        filecontent = file.filecontent, filename = file.filename;
+                        return [4 /*yield*/, (0, aws_1.uploadToAws)(filename, filecontent)];
                     case 2:
+                        urlImage = _a.sent();
+                        data.avatar = urlImage;
+                        _a.label = 3;
+                    case 3: return [4 /*yield*/, this.userRepository.edit(data)];
+                    case 4:
                         user = _a.sent();
-                        console.log(user);
                         userUpdate = {
                             id: user.id,
                             name: user.name,
+                            supportId: user.name,
                             email: user.email,
-                            role: user.role
+                            avatar: user.avatar,
+                            active: user.active,
+                            role: user.role,
+                            createdAt: user.createdAt,
+                            updatedAt: user.updatedAt,
                         };
-                        console.log(userUpdate);
                         return [2 /*return*/, userUpdate];
-                    case 3:
+                    case 5:
                         error_1 = _a.sent();
                         console.log(error_1);
                         throw new AppError_1.AppError('Error creating user', 400, { error: error_1 });
-                    case 4: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

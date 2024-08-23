@@ -1,11 +1,11 @@
 import "reflect-metadata";
 
 import { inject, injectable } from "tsyringe";
-import { ICreateUserDTO } from "../../../../modules/accounts/DTOs/ICreateUserDTOS";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
-import { hash } from 'bcrypt'
 import { AppError } from "../../../../error/AppError";
 import { IUpdateUserDTOS } from "../../DTOs/IUpdateUserDTOS";
+import { IUploadDTOS } from "../../DTOs/IUploadDTOS";
+import { uploadToAws } from "../../../../main/infra/upload/aws";
 
 @injectable()
 class EditUserUseCase {
@@ -18,37 +18,41 @@ class EditUserUseCase {
 
     async execute(data: IUpdateUserDTOS) {
         try {
-           
-            const { id} = data
-           
-           // console.log('veio no antes de ver email'+passwordHash)
-            
+
+            const { id } = data
+            // filename:string;
+            // filecontent:Buffer;
+            // console.log('veio no antes de ver email'+passwordHash)
+
             const isuseralreadyExist = await this.userRepository.findById(id)
 
-          //  console.log('veio no depois de ver email')
+            //  console.log('veio no depois de ver email')
 
             if (!isuseralreadyExist) {
                 console.log('veio aqui')
                 throw new AppError("User already exists")
             }
-
-           // console.log('veio no antes de salvar')
-
-            const user = await this.userRepository.edit(data)   
-            console.log(user)
+          
+            const user = await this.userRepository.edit(data)
 
             const userUpdate = {
                 id: user.id,
                 name: user.name,
+                supportId: user.name,
                 email: user.email,
-                role : user.role
+                avatar: user.avatar,
+                active: user.active,
+                role: user.role,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
             }
-            console.log(userUpdate)
+
+
             return userUpdate
 
         } catch (error) {
             console.log(error)
-            throw new AppError('Error creating user',400,{error})
+            throw new AppError('Error creating user', 400, { error })
         }
 
     }

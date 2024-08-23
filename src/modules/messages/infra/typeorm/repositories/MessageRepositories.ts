@@ -17,7 +17,7 @@ class MessageRepository implements IMessageRepository {
     private repositoryMessage: Repository<Messages>
     private repositoryChat: Repository<Chats>
     private repositoryContacts: Repository<Contacts>
-    private repositoryOldMessage:  Repository<OldMessages>
+    private repositoryOldMessage: Repository<OldMessages>
     private next: NextFunction
 
     constructor() {
@@ -30,9 +30,10 @@ class MessageRepository implements IMessageRepository {
     }
     async getOldMessages(id: number): Promise<OldMessages[]> {
         const message = await this.repositoryOldMessage.find({
-            where: { idMessage: { id } ,
-        
-        }
+            where: {
+                idMessage: { id },
+
+            }
         });
 
         if (message.length === 0) {
@@ -40,7 +41,7 @@ class MessageRepository implements IMessageRepository {
         }
         const oldMessages = message.map((item) => ({
             oldMessage: item.oldMessage,
-           
+
         })) as unknown as OldMessages[]
 
         return oldMessages;
@@ -139,7 +140,7 @@ class MessageRepository implements IMessageRepository {
 
         } catch (error) {
             // console.log('131313131', error);
-            this.next(error);
+            
             throw new AppError('error', 400, { error });
         }
     }
@@ -156,7 +157,7 @@ class MessageRepository implements IMessageRepository {
             throw new AppError("Message not found!")
         }
 
-       
+
         const oldMessage = getMessage.messages
         getMessage.messages = message;
         getMessage.msgEdt = true;
@@ -165,7 +166,7 @@ class MessageRepository implements IMessageRepository {
         const idMessage = getMessage.id
         const newOldMessage = await this.repositoryOldMessage.create({
             oldMessage,
-            idMessage: {id:idMessage},
+            idMessage: { id: idMessage },
         });
 
         await this.repositoryOldMessage.save(newOldMessage);
@@ -177,7 +178,7 @@ class MessageRepository implements IMessageRepository {
             await io.to("support").emit('supportMsgUpdate', { id: getMessage.id, updatedMessage: getMessage.messages });
         }
 
-        return getMessage; 
+        return getMessage;
 
     }
     public async getFilterToStatusSidebar(statusAttention: string): Promise<DtoNewMessages[]> {
@@ -479,59 +480,67 @@ class MessageRepository implements IMessageRepository {
         return project;
     }
     async uploadMedia(data: UploadDataDTO): Promise<void> {
+        try {
 
-        // console.log(data)
-        const { filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin } = data
-        const urlImage = await uploadToAws(filename, filecontent)
 
-        const message = {
-            userType,
-            projectId,
-            supportId,
-            messageType,
-            urlImage,
-            messages,
-            origin,
+            // console.log(data)
+            const { filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin } = data
+            const urlImage = await uploadToAws(filename, filecontent)
+
+            const message = {
+                userType,
+                projectId,
+                supportId,
+                messageType,
+                urlImage,
+                messages,
+                origin,
+            }
+            const msg = await this.createMessage(message)
+
+            const datatoSocket = {
+                id: msg.id,
+                chatId: msg.chatId,
+                key,
+                userType,
+                projectId,
+                supportId,
+                messageType,
+                messages,
+                urlImage,
+                origin,
+                createdAt: msg.createdAt
+            }
+
+            if (origin === "support") {
+                io.to(projectId).emit('clientMessage', datatoSocket);
+                io.to('support').emit('supportResponse', datatoSocket);
+
+            } else {
+                io.to('support').emit('supportMessage', datatoSocket);
+
+                // if (supportId) {
+                //     console.log('veio aqui upload')
+                //     console.log(datatoSocket)
+                //     io.to(supportId).emit('supportMessage', datatoSocket);
+                //     io.to('support').emit('supportMessage', datatoSocket);
+
+                // }else{
+                //     console.log('veio aqui upload222222')
+                //     console.log(datatoSocket)
+                //     io.to('support').emit('supportMessage', datatoSocket);
+
+                // }
+            }
+
+            return
+        } catch (error) {
+            console.log('veio error')
+
+            console.log(error)
+
+            return
         }
-        const msg = await this.createMessage(message)
-
-        const datatoSocket = {
-            id: msg.id,
-            chatId: msg.chatId,
-            key,
-            userType,
-            projectId,
-            supportId,
-            messageType,
-            messages,
-            urlImage,
-            origin,
-            createdAt: msg.createdAt
-        }
-
-        if (origin === "support") {
-            io.to(projectId).emit('clientMessage', datatoSocket);
-            io.to('support').emit('supportResponse', datatoSocket);
-
-        } else {
-            io.to('support').emit('supportMessage', datatoSocket);
-
-            // if (supportId) {
-            //     console.log('veio aqui upload')
-            //     console.log(datatoSocket)
-            //     io.to(supportId).emit('supportMessage', datatoSocket);
-            //     io.to('support').emit('supportMessage', datatoSocket);
-
-            // }else{
-            //     console.log('veio aqui upload222222')
-            //     console.log(datatoSocket)
-            //     io.to('support').emit('supportMessage', datatoSocket);
-
-            // }
-        }
-
-        return
-
 
     }
 

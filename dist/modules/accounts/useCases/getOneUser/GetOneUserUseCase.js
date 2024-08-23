@@ -71,8 +71,12 @@ var GetOneUserUseCase = /** @class */ (function () {
                             id: user.id,
                             name: user.name,
                             email: user.email,
+                            role: user.role,
+                            supportId: user.name,
+                            active: user.active,
+                            avatar: user.avatar,
                             createdAt: user.createdAt,
-                            updatedAt: user.updatedAt,
+                            updatedAt: user.updatedAt
                         };
                         return [2 /*return*/, userData];
                 }

@@ -90,9 +90,13 @@ var CreateUserUseCase = /** @class */ (function () {
                         userCreated = {
                             id: user.id,
                             name: user.name,
+                            supportId: user.name,
                             email: user.email,
+                            avatar: user.avatar,
+                            active: user.active,
                             role: user.role,
-                            active: user.active
+                            createdAt: user.createdAt,
+                            updatedAt: user.updatedAt,
                         };
                         return [2 /*return*/, userCreated];
                     case 4:

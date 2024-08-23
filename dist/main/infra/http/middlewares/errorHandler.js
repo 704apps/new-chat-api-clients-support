@@ -13,9 +13,8 @@ function errorHandler(err, request, response, next) {
         });
     }
     // Para qualquer outro erro, que não seja AppError, exiba a mensagem original do erro.
-    console.error();
     return response.status(500).json({
         status: 500,
-        message: 'internal error', // Aqui ele exibirá a mensagem do erro
+        message: err.message, // Aqui ele exibirá a mensagem do erro
     });
 }

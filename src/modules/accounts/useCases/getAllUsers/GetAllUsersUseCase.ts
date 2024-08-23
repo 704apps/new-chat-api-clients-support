@@ -9,9 +9,9 @@ class GetAllUsersUseCase {
   constructor(
     @inject("UserRepository")
     private userRepository: IUserRepository
-  ) {}
+  ) { }
 
-  async getAllUser():Promise<Users> {
+  async getAllUser(): Promise<Users> {
     const users = await this.userRepository.allUsers();
 
     if (!users) {
@@ -21,9 +21,11 @@ class GetAllUsersUseCase {
     const usersData = users.map(user => ({
       id: user.id,
       name: user.name,
+      supportId: user.name,
       email: user.email,
-      role: user.role,
+      avatar: user.avatar,
       active: user.active,
+      role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     })) as unknown as Users

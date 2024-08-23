@@ -29,6 +29,10 @@ var Users = /** @class */ (function () {
         __metadata("design:type", String)
     ], Users.prototype, "email", void 0);
     __decorate([
+        (0, typeorm_1.Column)({ nullable: true }),
+        __metadata("design:type", String)
+    ], Users.prototype, "avatar", void 0);
+    __decorate([
         (0, typeorm_1.Column)('varchar'),
         __metadata("design:type", String)
     ], Users.prototype, "password", void 0);

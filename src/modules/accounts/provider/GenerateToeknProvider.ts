@@ -10,7 +10,7 @@ class GenerateTokenProvider {
             {}, 
             secretKey, {
             subject: `${userId}`, // Define o subject (assunto) do token
-            expiresIn: '24h'  // Define a expiração do token para 1 hora
+            expiresIn: '24h'  // Define a expiração do token para 24 hora
         })
 
         return token

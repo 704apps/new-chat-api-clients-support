@@ -70,9 +70,11 @@ var GetAllUsersUseCase = /** @class */ (function () {
                         usersData = users.map(function (user) { return ({
                             id: user.id,
                             name: user.name,
+                            supportId: user.name,
                             email: user.email,
-                            role: user.role,
+                            avatar: user.avatar,
                             active: user.active,
+                            role: user.role,
                             createdAt: user.createdAt,
                             updatedAt: user.updatedAt,
                         }); });

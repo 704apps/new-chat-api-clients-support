@@ -8,7 +8,7 @@ class GetOneUserUseCase {
   constructor(
     @inject("UserRepository")
     private userRepository: IUserRepository
-  ) {}
+  ) { }
 
   async getOneUser(id: string) {
     const user = await this.userRepository.findById(id);
@@ -21,8 +21,12 @@ class GetOneUserUseCase {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
+      supportId: user.name,
+      active: user.active,
+      avatar: user.avatar,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      updatedAt: user.updatedAt
     };
     return userData;
   }

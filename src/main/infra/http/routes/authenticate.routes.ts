@@ -16,6 +16,9 @@ import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 import { DisableUserController } from "../../../../modules/accounts/useCases/disableUser/DisableUserController"
 import { DeleteUserController } from "../../../../modules/accounts/useCases/deleteUser/DeleteUserController"
+import { GetLoggedInUserController } from "../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController"
+import { upload } from '../../upload';
+import { UploadMediaController } from "../../../../modules/accounts/useCases/uploadMedia/UploadMediaController"
 
 const autheticateRoutes = Router()
 
@@ -25,6 +28,9 @@ const updateUserToSubMasterController = new UpdateUserToSubMasterController()
 
 
 const getOneUserController= new GetOneUserController()
+
+const getLoggedInUserController= new GetLoggedInUserController()
+
 
 const deleteUserController= new DeleteUserController()
 const disableUserController= new DisableUserController()
@@ -38,6 +44,7 @@ const getOneUserByEmailController= new GetOneUserByEmailController()
 
 const authenticateUserController = new AuthenticateUserController()
 const refreshTokenUserController = new RefreshTokenUserController()
+const uploadMediaController = new UploadMediaController();
 
 
 
@@ -47,12 +54,16 @@ autheticateRoutes.post("/sessions", authenticateUserController.handle)
 
 autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.handle)
 
+autheticateRoutes.get("/logged_in_user",ensureAuthenticated, getLoggedInUserController.handle)
+autheticateRoutes.post('/uploadavatar/',upload.single('file'),ensureAuthenticated,uploadMediaController.handle)
+
+
 autheticateRoutes.delete("/delete_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,deleteUserController.handle)
 
 autheticateRoutes.patch("/disable_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,disableUserController.handle)
 
 
-autheticateRoutes.patch("/edit_user/:id",ensureAuthenticated, editUserController.handle)
+autheticateRoutes.patch("/edit_user/:id",upload.single('file'),ensureAuthenticated, editUserController.handle)
 
 autheticateRoutes.patch("/update_role_user/:id",ensureAdmin,ensureAuthenticated, updateUserToSubMasterController.handle)
 
