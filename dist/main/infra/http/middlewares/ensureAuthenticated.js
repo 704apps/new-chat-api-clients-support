@@ -72,14 +72,14 @@ function ensureAuthenticated(request, response, next) {
                     return [4 /*yield*/, userRepository.findById(userId)];
                 case 2:
                     user = _d.sent();
-                    //   console.log('veio aqui no aute6')
+                    //console.log('veio aqui no aute6')
                     if (!user) {
                         throw new AppError_1.AppError('User does not exist!', 401);
                     }
                     if (user.active === false) {
                         throw new AppError_1.AppError('This User has been deactivated!', 401);
                     }
-                    //  console.log('veio aqui no aute7')
+                    //console.log('veio aqui no aute7')
                     response.locals.userId = userId;
                     return [2 /*return*/, next()];
                 case 3:
@@ -103,9 +103,7 @@ function ensureAuthenticated(request, response, next) {
                     }
                     _b = authHeader.split(' '), token = _b[1];
                     id = request.params.id;
-                    console.log('veio aqui antes');
                     if (!!id) return [3 /*break*/, 10];
-                    console.log('veio aqui2222');
                     projectId_1 = request.body.projectId;
                     _d.label = 7;
                 case 7:
@@ -169,7 +167,7 @@ function ensureAuthenticated(request, response, next) {
                 case 18: return [2 /*return*/, next()];
                 case 19:
                     error_6 = _d.sent();
-                    console.log('veio aqui depois5 erro no try');
+                    //console.log('veio aqui depois5 erro no try')
                     return [2 /*return*/, next(error_6)];
                 case 20:
                     ;

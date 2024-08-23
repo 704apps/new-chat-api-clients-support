@@ -45,6 +45,21 @@ var NoteRepository = /** @class */ (function () {
     function NoteRepository() {
         this.repositoryNotes = app_data_source_1.myDataSource.getRepository(Notes_1.Notes);
     }
+    NoteRepository.prototype.getAllNotesSupportID = function (chatId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var notesSupport;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.repositoryNotes.find({
+                            where: { chatId: chatId }
+                        })];
+                    case 1:
+                        notesSupport = _a.sent();
+                        return [2 /*return*/, notesSupport];
+                }
+            });
+        });
+    };
     NoteRepository.prototype.getOneNote = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var getNote;
