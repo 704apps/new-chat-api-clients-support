@@ -13,6 +13,9 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
     @Column('varchar')
     oldMessage: string;
 
+    @Column('varchar',{ nullable: true })
+    supportId: string;
+    
     @CreateDateColumn()
     createdAt: Date;
 

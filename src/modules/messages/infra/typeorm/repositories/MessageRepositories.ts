@@ -40,7 +40,9 @@ class MessageRepository implements IMessageRepository {
             throw new AppError("Messages not found");
         }
         const oldMessages = message.map((item) => ({
+            supportId: item.supportId,
             oldMessage: item.oldMessage,
+            createdAt: item.createdAt,
 
         })) as unknown as OldMessages[]
 
@@ -162,12 +164,13 @@ class MessageRepository implements IMessageRepository {
         const oldMessage = getMessage.messages
         getMessage.messages = message;
         getMessage.msgEdt = true;
-
+        const supportId = getMessage.supportId
         await this.repositoryMessage.save(getMessage);
         const idMessage = getMessage.id
         const newOldMessage = await this.repositoryOldMessage.create({
             oldMessage,
             idMessage: { id: idMessage },
+            supportId,
         });
 
         await this.repositoryOldMessage.save(newOldMessage);

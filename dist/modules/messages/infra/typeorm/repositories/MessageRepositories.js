@@ -69,7 +69,9 @@ var MessageRepository = /** @class */ (function () {
                             throw new AppError_1.AppError("Messages not found");
                         }
                         oldMessages = message.map(function (item) { return ({
+                            supportId: item.supportId,
                             oldMessage: item.oldMessage,
+                            createdAt: item.createdAt,
                         }); });
                         return [2 /*return*/, oldMessages];
                 }
@@ -188,7 +190,7 @@ var MessageRepository = /** @class */ (function () {
     };
     MessageRepository.prototype.update = function (id, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var getMessage, oldMessage, idMessage, newOldMessage;
+            var getMessage, oldMessage, supportId, idMessage, newOldMessage;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.repositoryMessage.findOneBy({
@@ -202,6 +204,7 @@ var MessageRepository = /** @class */ (function () {
                         oldMessage = getMessage.messages;
                         getMessage.messages = message;
                         getMessage.msgEdt = true;
+                        supportId = getMessage.supportId;
                         return [4 /*yield*/, this.repositoryMessage.save(getMessage)];
                     case 2:
                         _a.sent();
@@ -209,6 +212,7 @@ var MessageRepository = /** @class */ (function () {
                         return [4 /*yield*/, this.repositoryOldMessage.create({
                                 oldMessage: oldMessage,
                                 idMessage: { id: idMessage },
+                                supportId: supportId,
                             })];
                     case 3:
                         newOldMessage = _a.sent();
