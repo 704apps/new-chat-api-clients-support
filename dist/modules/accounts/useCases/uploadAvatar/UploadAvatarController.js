@@ -36,58 +36,44 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EditUserController = void 0;
-require("reflect-metadata");
+exports.UploadAvatarController = void 0;
+var UploadAvatarUseCase_1 = require("./UploadAvatarUseCase");
 var tsyringe_1 = require("tsyringe");
-var EditUserUseCase_1 = require("./EditUserUseCase");
-var EditUserController = /** @class */ (function () {
-    function EditUserController() {
+var UploadAvatarController = /** @class */ (function () {
+    function UploadAvatarController() {
     }
-    EditUserController.prototype.handle = function (request, response) {
+    UploadAvatarController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, name_1, email, file, data, editUserUseCase, user, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var file, idUser, dataBody, uploadAvatarUseCase, user, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 5, , 6]);
-                        console.log('11');
-                        id = request.params.id;
-                        console.log('22');
-                        return [4 /*yield*/, request.body];
-                    case 1:
-                        _a = _b.sent(), name_1 = _a.name, email = _a.email;
+                        _a.trys.push([0, 3, , 4]);
                         return [4 /*yield*/, request.file];
-                    case 2:
-                        file = _b.sent();
-                        console.log('33');
-                        if (!name_1 || !email || !id) {
-                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
+                    case 1:
+                        file = _a.sent();
+                        idUser = request.params.id;
+                        dataBody = {};
+                        uploadAvatarUseCase = tsyringe_1.container.resolve(UploadAvatarUseCase_1.UploadAvatarUseCase);
+                        if (!file) {
+                            return [2 /*return*/, response.status(400).json({ error: "File not provided!" })];
                         }
-                        // let dataFile:IUploadDTOS
-                        console.log('33');
-                        data = {
-                            id: id,
-                            email: email,
-                            name: name_1,
-                        };
-                        return [4 /*yield*/, tsyringe_1.container.resolve(EditUserUseCase_1.EditUserUseCase)
-                            //console.log(data)
-                        ];
+                        dataBody.id = idUser;
+                        dataBody.filecontent = file.buffer;
+                        dataBody.filename = file.originalname;
+                        return [4 /*yield*/, uploadAvatarUseCase.uploadMedia(dataBody)];
+                    case 2:
+                        user = _a.sent();
+                        return [2 /*return*/, response.status(200).json(user)];
                     case 3:
-                        editUserUseCase = _b.sent();
-                        return [4 /*yield*/, editUserUseCase.execute(data)];
-                    case 4:
-                        user = _b.sent();
-                        return [2 /*return*/, response.status(200).json({ message: 'User update successfully', user: user })];
-                    case 5:
-                        error_1 = _b.sent();
+                        error_1 = _a.sent();
                         console.log(error_1);
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 6: return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return EditUserController;
+    return UploadAvatarController;
 }());
-exports.EditUserController = EditUserController;
+exports.UploadAvatarController = UploadAvatarController;

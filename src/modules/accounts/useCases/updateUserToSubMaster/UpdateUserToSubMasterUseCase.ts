@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
 import { AppError } from "../../../../error/AppError";
+import { alterNameForSupporId } from "../../../accounts/util/alterNameForSupporId";
 
 @injectable()
 class UpdateUserToSubMasterUseCase {
@@ -22,7 +23,7 @@ class UpdateUserToSubMasterUseCase {
       name: user.name,
       email: user.email,
       role: user.role,
-      supportId: user.name,
+      supportId: alterNameForSupporId(user.name),
       active: user.active,
       avatar: user.avatar,
       createdAt: user.createdAt,

@@ -52,58 +52,53 @@ exports.EditUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
-var aws_1 = require("../../../../main/infra/upload/aws");
+var alterNameForSupporId_1 = require("../../../../modules/accounts/util/alterNameForSupporId");
 var EditUserUseCase = /** @class */ (function () {
     function EditUserUseCase(userRepository) {
         this.userRepository = userRepository;
     }
-    EditUserUseCase.prototype.execute = function (data, file) {
+    EditUserUseCase.prototype.execute = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, isuseralreadyExist, filecontent, filename, urlImage, user, userUpdate, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var id, isuseralreadyExist, user, userUpdate, error_1;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 5, , 6]);
+                        _b.trys.push([0, 4, , 5]);
                         id = data.id;
                         return [4 /*yield*/, this.userRepository.findById(id)
                             //  console.log('veio no depois de ver email')
                         ];
                     case 1:
-                        isuseralreadyExist = _a.sent();
+                        isuseralreadyExist = _b.sent();
                         //  console.log('veio no depois de ver email')
                         if (!isuseralreadyExist) {
                             console.log('veio aqui');
                             throw new AppError_1.AppError("User already exists");
                         }
-                        if (!file) return [3 /*break*/, 3];
-                        if (!file.filecontent) return [3 /*break*/, 3];
-                        console.log('veiop');
-                        filecontent = file.filecontent, filename = file.filename;
-                        return [4 /*yield*/, (0, aws_1.uploadToAws)(filename, filecontent)];
+                        return [4 /*yield*/, this.userRepository.edit(data)];
                     case 2:
-                        urlImage = _a.sent();
-                        data.avatar = urlImage;
-                        _a.label = 3;
-                    case 3: return [4 /*yield*/, this.userRepository.edit(data)];
-                    case 4:
-                        user = _a.sent();
-                        userUpdate = {
+                        user = _b.sent();
+                        _a = {
                             id: user.id,
-                            name: user.name,
-                            supportId: user.name,
-                            email: user.email,
-                            avatar: user.avatar,
-                            active: user.active,
-                            role: user.role,
-                            createdAt: user.createdAt,
-                            updatedAt: user.updatedAt,
+                            name: user.name
                         };
+                        return [4 /*yield*/, (0, alterNameForSupporId_1.alterNameForSupporId)(user.name)];
+                    case 3:
+                        userUpdate = (_a.supportId = _b.sent(),
+                            _a.email = user.email,
+                            _a.avatar = user.avatar,
+                            _a.active = user.active,
+                            _a.role = user.role,
+                            _a.createdAt = user.createdAt,
+                            _a.updatedAt = user.updatedAt,
+                            _a);
                         return [2 /*return*/, userUpdate];
-                    case 5:
-                        error_1 = _a.sent();
+                    case 4:
+                        error_1 = _b.sent();
                         console.log(error_1);
                         throw new AppError_1.AppError('Error creating user', 400, { error: error_1 });
-                    case 6: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });

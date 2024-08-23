@@ -82,6 +82,7 @@ function ensureAuthenticated(request, response, next) {
                     if (user.active === false) {
                         throw new AppError_1.AppError('This User has been deactivated!', 401);
                     }
+                    console.log('veio aqui no aute7');
                     response.locals.userId = userId;
                     return [2 /*return*/, next()];
                 case 3:

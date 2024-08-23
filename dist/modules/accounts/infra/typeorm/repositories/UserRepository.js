@@ -50,6 +50,8 @@ var app_data_source_1 = require("../../../../../main/infra/typeorm/connection/ap
 var Users_1 = require("../Entities/Users");
 var AppError_1 = require("../../../../../error/AppError");
 var tsyringe_1 = require("tsyringe");
+var aws_1 = require("../../../../../main/infra/upload/aws");
+var alterNameForSupporId_1 = require("../../../util/alterNameForSupporId");
 var UserRepository = /** @class */ (function () {
     function UserRepository() {
         this.repository = app_data_source_1.myDataSource.getRepository(Users_1.Users);
@@ -67,9 +69,6 @@ var UserRepository = /** @class */ (function () {
                         console.log(email);
                         user.name = name;
                         user.email = email;
-                        if (data.avatar) {
-                            user.avatar = data.avatar;
-                        }
                         return [4 /*yield*/, this.repository.save(user)];
                     case 2:
                         updateUser = _a.sent();
@@ -98,9 +97,10 @@ var UserRepository = /** @class */ (function () {
     UserRepository.prototype.create = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
             var user, userCreated, returnCreatedUser;
+            var _c;
             var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0: return [4 /*yield*/, this.repository.create({
                             name: name,
                             email: email,
@@ -109,21 +109,24 @@ var UserRepository = /** @class */ (function () {
                             active: true
                         })];
                     case 1:
-                        user = _c.sent();
+                        user = _d.sent();
                         return [4 /*yield*/, this.repository.save(user)];
                     case 2:
-                        userCreated = _c.sent();
-                        returnCreatedUser = {
+                        userCreated = _d.sent();
+                        _c = {
                             id: userCreated.id,
-                            name: userCreated.name,
-                            supportId: userCreated.name,
-                            email: userCreated.email,
-                            avatar: userCreated.avatar,
-                            active: userCreated.active,
-                            role: userCreated.role,
-                            createdAt: userCreated.createdAt,
-                            updatedAt: userCreated.updatedAt,
+                            name: userCreated.name
                         };
+                        return [4 /*yield*/, (0, alterNameForSupporId_1.alterNameForSupporId)(userCreated.name)];
+                    case 3:
+                        returnCreatedUser = (_c.supportId = _d.sent(),
+                            _c.email = userCreated.email,
+                            _c.avatar = userCreated.avatar,
+                            _c.active = userCreated.active,
+                            _c.role = userCreated.role,
+                            _c.createdAt = userCreated.createdAt,
+                            _c.updatedAt = userCreated.updatedAt,
+                            _c);
                         return [2 /*return*/, returnCreatedUser];
                 }
             });
@@ -154,6 +157,53 @@ var UserRepository = /** @class */ (function () {
                         user = _a.sent();
                         // console.log(user)
                         return [2 /*return*/, user];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.uploadMedia = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var filename, filecontent, id, user, urlImage, avatarUpdate, userUpdateAvatar, error_1;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 5, , 6]);
+                        filename = data.filename, filecontent = data.filecontent, id = data.id;
+                        return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                    case 1:
+                        user = _b.sent();
+                        if (!user) {
+                            throw new AppError_1.AppError('User not found!');
+                        }
+                        return [4 /*yield*/, (0, aws_1.uploadToAws)(filename, filecontent)];
+                    case 2:
+                        urlImage = _b.sent();
+                        user.avatar = urlImage;
+                        return [4 /*yield*/, this.repository.save(user)];
+                    case 3:
+                        avatarUpdate = _b.sent();
+                        _a = {
+                            id: avatarUpdate.id,
+                            name: avatarUpdate.name
+                        };
+                        return [4 /*yield*/, (0, alterNameForSupporId_1.alterNameForSupporId)(avatarUpdate.name)];
+                    case 4:
+                        userUpdateAvatar = (_a.supportId = _b.sent(),
+                            _a.email = avatarUpdate.email,
+                            _a.avatar = avatarUpdate.avatar,
+                            _a.active = avatarUpdate.active,
+                            _a.role = avatarUpdate.role,
+                            _a.createdAt = avatarUpdate.createdAt,
+                            _a.updatedAt = avatarUpdate.updatedAt,
+                            _a);
+                        return [2 /*return*/, userUpdateAvatar];
+                    case 5:
+                        error_1 = _b.sent();
+                        console.log('veio error');
+                        console.log(error_1);
+                        return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -222,7 +272,7 @@ var UserRepository = /** @class */ (function () {
     };
     UserRepository.prototype.allUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var users, error_1;
+            var users, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -232,7 +282,7 @@ var UserRepository = /** @class */ (function () {
                         users = _a.sent();
                         return [2 /*return*/, users];
                     case 2:
-                        error_1 = _a.sent();
+                        error_2 = _a.sent();
                         throw new AppError_1.AppError('dfdfdf');
                     case 3: return [2 /*return*/];
                 }
@@ -241,7 +291,7 @@ var UserRepository = /** @class */ (function () {
     };
     UserRepository.prototype.resetPasswordNoEmail = function (id, newPassword) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, error_2;
+            var user, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -258,8 +308,8 @@ var UserRepository = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, 'Password change successfully'];
                     case 3:
-                        error_2 = _a.sent();
-                        throw new AppError_1.AppError('', 400, { error: error_2 });
+                        error_3 = _a.sent();
+                        throw new AppError_1.AppError('', 400, { error: error_3 });
                     case 4: return [2 /*return*/];
                 }
             });

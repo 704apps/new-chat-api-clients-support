@@ -10,6 +10,7 @@ import { container } from 'tsyringe'
 import { DeleteRefreshToken } from '../../../../modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken'
 
 import { RefreshToken } from "../../../../modules/refreshToken/infra/typeorm/Entities/RefreshToken";
+import { alterNameForSupporId } from "../../../../modules/accounts/util/alterNameForSupporId";
 interface IRequest {
     email: string;
     password: string;
@@ -78,7 +79,7 @@ class AutenticateUserUseCase {
         const user = {
             id: returrefreshToken?.userId.id,
             name: returrefreshToken?.userId.name,
-            supportId: returrefreshToken?.userId.name,
+            supportId: await alterNameForSupporId(returrefreshToken.userId.name),
             email: returrefreshToken?.userId.email,
             role: returrefreshToken?.userId.role,
             active: returrefreshToken?.userId.active,

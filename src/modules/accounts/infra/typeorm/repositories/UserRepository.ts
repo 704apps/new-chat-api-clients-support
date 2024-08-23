@@ -8,7 +8,7 @@ import { injectable } from "tsyringe";
 import { IUpdateUserDTOS } from "../../../DTOs/IUpdateUserDTOS";
 import { IUploadDTOS } from "../../../DTOs/IUploadDTOS";
 import { uploadToAws } from "../../../../../main/infra/upload/aws";
-
+import {alterNameForSupporId} from '../../../util/alterNameForSupporId'
 @injectable()
 class UserRepository implements IUserRepository {
 
@@ -26,9 +26,7 @@ class UserRepository implements IUserRepository {
         console.log(email)
         user.name = name
         user.email = email
-        if (data.avatar) {
-            user.avatar = data.avatar
-        }
+      
 
 
         const updateUser = await this.repository.save(user)
@@ -40,7 +38,6 @@ class UserRepository implements IUserRepository {
         const user = await this.repository.findOneBy({ id })
 
         user.role = role;
-
         const updateuser = await this.repository.save(user)
 
         return updateuser
@@ -63,7 +60,7 @@ class UserRepository implements IUserRepository {
         const returnCreatedUser = {
             id: userCreated.id,
             name: userCreated.name,
-            supportId: userCreated.name,
+            supportId: await alterNameForSupporId(userCreated.name),
             email: userCreated.email,
             avatar: userCreated.avatar,
             active: userCreated.active,
@@ -92,7 +89,7 @@ class UserRepository implements IUserRepository {
 
 
     }
-    async uploadMedia(data: IUploadDTOS): Promise<String> {
+    async uploadMedia(data: IUploadDTOS): Promise<Users> {
         try {
             
             const { filename, filecontent,id} = data;
@@ -106,9 +103,22 @@ class UserRepository implements IUserRepository {
 
             user.avatar = urlImage
             
-            await this.repository.save(user)
+            const avatarUpdate = await this.repository.save(user)
 
-            return 'Avatar updated successfully!'
+            const userUpdateAvatar  = {  
+                
+                    id: avatarUpdate.id,
+                    name: avatarUpdate.name,
+                    supportId: await alterNameForSupporId(avatarUpdate.name),
+                    email: avatarUpdate.email,
+                    avatar: avatarUpdate.avatar,
+                    active: avatarUpdate.active,
+                    role: avatarUpdate.role,
+                    createdAt: avatarUpdate.createdAt,
+                    updatedAt: avatarUpdate.updatedAt,
+                
+            } as unknown as Users
+            return userUpdateAvatar
 
         } catch (error) {
             console.log('veio error')

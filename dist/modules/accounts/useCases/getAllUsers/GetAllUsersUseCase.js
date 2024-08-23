@@ -52,6 +52,7 @@ exports.GetAllUsersUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
+var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
 var GetAllUsersUseCase = /** @class */ (function () {
     function GetAllUsersUseCase(userRepository) {
         this.userRepository = userRepository;
@@ -70,7 +71,7 @@ var GetAllUsersUseCase = /** @class */ (function () {
                         usersData = users.map(function (user) { return ({
                             id: user.id,
                             name: user.name,
-                            supportId: user.name,
+                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
                             email: user.email,
                             avatar: user.avatar,
                             active: user.active,

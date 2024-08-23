@@ -1,4 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,58 +48,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EditUserController = void 0;
-require("reflect-metadata");
+exports.UploadAvatarUseCase = void 0;
+var AppError_1 = require("../../../../error/AppError");
 var tsyringe_1 = require("tsyringe");
-var EditUserUseCase_1 = require("./EditUserUseCase");
-var EditUserController = /** @class */ (function () {
-    function EditUserController() {
+var UploadAvatarUseCase = /** @class */ (function () {
+    function UploadAvatarUseCase(userRepository) {
+        this.userRepository = userRepository;
     }
-    EditUserController.prototype.handle = function (request, response) {
+    UploadAvatarUseCase.prototype.uploadMedia = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, name_1, email, file, data, editUserUseCase, user, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var userAvatarUpdate, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 5, , 6]);
-                        console.log('11');
-                        id = request.params.id;
-                        console.log('22');
-                        return [4 /*yield*/, request.body];
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.userRepository.uploadMedia(data)];
                     case 1:
-                        _a = _b.sent(), name_1 = _a.name, email = _a.email;
-                        return [4 /*yield*/, request.file];
+                        userAvatarUpdate = _a.sent();
+                        return [2 /*return*/, userAvatarUpdate];
                     case 2:
-                        file = _b.sent();
-                        console.log('33');
-                        if (!name_1 || !email || !id) {
-                            return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
-                        }
-                        // let dataFile:IUploadDTOS
-                        console.log('33');
-                        data = {
-                            id: id,
-                            email: email,
-                            name: name_1,
-                        };
-                        return [4 /*yield*/, tsyringe_1.container.resolve(EditUserUseCase_1.EditUserUseCase)
-                            //console.log(data)
-                        ];
-                    case 3:
-                        editUserUseCase = _b.sent();
-                        return [4 /*yield*/, editUserUseCase.execute(data)];
-                    case 4:
-                        user = _b.sent();
-                        return [2 /*return*/, response.status(200).json({ message: 'User update successfully', user: user })];
-                    case 5:
-                        error_1 = _b.sent();
-                        console.log(error_1);
-                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
-                    case 6: return [2 /*return*/];
+                        error_1 = _a.sent();
+                        throw new AppError_1.AppError('An error occurred while updating!', 400, { error: error_1 });
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return EditUserController;
+    UploadAvatarUseCase = __decorate([
+        (0, tsyringe_1.injectable)(),
+        __param(0, (0, tsyringe_1.inject)("UserRepository")),
+        __metadata("design:paramtypes", [Object])
+    ], UploadAvatarUseCase);
+    return UploadAvatarUseCase;
 }());
-exports.EditUserController = EditUserController;
+exports.UploadAvatarUseCase = UploadAvatarUseCase;

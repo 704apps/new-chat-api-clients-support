@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
 import { AppError } from "../../../../error/AppError";
+import { alterNameForSupporId } from "../../../accounts/util/alterNameForSupporId";
 
 @injectable()
 class GetLoggedInUserUseCase {
@@ -21,7 +22,7 @@ class GetLoggedInUserUseCase {
                 id: user?.id,
                 name: user?.name,
                 email: user?.email,
-                supportId: user?.name,
+                supportId:  alterNameForSupporId(user.name),                
                 role: user.role,
                 active: user.active,
                 avatar: user.avatar,

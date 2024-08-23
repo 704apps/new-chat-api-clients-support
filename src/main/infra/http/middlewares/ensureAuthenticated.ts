@@ -37,6 +37,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             if (user.active===false) {
                 throw new AppError('This User has been deactivated!', 401);
             }
+            console.log('veio aqui no aute7')
             response.locals.userId = userId;
     
             return next();
