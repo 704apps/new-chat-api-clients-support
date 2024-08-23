@@ -63,10 +63,12 @@ var UserRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         id = data.id, email = data.email, name = data.name;
-                        return [4 /*yield*/, this.repository.findOneBy({ id: id })];
+                        return [4 /*yield*/, this.repository.findOneBy({ id: id })
+                            // console.log(email)
+                        ];
                     case 1:
                         user = _a.sent();
-                        console.log(email);
+                        // console.log(email)
                         user.name = name;
                         user.email = email;
                         return [4 /*yield*/, this.repository.save(user)];
@@ -200,8 +202,8 @@ var UserRepository = /** @class */ (function () {
                         return [2 /*return*/, userUpdateAvatar];
                     case 5:
                         error_1 = _b.sent();
-                        console.log('veio error');
-                        console.log(error_1);
+                        //  console.log('veio error')
+                        //  console.log(error)
                         return [2 /*return*/];
                     case 6: return [2 /*return*/];
                 }

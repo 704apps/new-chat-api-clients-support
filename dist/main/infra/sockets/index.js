@@ -181,7 +181,7 @@ function setupSocketIO() {
             }
         });
         socket.on('disconnect', function () {
-            console.log('Cliente desconectado');
+            //   console.log('Cliente desconectado');
         });
     });
 }

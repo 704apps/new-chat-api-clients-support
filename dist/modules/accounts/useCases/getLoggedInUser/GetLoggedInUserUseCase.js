@@ -81,7 +81,6 @@ var GetLoggedInUserUseCase = /** @class */ (function () {
                         return [2 /*return*/, userData];
                     case 2:
                         error_1 = _a.sent();
-                        console.log(error_1);
                         throw new AppError_1.AppError('User not found', 400, { error: error_1 });
                     case 3: return [2 /*return*/];
                 }

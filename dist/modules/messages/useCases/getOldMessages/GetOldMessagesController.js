@@ -50,13 +50,10 @@ var GetOldMessagesController = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         idMessage = request.params.id;
-                        console.log("aqui1");
                         getOldMessagesUseCase = tsyringe_1.container.resolve(GetOldMessagesUseCase_1.GetOldMessagesUseCase);
-                        console.log("aqui2");
                         return [4 /*yield*/, getOldMessagesUseCase.getOldMessages(idMessage)];
                     case 1:
                         messages = _a.sent();
-                        console.log("aqui3");
                         return [2 /*return*/, response.status(200).json(messages)];
                     case 2:
                         error_1 = _a.sent();

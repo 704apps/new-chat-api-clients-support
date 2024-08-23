@@ -169,6 +169,7 @@ var MessageRepository = /** @class */ (function () {
                             chatId: chatId,
                             messages: messages,
                             origin: origin_1,
+                            msgEdt: false,
                             projectId: projectId,
                             supportId: supportId,
                             userType: userType,
@@ -614,8 +615,6 @@ var MessageRepository = /** @class */ (function () {
                         return [2 /*return*/];
                     case 3:
                         error_2 = _a.sent();
-                        console.log('veio error');
-                        console.log(error_2);
                         return [2 /*return*/];
                     case 4: return [2 /*return*/];
                 }

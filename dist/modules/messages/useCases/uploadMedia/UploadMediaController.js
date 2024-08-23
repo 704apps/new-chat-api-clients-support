@@ -66,7 +66,6 @@ var UploadMediaController = /** @class */ (function () {
                     case 4: return [2 /*return*/, response.status(200).json({ message: 'Upload completed successfully!' })];
                     case 5:
                         error_1 = _a.sent();
-                        console.log(error_1);
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 6: return [2 /*return*/];
                 }

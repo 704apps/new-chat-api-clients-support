@@ -50,21 +50,16 @@ var EditUserController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 5, , 6]);
-                        console.log('11');
                         id = request.params.id;
-                        console.log('22');
                         return [4 /*yield*/, request.body];
                     case 1:
                         _a = _b.sent(), name_1 = _a.name, email = _a.email;
                         return [4 /*yield*/, request.file];
                     case 2:
                         file = _b.sent();
-                        console.log('33');
                         if (!name_1 || !email || !id) {
                             return [2 /*return*/, response.status(400).json({ error: "Missing required fields" })];
                         }
-                        // let dataFile:IUploadDTOS
-                        console.log('33');
                         data = {
                             id: id,
                             email: email,
@@ -81,7 +76,6 @@ var EditUserController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json({ message: 'User update successfully', user: user })];
                     case 5:
                         error_1 = _b.sent();
-                        console.log(error_1);
                         return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 6: return [2 /*return*/];
                 }

@@ -50,26 +50,22 @@ function ensureAdmin(request, response, next) {
                 case 0:
                     _b.trys.push([0, 5, , 6]);
                     authHeader = request.headers.authorization;
-                    console.log('veio aqui no admin');
+                    // console.log('veio aqui no admin')
                     if (!authHeader) {
                         throw new AppError_1.AppError('Token missing', 401);
                     }
-                    console.log('veio aqui no admin2');
                     _a = authHeader.split(' '), token = _a[1];
-                    console.log('veio aqui no admin3');
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 3, , 4]);
                     userId = (0, jsonwebtoken_1.verify)(token, process.env.SECRET_JWT).sub;
-                    console.log('veio aqui no admin4');
                     userRepository = new UserRepository_1.UserRepository();
-                    console.log('veio aqui no admin5');
                     return [4 /*yield*/, userRepository.findById(userId)];
                 case 2:
                     user = _b.sent();
-                    console.log('veio aqui no admin6');
+                    //   console.log('veio aqui no admin6')
                     if (!user) {
-                        console.log('veio aqui no erro user');
+                        //      console.log('veio aqui no erro user')
                         return [2 /*return*/, next(new AppError_1.AppError('Access denied', 403))];
                     }
                     if (user.role !== 'MASTER') {

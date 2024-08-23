@@ -73,7 +73,6 @@ var EditUserUseCase = /** @class */ (function () {
                         isuseralreadyExist = _b.sent();
                         //  console.log('veio no depois de ver email')
                         if (!isuseralreadyExist) {
-                            console.log('veio aqui');
                             throw new AppError_1.AppError("User already exists");
                         }
                         return [4 /*yield*/, this.userRepository.edit(data)];
