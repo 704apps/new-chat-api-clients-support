@@ -33,6 +33,9 @@ class MessageRepository implements IMessageRepository {
             where: {
                 idMessage: { id },
 
+            },
+            order:{
+                createdAt:"DESC"
             }
         });
 
