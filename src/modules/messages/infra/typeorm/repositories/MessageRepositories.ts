@@ -130,6 +130,7 @@ class MessageRepository implements IMessageRepository {
                 chatId,
                 messages,
                 origin,
+                msgEdt:false,
                 projectId,
                 supportId,
                 userType,
