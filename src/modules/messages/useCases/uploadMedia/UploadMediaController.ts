@@ -24,7 +24,7 @@ import { UploadDataDTO } from '../../../../modules/messages/DTOs/querysparamsDTO
             return response.status(200).json({ message: 'Upload completed successfully!' })
             
         } catch (error) {
-            console.log(error)
+           
             return response.status(400).json({ error })
 
         }

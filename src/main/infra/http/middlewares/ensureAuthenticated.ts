@@ -20,16 +20,16 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         if (!authHeader) {
             throw new AppError('Token missing', 401);
         }
-        console.log('veio aqui no aute')
+       // console.log('veio aqui no aute')
         const [, token] = authHeader.split(' ');
         try {
             const { sub: userId } = verify(token, process.env.SECRET_JWT) as IPayload;
-            console.log('veio aqui no aute4')
+         //   console.log('veio aqui no aute4')
             const userRepository = new UserRepository();
-            console.log('veio aqui no aute5')
+         //   console.log('veio aqui no aute5')
 
             const user = await userRepository.findById(userId);
-            console.log('veio aqui no aute6')
+         //   console.log('veio aqui no aute6')
 
             if (!user) {
                 throw new AppError('User does not exist!', 401);
@@ -37,7 +37,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             if (user.active===false) {
                 throw new AppError('This User has been deactivated!', 401);
             }
-            console.log('veio aqui no aute7')
+          //  console.log('veio aqui no aute7')
             response.locals.userId = userId;
     
             return next();
@@ -59,7 +59,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 const authHeader = request.headers.authorization;
 
                 if (!authHeader) {
-                    console.log('veio aqui antes0')
+               //     console.log('veio aqui antes0')
                     throw new AppError('Token missing', 401);
                 }
 
@@ -74,64 +74,64 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                     try {
                         const tokenMatches = await compareToken(projectId, token);
                         if (!tokenMatches) {
-                            console.log('veio aqui3:' + projectId)
+                    //        console.log('veio aqui3:' + projectId)
 
                             throw new AppError('Invalid or expired token', 401);
                         }
                         return next();
                     } catch (error) {
-                        console.log('error')
+                 //       console.log('error')
                         return next(error);
                         //throw new AppError('Invalid or expired token', 401,{error});
                     }
                 }
-                console.log('veio aqui antes2')
+             //   console.log('veio aqui antes2')
 
                 const getNewMessagesClientUseCase = container.resolve(GetOneMessagesClientUseCase);
                 const messages = await getNewMessagesClientUseCase.getOneMessage(Number(id));
-                console.log('veio aqui antes3')
+             //   console.log('veio aqui antes3')
 
                 const { projectId } = messages
-                console.log('veio aqui antes4')
+            //    console.log('veio aqui antes4')
 
 
                 // Comparação com bcrypt
-                console.log('veio aqui antes5.1')
+             //   console.log('veio aqui antes5.1')
 
                 const tokenMatches = await compareToken(projectId, token);
-                console.log('veio aqui antes5.2')
+             //   console.log('veio aqui antes5.2')
 
                 if (!tokenMatches) {
-                    console.log('veio aqui antes6')
+          //          console.log('veio aqui antes6')
 
                     throw new AppError('Invalid or expired token', 401);
                 }
-                console.log('veio aqui antes7')
+           //     console.log('veio aqui antes7')
 
                 return next();
             } catch (error) {
                 try {
                     const authHeader = request.headers.authorization;
-                    console.log('veio aqui inicio')
+             //       console.log('veio aqui inicio')
                     if (!authHeader) {
                         console.log('veio aqui antes0')
                         throw new AppError('Token missing', 401);
                     }
-                    console.log('veio aqui depois')
+              //      console.log('veio aqui depois')
 
                     const [, token] = authHeader.split(' ');
                     const id = request.params.id;
                     try {
-                        console.log('veio aqui depois2')
+                    //    console.log('veio aqui depois2')
                         const tokenMatches = await compareToken(id, token);
                         if (!tokenMatches) {
-                            console.log('veio aqui depois3')
+                    //        console.log('veio aqui depois3')
                             throw new AppError('Invalid or expired token', 401);
                         }
-                        console.log('veio aqui depois4')
+                    //    console.log('veio aqui depois4')
 
                     } catch (error) {
-                        console.log('veio aqui depois5 no erro')
+                  //      console.log('veio aqui depois5 no erro')
 
                         return next(error);
                     }
@@ -146,8 +146,8 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 };
             }
         } else {
-            console.log(error)
-            console.log('veio aqui depois5 erro no try final')
+         //   console.log(error
+         //console.log('veio aqui depois5 erro no try final')
 
             return next(error);
         }

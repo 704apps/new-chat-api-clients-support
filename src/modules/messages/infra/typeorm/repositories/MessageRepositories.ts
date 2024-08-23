@@ -533,12 +533,10 @@ class MessageRepository implements IMessageRepository {
                 // }
             }
 
-            return
+            return 
         } catch (error) {
-            console.log('veio error')
-
-            console.log(error)
-
+        
+            
             return
         }
 

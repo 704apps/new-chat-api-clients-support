@@ -150,7 +150,7 @@ function setupSocketIO() {
         })
 
         socket.on('disconnect', () => {
-            console.log('Cliente desconectado');
+         //   console.log('Cliente desconectado');
         });
 
 

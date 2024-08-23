@@ -11,26 +11,26 @@ interface IPayload {
 async function ensureAdmin(request: Request, response: Response, next: NextFunction) {
     try {
         const authHeader = request.headers.authorization;
-        console.log('veio aqui no admin')
+       // console.log('veio aqui no admin')
 
         if (!authHeader) {
             throw new AppError('Token missing', 401);
         }
-        console.log('veio aqui no admin2')
+       // console.log('veio aqui no admin2')
 
         const [, token] = authHeader.split(' ');
-        console.log('veio aqui no admin3')
+//console.log('veio aqui no admin3')
         try {
             const { sub: userId } = verify(token, process.env.SECRET_JWT) as IPayload;
-            console.log('veio aqui no admin4')
+          //  console.log('veio aqui no admin4')
             const userRepository = new UserRepository();
-            console.log('veio aqui no admin5')
+          //  console.log('veio aqui no admin5')
 
             const user = await userRepository.findById(userId);
-            console.log('veio aqui no admin6')
+         //   console.log('veio aqui no admin6')
 
             if (!user) {
-                console.log('veio aqui no erro user')
+          //      console.log('veio aqui no erro user')
                 return next(new AppError('Access denied', 403));
             }
 

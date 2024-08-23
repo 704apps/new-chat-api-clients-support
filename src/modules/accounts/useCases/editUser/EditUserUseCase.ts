@@ -30,7 +30,7 @@ class EditUserUseCase {
             //  console.log('veio no depois de ver email')
 
             if (!isuseralreadyExist) {
-                console.log('veio aqui')
+               
                 throw new AppError("User already exists")
             }
           

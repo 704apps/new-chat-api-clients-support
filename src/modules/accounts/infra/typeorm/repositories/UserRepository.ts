@@ -23,7 +23,7 @@ class UserRepository implements IUserRepository {
         const { id, email, name } = data
 
         const user = await this.repository.findOneBy({ id })
-        console.log(email)
+       // console.log(email)
         user.name = name
         user.email = email
       
@@ -121,9 +121,9 @@ class UserRepository implements IUserRepository {
             return userUpdateAvatar
 
         } catch (error) {
-            console.log('veio error')
+          //  console.log('veio error')
 
-            console.log(error)
+          //  console.log(error)
 
             return
         }
