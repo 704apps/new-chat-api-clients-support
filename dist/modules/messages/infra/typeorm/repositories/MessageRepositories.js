@@ -59,7 +59,8 @@ var MessageRepository = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.repositoryOldMessage.find({
-                            where: { idMessage: { id: id },
+                            where: {
+                                idMessage: { id: id },
                             }
                         })];
                     case 1:
@@ -68,7 +69,9 @@ var MessageRepository = /** @class */ (function () {
                             throw new AppError_1.AppError("Messages not found");
                         }
                         oldMessages = message.map(function (item) { return ({
+                            supportId: item.supportId,
                             oldMessage: item.oldMessage,
+                            createdAt: item.createdAt,
                         }); });
                         return [2 /*return*/, oldMessages];
                 }
@@ -168,6 +171,7 @@ var MessageRepository = /** @class */ (function () {
                             chatId: chatId,
                             messages: messages,
                             origin: origin_1,
+                            msgEdt: false,
                             projectId: projectId,
                             supportId: supportId,
                             userType: userType,
@@ -178,7 +182,6 @@ var MessageRepository = /** @class */ (function () {
                     case 19:
                         error_1 = _a.sent();
                         // console.log('131313131', error);
-                        this.next(error_1);
                         throw new AppError_1.AppError('error', 400, { error: error_1 });
                     case 20: return [2 /*return*/];
                 }
@@ -187,7 +190,7 @@ var MessageRepository = /** @class */ (function () {
     };
     MessageRepository.prototype.update = function (id, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var getMessage, oldMessage, idMessage, newOldMessage;
+            var getMessage, oldMessage, supportId, idMessage, newOldMessage;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.repositoryMessage.findOneBy({
@@ -201,6 +204,7 @@ var MessageRepository = /** @class */ (function () {
                         oldMessage = getMessage.messages;
                         getMessage.messages = message;
                         getMessage.msgEdt = true;
+                        supportId = getMessage.supportId;
                         return [4 /*yield*/, this.repositoryMessage.save(getMessage)];
                     case 2:
                         _a.sent();
@@ -208,6 +212,7 @@ var MessageRepository = /** @class */ (function () {
                         return [4 /*yield*/, this.repositoryOldMessage.create({
                                 oldMessage: oldMessage,
                                 idMessage: { id: idMessage },
+                                supportId: supportId,
                             })];
                     case 3:
                         newOldMessage = _a.sent();
@@ -560,11 +565,12 @@ var MessageRepository = /** @class */ (function () {
     };
     MessageRepository.prototype.uploadMedia = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin, urlImage, message, msg, datatoSocket;
+            var filename, filecontent, messages, key, userType, projectId, supportId, messageType, origin_2, urlImage, message, msg, datatoSocket, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        filename = data.filename, filecontent = data.filecontent, messages = data.messages, key = data.key, userType = data.userType, projectId = data.projectId, supportId = data.supportId, messageType = data.messageType, origin = data.origin;
+                        _a.trys.push([0, 3, , 4]);
+                        filename = data.filename, filecontent = data.filecontent, messages = data.messages, key = data.key, userType = data.userType, projectId = data.projectId, supportId = data.supportId, messageType = data.messageType, origin_2 = data.origin;
                         return [4 /*yield*/, (0, aws_1.uploadToAws)(filename, filecontent)];
                     case 1:
                         urlImage = _a.sent();
@@ -575,7 +581,7 @@ var MessageRepository = /** @class */ (function () {
                             messageType: messageType,
                             urlImage: urlImage,
                             messages: messages,
-                            origin: origin,
+                            origin: origin_2,
                         };
                         return [4 /*yield*/, this.createMessage(message)];
                     case 2:
@@ -590,10 +596,10 @@ var MessageRepository = /** @class */ (function () {
                             messageType: messageType,
                             messages: messages,
                             urlImage: urlImage,
-                            origin: origin,
+                            origin: origin_2,
                             createdAt: msg.createdAt
                         };
-                        if (origin === "support") {
+                        if (origin_2 === "support") {
                             server_1.io.to(projectId).emit('clientMessage', datatoSocket);
                             server_1.io.to('support').emit('supportResponse', datatoSocket);
                         }
@@ -611,6 +617,10 @@ var MessageRepository = /** @class */ (function () {
                             // }
                         }
                         return [2 /*return*/];
+                    case 3:
+                        error_2 = _a.sent();
+                        return [2 /*return*/];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

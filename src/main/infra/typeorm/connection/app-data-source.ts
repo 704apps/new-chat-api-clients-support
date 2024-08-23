@@ -54,7 +54,7 @@ export const myDataSource = new DataSource(
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
         entities: [Messages, OldMessages,Contacts, Chats, Users, RefreshToken,Notes], // Ajuste o caminho conforme necessário
-        migrations: ['src/main/infra/typeorm/migrations/*.ts'],
+        migrations: [adressFile],
         synchronize: true,
         timezone: 'Z',  // Para UTC
 
@@ -69,7 +69,8 @@ async function initializeDataSource() {
     try {
 
         await myDataSource.initialize();
-      
+        console.log(adressFile);
+
         console.log("Data Source has been initialized!");
         
     } catch (err) {

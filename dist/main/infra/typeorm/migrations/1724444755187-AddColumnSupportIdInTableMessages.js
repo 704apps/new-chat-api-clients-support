@@ -1,16 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,47 +36,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetAllUsersUseCase = void 0;
-require("reflect-metadata");
-var tsyringe_1 = require("tsyringe");
-var AppError_1 = require("../../../../error/AppError");
-var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
-var GetAllUsersUseCase = /** @class */ (function () {
-    function GetAllUsersUseCase(userRepository) {
-        this.userRepository = userRepository;
+exports.AddColumnSupportIdInTableMessages1724444755187 = void 0;
+var typeorm_1 = require("typeorm");
+var AddColumnSupportIdInTableMessages1724444755187 = /** @class */ (function () {
+    function AddColumnSupportIdInTableMessages1724444755187() {
     }
-    GetAllUsersUseCase.prototype.getAllUser = function () {
+    AddColumnSupportIdInTableMessages1724444755187.prototype.up = function (queryRunner) {
         return __awaiter(this, void 0, void 0, function () {
-            var users, usersData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userRepository.allUsers()];
+                    case 0: return [4 /*yield*/, queryRunner.addColumn('oldMessage', new typeorm_1.TableColumn({
+                            name: 'supportId',
+                            type: 'varchar',
+                            isNullable: true
+                        }))];
                     case 1:
-                        users = _a.sent();
-                        if (!users) {
-                            throw new AppError_1.AppError('User not found', 400);
-                        }
-                        usersData = users.map(function (user) { return ({
-                            id: user.id,
-                            name: user.name,
-                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
-                            email: user.email,
-                            avatar: user.avatar,
-                            active: user.active,
-                            role: user.role,
-                            createdAt: user.createdAt,
-                            updatedAt: user.updatedAt,
-                        }); });
-                        return [2 /*return*/, usersData];
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    GetAllUsersUseCase = __decorate([
-        (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("UserRepository")),
-        __metadata("design:paramtypes", [Object])
-    ], GetAllUsersUseCase);
-    return GetAllUsersUseCase;
+    AddColumnSupportIdInTableMessages1724444755187.prototype.down = function (queryRunner) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, queryRunner.dropColumn('oldMessage', 'supportId')];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return AddColumnSupportIdInTableMessages1724444755187;
 }());
-exports.GetAllUsersUseCase = GetAllUsersUseCase;
+exports.AddColumnSupportIdInTableMessages1724444755187 = AddColumnSupportIdInTableMessages1724444755187;

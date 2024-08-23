@@ -17,6 +17,7 @@ var DisableUserController_1 = require("../../../../modules/accounts/useCases/dis
 var DeleteUserController_1 = require("../../../../modules/accounts/useCases/deleteUser/DeleteUserController");
 var GetLoggedInUserController_1 = require("../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController");
 var upload_1 = require("../../upload");
+var UploadAvatarController_1 = require("../../../../modules/accounts/useCases/uploadAvatar/UploadAvatarController");
 var autheticateRoutes = (0, express_1.Router)();
 exports.autheticateRoutes = autheticateRoutes;
 var createUserController = new CreateUserController_1.CreateUserController();
@@ -31,13 +32,15 @@ var resetPasswordNoEmailController = new ResetPasswordNoEmailController_1.ResetP
 var getOneUserByEmailController = new GetOneUserByEmailController_1.GetOneUserByEmailController();
 var authenticateUserController = new AutenticateUserController_1.AuthenticateUserController();
 var refreshTokenUserController = new RefreshTokenUserController_1.RefreshTokenUserController();
+var uploadAvatarController = new UploadAvatarController_1.UploadAvatarController();
 autheticateRoutes.post("/create_user", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, createUserController.handle);
 autheticateRoutes.post("/sessions", authenticateUserController.handle);
 autheticateRoutes.get("/user/:id", ensureAuthenticated_1.ensureAuthenticated, getOneUserController.handle);
 autheticateRoutes.get("/logged_in_user", ensureAuthenticated_1.ensureAuthenticated, getLoggedInUserController.handle);
+autheticateRoutes.post('/uploadavatar/:id', ensureAuthenticated_1.ensureAuthenticated, upload_1.upload.single('file'), uploadAvatarController.handle);
 autheticateRoutes.delete("/delete_user/:id", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, deleteUserController.handle);
 autheticateRoutes.patch("/disable_user/:id", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, disableUserController.handle);
-autheticateRoutes.patch("/edit_user/:id", upload_1.upload.single('file'), ensureAuthenticated_1.ensureAuthenticated, editUserController.handle);
+autheticateRoutes.patch("/edit_user/:id", ensureAuthenticated_1.ensureAuthenticated, editUserController.handle);
 autheticateRoutes.patch("/update_role_user/:id", ensureAdmin_1.ensureAdmin, ensureAuthenticated_1.ensureAuthenticated, updateUserToSubMasterController.handle);
 autheticateRoutes.patch("/reset_password/:id", ensureAuthenticated_1.ensureAuthenticated, resetPasswordNoEmailController.handle);
 autheticateRoutes.get("/users", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdminAndSubadmin, getAllUsersController.handle);

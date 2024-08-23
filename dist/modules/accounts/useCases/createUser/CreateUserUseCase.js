@@ -53,13 +53,14 @@ require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var bcrypt_1 = require("bcrypt");
 var AppError_1 = require("../../../../error/AppError");
+var alterNameForSupporId_1 = require("../../util/alterNameForSupporId");
 var CreateUserUseCase = /** @class */ (function () {
     function CreateUserUseCase(userRepository) {
         this.userRepository = userRepository;
     }
     CreateUserUseCase.prototype.execute = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
-            var passwordHash, isuseralreadyExist, user, userCreated, error_1;
+            var passwordHash, isuseralreadyExist, user, supportId, userCreated, error_1;
             var name = _b.name, email = _b.email, password = _b.password, role = _b.role;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -87,10 +88,11 @@ var CreateUserUseCase = /** @class */ (function () {
                             })];
                     case 3:
                         user = _c.sent();
+                        supportId = (0, alterNameForSupporId_1.alterNameForSupporId)(user.name);
                         userCreated = {
                             id: user.id,
                             name: user.name,
-                            supportId: user.name,
+                            supportId: supportId,
                             email: user.email,
                             avatar: user.avatar,
                             active: user.active,

@@ -52,7 +52,7 @@ var Messages = /** @class */ (function () {
         __metadata("design:type", Array)
     ], Messages.prototype, "message", void 0);
     __decorate([
-        (0, typeorm_1.Column)('text'),
+        (0, typeorm_1.Column)('text', { nullable: true }),
         __metadata("design:type", String)
     ], Messages.prototype, "oldMessages", void 0);
     __decorate([

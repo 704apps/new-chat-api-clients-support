@@ -1,11 +1,10 @@
 import "reflect-metadata";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
 import { IUpdateUserDTOS } from "../../DTOs/IUpdateUserDTOS";
-import { IUploadDTOS } from "../../DTOs/IUploadDTOS";
 declare class EditUserUseCase {
     private userRepository;
     constructor(userRepository: IUserRepository);
-    execute(data: IUpdateUserDTOS, file?: IUploadDTOS): Promise<{
+    execute(data: IUpdateUserDTOS): Promise<{
         id: string;
         name: string;
         supportId: string;

@@ -48,47 +48,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetAllUsersUseCase = void 0;
-require("reflect-metadata");
-var tsyringe_1 = require("tsyringe");
+exports.UploadAvatarUseCase = void 0;
 var AppError_1 = require("../../../../error/AppError");
-var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
-var GetAllUsersUseCase = /** @class */ (function () {
-    function GetAllUsersUseCase(userRepository) {
+var tsyringe_1 = require("tsyringe");
+var UploadAvatarUseCase = /** @class */ (function () {
+    function UploadAvatarUseCase(userRepository) {
         this.userRepository = userRepository;
     }
-    GetAllUsersUseCase.prototype.getAllUser = function () {
+    UploadAvatarUseCase.prototype.uploadMedia = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var users, usersData;
+            var userAvatarUpdate, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userRepository.allUsers()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.userRepository.uploadMedia(data)];
                     case 1:
-                        users = _a.sent();
-                        if (!users) {
-                            throw new AppError_1.AppError('User not found', 400);
-                        }
-                        usersData = users.map(function (user) { return ({
-                            id: user.id,
-                            name: user.name,
-                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
-                            email: user.email,
-                            avatar: user.avatar,
-                            active: user.active,
-                            role: user.role,
-                            createdAt: user.createdAt,
-                            updatedAt: user.updatedAt,
-                        }); });
-                        return [2 /*return*/, usersData];
+                        userAvatarUpdate = _a.sent();
+                        return [2 /*return*/, userAvatarUpdate];
+                    case 2:
+                        error_1 = _a.sent();
+                        throw new AppError_1.AppError('An error occurred while updating!', 400, { error: error_1 });
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    GetAllUsersUseCase = __decorate([
+    UploadAvatarUseCase = __decorate([
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("UserRepository")),
         __metadata("design:paramtypes", [Object])
-    ], GetAllUsersUseCase);
-    return GetAllUsersUseCase;
+    ], UploadAvatarUseCase);
+    return UploadAvatarUseCase;
 }());
-exports.GetAllUsersUseCase = GetAllUsersUseCase;
+exports.UploadAvatarUseCase = UploadAvatarUseCase;

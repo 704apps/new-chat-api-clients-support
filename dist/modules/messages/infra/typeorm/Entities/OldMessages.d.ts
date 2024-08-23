@@ -3,6 +3,7 @@ declare class OldMessages {
     id: number;
     idMessage: Messages;
     oldMessage: string;
+    supportId: string;
     createdAt: Date;
     updatedAt: Date;
 }

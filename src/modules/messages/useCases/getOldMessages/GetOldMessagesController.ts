@@ -11,12 +11,12 @@ class GetOldMessagesController {
         try {
 
             const idMessage = request.params.id as unknown as number
-            console.log("aqui1")
+          
 
             const getOldMessagesUseCase =   container.resolve(GetOldMessagesUseCase)
-            console.log("aqui2")
+          
             const messages = await getOldMessagesUseCase.getOldMessages(idMessage);
-            console.log("aqui3")
+        
 
             return   response.status(200).json(messages)
 

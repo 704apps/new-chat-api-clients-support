@@ -29,6 +29,10 @@ var OldMessages = /** @class */ (function () {
         __metadata("design:type", String)
     ], OldMessages.prototype, "oldMessage", void 0);
     __decorate([
+        (0, typeorm_1.Column)('varchar', { nullable: true }),
+        __metadata("design:type", String)
+    ], OldMessages.prototype, "supportId", void 0);
+    __decorate([
         (0, typeorm_1.CreateDateColumn)(),
         __metadata("design:type", Date)
     ], OldMessages.prototype, "createdAt", void 0);

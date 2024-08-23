@@ -4,12 +4,17 @@ import { inject, injectable } from "tsyringe";
 import { IUploadDTOS } from '../../../accounts/DTOs/IUploadDTOS';
 import { IUserRepository } from "../../../accounts/repositories/IUsersRepository";
 
-class UploadMediaUseCase {
+import { Users } from "../../../accounts/infra/typeorm/Entities/Users";
+
+
+@injectable()  
+class UploadAvatarUseCase {
     constructor(
       @inject("UserRepository")
       private userRepository: IUserRepository
+      
     ) { }
-    public async uploadMedia(data: IUploadDTOS) {
+    public async uploadMedia(data: IUploadDTOS): Promise<Users> {
         try {
 
             const userAvatarUpdate = await this.userRepository.uploadMedia(data);
@@ -24,4 +29,4 @@ class UploadMediaUseCase {
     }
 }
 
-export {UploadMediaUseCase}
+export {UploadAvatarUseCase}

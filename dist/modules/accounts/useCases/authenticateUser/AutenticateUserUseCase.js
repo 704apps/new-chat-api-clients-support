@@ -57,6 +57,7 @@ var AppError_1 = require("../../../../error/AppError");
 var GenerateRefreshToken_1 = require("../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken");
 var tsyringe_2 = require("tsyringe");
 var DeleteRefreshToken_1 = require("../../../../modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken");
+var alterNameForSupporId_1 = require("../../../../modules/accounts/util/alterNameForSupporId");
 var AutenticateUserUseCase = /** @class */ (function () {
     function AutenticateUserUseCase(userRespository) {
         this.userRespository = userRespository;
@@ -64,12 +65,13 @@ var AutenticateUserUseCase = /** @class */ (function () {
     AutenticateUserUseCase.prototype.execute = function (_a) {
         return __awaiter(this, arguments, void 0, function (_b) {
             var userVerify, passwordMath, secretKey, token, generateRefleshToken, deleteRefleshToken, returrefreshToken, refreshToken, user;
+            var _c;
             var email = _b.email, password = _b.password;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0: return [4 /*yield*/, this.userRespository.findByEmail(email)];
                     case 1:
-                        userVerify = _c.sent();
+                        userVerify = _d.sent();
                         if (!userVerify) {
                             throw new AppError_1.AppError("Email or password incorrect!");
                         }
@@ -78,7 +80,7 @@ var AutenticateUserUseCase = /** @class */ (function () {
                         }
                         return [4 /*yield*/, (0, bcrypt_1.compare)(password, userVerify.password)];
                     case 2:
-                        passwordMath = _c.sent();
+                        passwordMath = _d.sent();
                         if (!passwordMath) {
                             //  console.log('veio aqui 2')
                             throw new AppError_1.AppError("Email or password incorrect!");
@@ -93,24 +95,27 @@ var AutenticateUserUseCase = /** @class */ (function () {
                         deleteRefleshToken = tsyringe_2.container.resolve(DeleteRefreshToken_1.DeleteRefreshToken);
                         return [4 /*yield*/, deleteRefleshToken.deleteMany(userVerify.id)];
                     case 3:
-                        _c.sent();
+                        _d.sent();
                         return [4 /*yield*/, generateRefleshToken.execute(userVerify.id)];
                     case 4:
-                        returrefreshToken = _c.sent();
+                        returrefreshToken = _d.sent();
                         refreshToken = {
                             id: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.id,
                             expiriesIn: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.expiriesIn,
                         };
-                        user = {
+                        _c = {
                             id: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.id,
-                            name: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.name,
-                            supportId: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.name,
-                            email: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.email,
-                            role: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.role,
-                            active: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.active,
-                            createdAt: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.createdAt,
-                            updatedAt: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.updatedAt
+                            name: returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.name
                         };
+                        return [4 /*yield*/, (0, alterNameForSupporId_1.alterNameForSupporId)(returrefreshToken.userId.name)];
+                    case 5:
+                        user = (_c.supportId = _d.sent(),
+                            _c.email = returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.email,
+                            _c.role = returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.role,
+                            _c.active = returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.active,
+                            _c.createdAt = returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.createdAt,
+                            _c.updatedAt = returrefreshToken === null || returrefreshToken === void 0 ? void 0 : returrefreshToken.userId.updatedAt,
+                            _c);
                         return [2 /*return*/, { token: token, refreshToken: refreshToken, user: user }];
                 }
             });

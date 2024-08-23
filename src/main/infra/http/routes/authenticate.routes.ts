@@ -18,7 +18,7 @@ import { DisableUserController } from "../../../../modules/accounts/useCases/dis
 import { DeleteUserController } from "../../../../modules/accounts/useCases/deleteUser/DeleteUserController"
 import { GetLoggedInUserController } from "../../../../modules/accounts/useCases/getLoggedInUser/GetLoggedInUserController"
 import { upload } from '../../upload';
-import { UploadMediaController } from "../../../../modules/accounts/useCases/uploadMedia/UploadMediaController"
+import { UploadAvatarController } from "../../../../modules/accounts/useCases/uploadAvatar/UploadAvatarController"
 
 const autheticateRoutes = Router()
 
@@ -44,7 +44,7 @@ const getOneUserByEmailController= new GetOneUserByEmailController()
 
 const authenticateUserController = new AuthenticateUserController()
 const refreshTokenUserController = new RefreshTokenUserController()
-const uploadMediaController = new UploadMediaController();
+const uploadAvatarController = new UploadAvatarController();
 
 
 
@@ -55,7 +55,7 @@ autheticateRoutes.post("/sessions", authenticateUserController.handle)
 autheticateRoutes.get("/user/:id",ensureAuthenticated, getOneUserController.handle)
 
 autheticateRoutes.get("/logged_in_user",ensureAuthenticated, getLoggedInUserController.handle)
-autheticateRoutes.post('/uploadavatar/',upload.single('file'),ensureAuthenticated,uploadMediaController.handle)
+autheticateRoutes.post('/uploadavatar/:id',ensureAuthenticated,upload.single('file'),uploadAvatarController.handle)
 
 
 autheticateRoutes.delete("/delete_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,deleteUserController.handle)
@@ -63,7 +63,7 @@ autheticateRoutes.delete("/delete_user/:id",ensureAuthenticated, ensureAdminAndS
 autheticateRoutes.patch("/disable_user/:id",ensureAuthenticated, ensureAdminAndSubadmin,disableUserController.handle)
 
 
-autheticateRoutes.patch("/edit_user/:id",upload.single('file'),ensureAuthenticated, editUserController.handle)
+autheticateRoutes.patch("/edit_user/:id",ensureAuthenticated, editUserController.handle)
 
 autheticateRoutes.patch("/update_role_user/:id",ensureAdmin,ensureAuthenticated, updateUserToSubMasterController.handle)
 

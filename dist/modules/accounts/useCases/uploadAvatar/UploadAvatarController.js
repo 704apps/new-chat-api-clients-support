@@ -1,16 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,47 +36,44 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetAllUsersUseCase = void 0;
-require("reflect-metadata");
+exports.UploadAvatarController = void 0;
+var UploadAvatarUseCase_1 = require("./UploadAvatarUseCase");
 var tsyringe_1 = require("tsyringe");
-var AppError_1 = require("../../../../error/AppError");
-var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
-var GetAllUsersUseCase = /** @class */ (function () {
-    function GetAllUsersUseCase(userRepository) {
-        this.userRepository = userRepository;
+var UploadAvatarController = /** @class */ (function () {
+    function UploadAvatarController() {
     }
-    GetAllUsersUseCase.prototype.getAllUser = function () {
+    UploadAvatarController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var users, usersData;
+            var file, idUser, dataBody, uploadAvatarUseCase, user, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userRepository.allUsers()];
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, request.file];
                     case 1:
-                        users = _a.sent();
-                        if (!users) {
-                            throw new AppError_1.AppError('User not found', 400);
+                        file = _a.sent();
+                        idUser = request.params.id;
+                        dataBody = {};
+                        uploadAvatarUseCase = tsyringe_1.container.resolve(UploadAvatarUseCase_1.UploadAvatarUseCase);
+                        if (!file) {
+                            return [2 /*return*/, response.status(400).json({ error: "File not provided!" })];
                         }
-                        usersData = users.map(function (user) { return ({
-                            id: user.id,
-                            name: user.name,
-                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
-                            email: user.email,
-                            avatar: user.avatar,
-                            active: user.active,
-                            role: user.role,
-                            createdAt: user.createdAt,
-                            updatedAt: user.updatedAt,
-                        }); });
-                        return [2 /*return*/, usersData];
+                        dataBody.id = idUser;
+                        dataBody.filecontent = file.buffer;
+                        dataBody.filename = file.originalname;
+                        return [4 /*yield*/, uploadAvatarUseCase.uploadMedia(dataBody)];
+                    case 2:
+                        user = _a.sent();
+                        return [2 /*return*/, response.status(200).json(user)];
+                    case 3:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    GetAllUsersUseCase = __decorate([
-        (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("UserRepository")),
-        __metadata("design:paramtypes", [Object])
-    ], GetAllUsersUseCase);
-    return GetAllUsersUseCase;
+    return UploadAvatarController;
 }());
-exports.GetAllUsersUseCase = GetAllUsersUseCase;
+exports.UploadAvatarController = UploadAvatarController;

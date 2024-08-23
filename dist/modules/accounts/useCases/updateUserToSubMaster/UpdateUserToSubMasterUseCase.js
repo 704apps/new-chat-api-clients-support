@@ -52,6 +52,7 @@ exports.UpdateUserToSubMasterUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
+var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
 var UpdateUserToSubMasterUseCase = /** @class */ (function () {
     function UpdateUserToSubMasterUseCase(userRepository) {
         this.userRepository = userRepository;
@@ -72,7 +73,7 @@ var UpdateUserToSubMasterUseCase = /** @class */ (function () {
                             name: user.name,
                             email: user.email,
                             role: user.role,
-                            supportId: user.name,
+                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
                             active: user.active,
                             avatar: user.avatar,
                             createdAt: user.createdAt,

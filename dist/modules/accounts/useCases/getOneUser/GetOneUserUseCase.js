@@ -52,6 +52,7 @@ exports.GetOneUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
+var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
 var GetOneUserUseCase = /** @class */ (function () {
     function GetOneUserUseCase(userRepository) {
         this.userRepository = userRepository;
@@ -72,7 +73,7 @@ var GetOneUserUseCase = /** @class */ (function () {
                             name: user.name,
                             email: user.email,
                             role: user.role,
-                            supportId: user.name,
+                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
                             active: user.active,
                             avatar: user.avatar,
                             createdAt: user.createdAt,

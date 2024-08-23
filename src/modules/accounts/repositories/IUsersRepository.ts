@@ -10,7 +10,7 @@ interface IUserRepository{
     updateUserToSubMaster(id:string,role:string):Promise<Users>
     deleteUser(id: string): Promise<String>
     disableUser(id: string,action:boolean): Promise<String>
-    uploadMedia(data: IUploadDTOS): Promise<String> 
+    uploadMedia(data: IUploadDTOS): Promise<Users> 
     findByEmail(email:string):Promise<Users | null>
     findById(id:string):Promise<Users | null>
     allUsers():Promise<Users []>

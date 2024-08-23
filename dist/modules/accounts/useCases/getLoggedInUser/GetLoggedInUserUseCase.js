@@ -52,6 +52,7 @@ exports.GetLoggedInUserUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
+var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
 var GetLoggedInUserUseCase = /** @class */ (function () {
     function GetLoggedInUserUseCase(userRepository) {
         this.userRepository = userRepository;
@@ -70,7 +71,7 @@ var GetLoggedInUserUseCase = /** @class */ (function () {
                             id: user === null || user === void 0 ? void 0 : user.id,
                             name: user === null || user === void 0 ? void 0 : user.name,
                             email: user === null || user === void 0 ? void 0 : user.email,
-                            supportId: user === null || user === void 0 ? void 0 : user.name,
+                            supportId: (0, alterNameForSupporId_1.alterNameForSupporId)(user.name),
                             role: user.role,
                             active: user.active,
                             avatar: user.avatar,
@@ -80,7 +81,6 @@ var GetLoggedInUserUseCase = /** @class */ (function () {
                         return [2 /*return*/, userData];
                     case 2:
                         error_1 = _a.sent();
-                        console.log(error_1);
                         throw new AppError_1.AppError('User not found', 400, { error: error_1 });
                     case 3: return [2 /*return*/];
                 }
