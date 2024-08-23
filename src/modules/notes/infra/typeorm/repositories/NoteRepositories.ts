@@ -15,6 +15,16 @@ class NoteRepository implements INoteRepository {
     constructor() {
         this.repositoryNotes = myDataSource.getRepository(Notes)
     }
+ 
+    async getAllNotesSupportID(chatId: string): Promise<Notes[]> {
+        const notesSupport = await this.repositoryNotes.find({
+            where: {chatId}
+            }
+        )
+      
+        return notesSupport
+    }
+ 
     async getOneNote(id: number): Promise<Notes> {
         const getNote = await this.repositoryNotes.findOneBy({id})
 

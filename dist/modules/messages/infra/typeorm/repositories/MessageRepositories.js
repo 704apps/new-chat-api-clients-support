@@ -61,6 +61,9 @@ var MessageRepository = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.repositoryOldMessage.find({
                             where: {
                                 idMessage: { id: id },
+                            },
+                            order: {
+                                createdAt: "DESC"
                             }
                         })];
                     case 1:

@@ -20,16 +20,16 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         if (!authHeader) {
             throw new AppError('Token missing', 401);
         }
-       // console.log('veio aqui no aute')
+       //console.log('veio aqui no aute')
         const [, token] = authHeader.split(' ');
         try {
             const { sub: userId } = verify(token, process.env.SECRET_JWT) as IPayload;
-         //   console.log('veio aqui no aute4')
+            //console.log('veio aqui no aute4')
             const userRepository = new UserRepository();
-         //   console.log('veio aqui no aute5')
+            //console.log('veio aqui no aute5')
 
             const user = await userRepository.findById(userId);
-         //   console.log('veio aqui no aute6')
+            //console.log('veio aqui no aute6')
 
             if (!user) {
                 throw new AppError('User does not exist!', 401);
@@ -37,7 +37,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             if (user.active===false) {
                 throw new AppError('This User has been deactivated!', 401);
             }
-          //  console.log('veio aqui no aute7')
+            //console.log('veio aqui no aute7')
             response.locals.userId = userId;
     
             return next();
@@ -66,9 +66,9 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 const [, token] = authHeader.split(' ');
                 const id = request.params.id;
                
-                console.log('veio aqui antes')
+                //console.log('veio aqui antes')
                 if (!id) {
-                     console.log('veio aqui2222')
+                     //console.log('veio aqui2222')
                     const { projectId } = request.body; // Obtendo projectId do body
                    // console.log(projectId)
                     try {
@@ -140,7 +140,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                     return next();
                   
                 } catch (error) {
-                    console.log('veio aqui depois5 erro no try')
+                    //console.log('veio aqui depois5 erro no try')
                     return next(error);
                     //throw new AppError('Invalid or expired token', 401,{error});
                 };

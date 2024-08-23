@@ -5,6 +5,8 @@ export interface INoteRepository {
 
 
     getOneNote(id: number): Promise<Notes>;
+    getAllNotesSupportID(chatId: string): Promise<Notes[]>;
+
     updateNote(id: number,note:string): Promise<Notes>;
     deleteNote(id: number): Promise<String>;
     createNote(infochat: NoteDTO): Promise<Notes>;
