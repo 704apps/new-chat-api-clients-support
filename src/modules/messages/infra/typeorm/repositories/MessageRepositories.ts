@@ -395,7 +395,7 @@ class MessageRepository implements IMessageRepository {
                 "c.id as chatId",
                 `CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention`,
             ])
-            .where("m.projectId=:projectId", { projectId })
+            .where("m.projectId Like :projectId", { projectId })
             .orderBy("m.createdAt", "DESC")
             .getRawMany();
 
