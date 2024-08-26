@@ -55,7 +55,7 @@ export const myDataSource = new DataSource(
         database: process.env.DB_NAME,
         entities: [Messages, OldMessages,Contacts, Chats, Users, RefreshToken,Notes], // Ajuste o caminho conforme necessário
         migrations: [adressFile],
-        synchronize: true,
+        synchronize: false,
         timezone: 'Z',  // Para UTC
 
         
