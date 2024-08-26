@@ -36,7 +36,7 @@ messageRoutes.get('/newmessages', ensureAuthenticated_1.ensureAuthenticated, get
 messageRoutes.get('/assisting/', ensureAuthenticated_1.ensureAuthenticated, getChatsRespondingToSupportController.handle);
 messageRoutes.get('/messages/:id', ensureAuthenticated_1.ensureAuthenticated, getOneMessagesClientController.handle);
 messageRoutes.get('/oldMessages/:id', ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, getOldMessagesController.handle);
-messageRoutes.get('/search_project/:id', ensureAuthenticated_1.ensureAuthenticated, getSearchProjectController.handle);
+messageRoutes.get('/search_project', ensureAuthenticated_1.ensureAuthenticated, getSearchProjectController.handle);
 messageRoutes.get('/search_word_phrase/', ensureAuthenticated_1.ensureAuthenticated, getSearchByWordOrPhraseController.handle);
 messageRoutes.get('/search_generaltosupport/', ensureAuthenticated_1.ensureAuthenticated, getSearchGenerationToSupportController.handle);
 messageRoutes.get('/filter_status_attention/', ensureAuthenticated_1.ensureAuthenticated, getFilterToStatusSidebarController.handle);

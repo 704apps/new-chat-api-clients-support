@@ -26,13 +26,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": [
-    
-    "dist/**/*.ts",
+  "include": [ 
+    "src/**/*.ts",
     "swagger.ts"
   ],
   "exclude": [
     "node_modules",
-    ".vscode/**/*"
+    ".vscode/**/*",
+ 
   ]
 }

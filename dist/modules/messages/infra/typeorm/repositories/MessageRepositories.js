@@ -462,7 +462,7 @@ var MessageRepository = /** @class */ (function () {
                                 "c.id as chatId",
                                 "CASE WHEN c.statusAttention IS NULL THEN 'OPEN' ELSE c.statusAttention END AS statusAttention",
                             ])
-                                .where("m.projectId=:projectId", { projectId: projectId })
+                                .where("m.projectId Like :projectId", { projectId: "%".concat(projectId, "%") })
                                 .orderBy("m.createdAt", "DESC")
                                 .getRawMany()];
                     case 2:
