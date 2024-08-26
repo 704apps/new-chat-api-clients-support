@@ -106,8 +106,8 @@ exports.myDataSource = new typeorm_1.DataSource({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     entities: [Messages_1.Messages, OldMessages_1.OldMessages, Contacts_1.Contacts, Chats_1.Chats, Users_1.Users, RefreshToken_1.RefreshToken, Notes_1.Notes], // Ajuste o caminho conforme necessário
-    migrations: [adressFile],
-    synchronize: true,
+    migrations: [fileExtension === 'js' ? 'dist/main/infra/typeorm/migrations/*.js' : 'src/main/infra/typeorm/migrations/*.ts'],
+    synchronize: false,
     timezone: 'Z', // Para UTC
     //: true, // Ative o registro para ver as consultas SQL
     // logger: 'debug',
@@ -122,7 +122,6 @@ function initializeDataSource() {
                     return [4 /*yield*/, exports.myDataSource.initialize()];
                 case 1:
                     _a.sent();
-                    console.log(adressFile);
                     console.log("Data Source has been initialized!");
                     return [3 /*break*/, 3];
                 case 2:
