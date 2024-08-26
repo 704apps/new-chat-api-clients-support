@@ -56,7 +56,7 @@ messageRoutes.get('/assisting/',ensureAuthenticated, getChatsRespondingToSupport
 messageRoutes.get('/messages/:id',ensureAuthenticated, getOneMessagesClientController.handle)
 messageRoutes.get('/oldMessages/:id', ensureAuthenticated,ensureAdmin,getOldMessagesController.handle)
 
-messageRoutes.get('/search_project/:id',ensureAuthenticated, getSearchProjectController.handle)
+messageRoutes.get('/search_project',ensureAuthenticated, getSearchProjectController.handle)
 messageRoutes.get('/search_word_phrase/',ensureAuthenticated, getSearchByWordOrPhraseController.handle)
 messageRoutes.get('/search_generaltosupport/',ensureAuthenticated, getSearchGenerationToSupportController.handle)
 
