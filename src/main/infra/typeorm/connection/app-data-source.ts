@@ -69,7 +69,7 @@ async function initializeDataSource() {
     try {
 
         await myDataSource.initialize();
-        console.log(adressFile);
+      
 
         console.log("Data Source has been initialized!");
         
