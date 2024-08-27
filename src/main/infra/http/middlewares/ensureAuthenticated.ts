@@ -59,6 +59,14 @@ export async function ensureAuthenticated(request: Request, response: Response, 
     } catch (error) {
         if (error instanceof JsonWebTokenError) {
             try {
+                const getIfInaugurationUseCase = container.resolve(GetIfInaugurationUseCase);
+                const ifInauguration = await getIfInaugurationUseCase.getIfInauguration();
+                console.log('veio aqui')
+                if(ifInauguration.length===0){
+                    console.log('veio aqui2')
+
+                    return next()
+                }
                 const authHeader = request.headers.authorization;
 
                 if (!authHeader) {
@@ -69,14 +77,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 const [, token] = authHeader.split(' ');
                 
 
-                const getIfInaugurationUseCase = container.resolve(GetIfInaugurationUseCase);
-                const ifInauguration = await getIfInaugurationUseCase.getIfInauguration();
-                console.log('veio aqui')
-                if(ifInauguration.length===0){
-                    console.log('veio aqui2')
-
-                    return next()
-                }
+              
                 console.log('veio aqui3')
 
                 const id = request.params.id;
