@@ -18,6 +18,8 @@ async function compareToken(pc,tk){
 export async function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
     try {
         const authHeader = request.headers.authorization;
+        console.log('veio aqui no auteo')
+
         if (!authHeader) {
             throw new AppError('Token missing', 401);
         }
@@ -69,10 +71,13 @@ export async function ensureAuthenticated(request: Request, response: Response, 
 
                 const getIfInaugurationUseCase = container.resolve(GetIfInaugurationUseCase);
                 const ifInauguration = await getIfInaugurationUseCase.getIfInauguration();
+                console.log('veio aqui')
                 if(ifInauguration.length===0){
-                    
+                    console.log('veio aqui2')
+
                     return next()
                 }
+                console.log('veio aqui3')
 
                 const id = request.params.id;
                  
