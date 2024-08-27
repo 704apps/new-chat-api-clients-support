@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
+import { IUserRepository } from "../../repositories/IUsersRepository";
 declare class GetOneUserByEmailUseCase {
     private userRepository;
     constructor(userRepository: IUserRepository);

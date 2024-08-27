@@ -1277,7 +1277,7 @@
                 }
             }
         },
-        "/search_project/{projectId}": {
+        "/search_project/": {
             "get": {
                 "summary": "Pesquisa de mensagens de um cliente",
                 "description": "Traz um cliente",

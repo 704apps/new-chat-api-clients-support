@@ -52,7 +52,7 @@ exports.GetOneUserByEmailUseCase = void 0;
 require("reflect-metadata");
 var tsyringe_1 = require("tsyringe");
 var AppError_1 = require("../../../../error/AppError");
-var alterNameForSupporId_1 = require("../../../accounts/util/alterNameForSupporId");
+var alterNameForSupporId_1 = require("../../util/alterNameForSupporId");
 var GetOneUserByEmailUseCase = /** @class */ (function () {
     function GetOneUserByEmailUseCase(userRepository) {
         this.userRepository = userRepository;
