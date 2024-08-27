@@ -1,56 +1,52 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.server = exports.io = void 0;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.io = exports.server = void 0;
 require("reflect-metadata");
-var _express = _interopRequireDefault(require("express"));
-var _http = _interopRequireDefault(require("http"));
-var _index = require("../sockets/index");
-var _routes = require("./routes");
-var _socket = require("socket.io");
-var _errorHandler = require("./middlewares/errorHandler");
-var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
-var _cors = _interopRequireDefault(require("cors"));
-var _swagger = _interopRequireDefault(require("../../../api-doc/swagger.json"));
+var express_1 = __importDefault(require("express"));
+var http_1 = __importDefault(require("http"));
+var index_1 = require("../sockets/index");
+var routes_1 = require("./routes");
+var socket_io_1 = require("socket.io");
+var errorHandler_1 = require("./middlewares/errorHandler");
+var swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+var cors_1 = __importDefault(require("cors"));
+var swagger_json_1 = __importDefault(require("../../../api-doc/swagger.json"));
+var path = require("path");
 require("../../container/index");
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-const path = require("path");
-const app = (0, _express.default)();
-const server = exports.server = _http.default.createServer(app);
-const io = exports.io = new _socket.Server(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"]
-  }
+var app = (0, express_1.default)();
+exports.server = http_1.default.createServer(app);
+exports.io = new socket_io_1.Server(exports.server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
+    },
 });
-app.use(_express.default.json());
-app.use((0, _cors.default)({
-  origin: "*",
-  // Permite qualquer origem
-  methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+app.use(express_1.default.json());
+app.use((0, cors_1.default)({
+    origin: "*", // Permite qualquer origem
+    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
 }));
-app.use(_routes.router);
-app.use(_errorHandler.errorHandler);
-app.use("/api-docs", _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(_swagger.default));
-app.use(_express.default.static(path.join(__dirname, "..", "..", "..", "public")));
-app.get("/terms", (request, response) => {
-  return response.json({
-    message: "Termos de Serviço"
-  });
+app.use(routes_1.router);
+app.use(errorHandler_1.errorHandler);
+app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
+app.use(express_1.default.static(path.join(__dirname, "..", "..", "..", "public")));
+app.get("/terms", function (request, response) {
+    return response.json({
+        message: "Termos de Serviço",
+    });
 });
-
 // export const io: SocketIOServer = new SocketIOServer(server, {
 //   cors: {
 //     origin: "*",
 //     methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
 //   }
 // });
-
-server.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.PORT} `);
-  (0, _index.setupSocketIO)(); //inicializando o socket
+exports.server.listen(process.env.PORT, function () {
+    console.log("Listening on port ".concat(process.env.PORT, " "));
+    (0, index_1.setupSocketIO)(); //inicializando o socket
 });
