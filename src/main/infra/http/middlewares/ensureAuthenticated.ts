@@ -21,16 +21,16 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         if (!authHeader) {
             throw new AppError('Token missing', 401);
         }
-       //console.log('veio aqui no aute')
+       console.log('veio aqui no aute')
         const [, token] = authHeader.split(' ');
-        try {
+        //try {
             const { sub: userId } = verify(token, process.env.SECRET_JWT) as IPayload;
-            //console.log('veio aqui no aute4')
+            console.log('veio aqui no aute4')
             const userRepository = new UserRepository();
-            //console.log('veio aqui no aute5')
+            console.log('veio aqui no aute5')
 
             const user = await userRepository.findById(userId);
-            //console.log('veio aqui no aute6')
+            console.log('veio aqui no aute6')
 
             if (!user) {
                 throw new AppError('User does not exist!', 401);
@@ -38,18 +38,18 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             if (user.active===false) {
                 throw new AppError('This User has been deactivated!', 401);
             }
-            //console.log('veio aqui no aute7')
+            console.log('veio aqui no aute7')
             response.locals.userId = userId;
     
             return next();
-        } catch (error) {
-            if (error instanceof TokenExpiredError) {
-                throw new AppError('Invalid token', 401);
-              }
+        // } catch (error) {
+        //     if (error instanceof TokenExpiredError) {
+        //         throw new AppError('Invalid token', 401);
+        //       }
             
-              // Outros erros podem ser tratados aqui
-              throw new AppError('Invalid token.', 401);
-        }
+        //       // Outros erros podem ser tratados aqui
+        //       throw new AppError('Invalid token.', 401);
+        // }
         
    
       
@@ -60,16 +60,17 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 const authHeader = request.headers.authorization;
 
                 if (!authHeader) {
-               //     console.log('veio aqui antes0')
+                   console.log('veio aqui antes0')
                     throw new AppError('Token missing', 401);
                 }
 
                 const [, token] = authHeader.split(' ');
                 
-                
+
                 const getIfInaugurationUseCase = container.resolve(GetIfInaugurationUseCase);
                 const ifInauguration = await getIfInaugurationUseCase.getIfInauguration();
                 if(ifInauguration.length===0){
+                    
                     return next()
                 }
 
