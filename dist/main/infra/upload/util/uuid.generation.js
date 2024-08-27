@@ -1,11 +1,8 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.uuidGeneration = uuidGeneration;
-var _uuid = require("uuid");
+var uuid_1 = require("uuid");
 function uuidGeneration() {
-  const uuid = (0, _uuid.v4)();
-  return uuid;
+    var uuid = (0, uuid_1.v4)();
+    return uuid;
 }
