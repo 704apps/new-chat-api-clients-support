@@ -1283,7 +1283,7 @@
                 }
             }
         },
-        "/search_project/{projectId}": {
+        "/search_project/": {
             "get": {
                 "summary": "Pesquisa de mensagens de um cliente",
                 "description": "Traz um cliente",
@@ -1320,6 +1320,7 @@
                         "description": "Bad Request"
                     },
                     "200": {
+
                         "content": {
                             "application/json": {
                                 "schemas": {
