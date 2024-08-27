@@ -1,48 +1,60 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.OldMessages = void 0;
-var Messages_1 = require("./Messages");
-var typeorm_1 = require("typeorm");
-var OldMessages = /** @class */ (function () {
-    function OldMessages() {
-    }
-    __decorate([
-        (0, typeorm_1.PrimaryGeneratedColumn)(),
-        __metadata("design:type", Number)
-    ], OldMessages.prototype, "id", void 0);
-    __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return Messages_1.Messages; }, function (message) { return message.id; }, { onDelete: "CASCADE" }),
-        (0, typeorm_1.JoinColumn)({ name: 'idMessage' }),
-        __metadata("design:type", Messages_1.Messages)
-    ], OldMessages.prototype, "idMessage", void 0);
-    __decorate([
-        (0, typeorm_1.Column)('varchar'),
-        __metadata("design:type", String)
-    ], OldMessages.prototype, "oldMessage", void 0);
-    __decorate([
-        (0, typeorm_1.Column)('varchar', { nullable: true }),
-        __metadata("design:type", String)
-    ], OldMessages.prototype, "supportId", void 0);
-    __decorate([
-        (0, typeorm_1.CreateDateColumn)(),
-        __metadata("design:type", Date)
-    ], OldMessages.prototype, "createdAt", void 0);
-    __decorate([
-        (0, typeorm_1.UpdateDateColumn)(),
-        __metadata("design:type", Date)
-    ], OldMessages.prototype, "updatedAt", void 0);
-    OldMessages = __decorate([
-        (0, typeorm_1.Entity)({ name: 'oldMessage' })
-    ], OldMessages);
-    return OldMessages;
-}());
-exports.OldMessages = OldMessages;
+var _Messages = require("./Messages");
+var _typeorm = require("typeorm");
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
+function _initializerDefineProperty(e, i, r, l) { r && Object.defineProperty(e, i, { enumerable: r.enumerable, configurable: r.configurable, writable: r.writable, value: r.initializer ? r.initializer.call(l) : void 0 }); }
+function _applyDecoratedDescriptor(i, e, r, n, l) { var a = {}; return Object.keys(n).forEach(function (i) { a[i] = n[i]; }), a.enumerable = !!a.enumerable, a.configurable = !!a.configurable, ("value" in a || a.initializer) && (a.writable = !0), a = r.slice().reverse().reduce(function (r, n) { return n(i, e, r) || r; }, a), l && void 0 !== a.initializer && (a.value = a.initializer ? a.initializer.call(l) : void 0, a.initializer = void 0), void 0 === a.initializer ? (Object.defineProperty(i, e, a), null) : a; }
+function _initializerWarningHelper(r, e) { throw Error("Decorating class property failed. Please ensure that transform-class-properties is enabled and runs after the decorators transform."); }
+let OldMessages = exports.OldMessages = (_dec = (0, _typeorm.Entity)({
+  name: 'oldMessage'
+}), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = Reflect.metadata("design:type", Number), _dec4 = (0, _typeorm.ManyToOne)(() => _Messages.Messages, message => message.id, {
+  onDelete: "CASCADE"
+}), _dec5 = (0, _typeorm.JoinColumn)({
+  name: 'idMessage'
+}), _dec6 = Reflect.metadata("design:type", typeof _Messages.Messages === "undefined" ? Object : _Messages.Messages), _dec7 = (0, _typeorm.Column)('varchar'), _dec8 = Reflect.metadata("design:type", String), _dec9 = (0, _typeorm.Column)('varchar', {
+  nullable: true
+}), _dec10 = Reflect.metadata("design:type", String), _dec11 = (0, _typeorm.CreateDateColumn)(), _dec12 = Reflect.metadata("design:type", typeof Date === "undefined" ? Object : Date), _dec13 = (0, _typeorm.UpdateDateColumn)(), _dec14 = Reflect.metadata("design:type", typeof Date === "undefined" ? Object : Date), _dec(_class = (_class2 = class OldMessages {
+  constructor() {
+    _initializerDefineProperty(this, "id", _descriptor, this);
+    _initializerDefineProperty(this, "idMessage", _descriptor2, this);
+    _initializerDefineProperty(this, "oldMessage", _descriptor3, this);
+    _initializerDefineProperty(this, "supportId", _descriptor4, this);
+    _initializerDefineProperty(this, "createdAt", _descriptor5, this);
+    _initializerDefineProperty(this, "updatedAt", _descriptor6, this);
+  }
+}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "id", [_dec2, _dec3], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "idMessage", [_dec4, _dec5, _dec6], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "oldMessage", [_dec7, _dec8], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "supportId", [_dec9, _dec10], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "createdAt", [_dec11, _dec12], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "updatedAt", [_dec13, _dec14], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+})), _class2)) || _class);
