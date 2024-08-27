@@ -4,6 +4,7 @@ import { AppError } from '../../../../error/AppError';
 import { UserRepository } from '../../../../modules/accounts/infra/typeorm/repositories/UserRepository';
 import { container } from 'tsyringe';
 import { GetOneMessagesClientUseCase } from '../../../../modules/messages/useCases/getOneMessage/GetOneMessagesUseCase';
+import { GetIfInaugurationUseCase } from '../../../../modules/messages/useCases/getIfInauguration/GetIfInaugurationUseCase';
 
 interface IPayload {
     sub: string;
@@ -64,8 +65,16 @@ export async function ensureAuthenticated(request: Request, response: Response, 
                 }
 
                 const [, token] = authHeader.split(' ');
+                
+                
+                const getIfInaugurationUseCase = container.resolve(GetIfInaugurationUseCase);
+                const ifInauguration = await getIfInaugurationUseCase.getIfInauguration();
+                if(ifInauguration.length===0){
+                    return next()
+                }
+
                 const id = request.params.id;
-               
+                 
                 //console.log('veio aqui antes')
                 if (!id) {
                      //console.log('veio aqui2222')
