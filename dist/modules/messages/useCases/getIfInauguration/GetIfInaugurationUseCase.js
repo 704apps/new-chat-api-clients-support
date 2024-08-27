@@ -48,21 +48,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetFilterToStatusSidebarUseCase = void 0;
+exports.GetIfInaugurationUseCase = void 0;
 var AppError_1 = require("../../../../error/AppError");
 var tsyringe_1 = require("tsyringe");
-var GetFilterToStatusSidebarUseCase = /** @class */ (function () {
-    function GetFilterToStatusSidebarUseCase(messageRepository) {
+var GetIfInaugurationUseCase = /** @class */ (function () {
+    function GetIfInaugurationUseCase(messageRepository) {
         this.messageRepository = messageRepository;
     }
-    GetFilterToStatusSidebarUseCase.prototype.getFilterToStatusSidebar = function (statusAttention) {
+    GetIfInaugurationUseCase.prototype.getIfInauguration = function () {
         return __awaiter(this, void 0, void 0, function () {
             var newMessage, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.messageRepository.getFilterToStatusSidebar(statusAttention)];
+                        return [4 /*yield*/, this.messageRepository.getIfInauguration()];
                     case 1:
                         newMessage = _a.sent();
                         return [2 /*return*/, newMessage];
@@ -74,11 +74,11 @@ var GetFilterToStatusSidebarUseCase = /** @class */ (function () {
             });
         });
     };
-    GetFilterToStatusSidebarUseCase = __decorate([
+    GetIfInaugurationUseCase = __decorate([
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("MessageRepository")),
         __metadata("design:paramtypes", [Object])
-    ], GetFilterToStatusSidebarUseCase);
-    return GetFilterToStatusSidebarUseCase;
+    ], GetIfInaugurationUseCase);
+    return GetIfInaugurationUseCase;
 }());
-exports.GetFilterToStatusSidebarUseCase = GetFilterToStatusSidebarUseCase;
+exports.GetIfInaugurationUseCase = GetIfInaugurationUseCase;

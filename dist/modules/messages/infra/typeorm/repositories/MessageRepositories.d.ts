@@ -11,6 +11,7 @@ declare class MessageRepository implements IMessageRepository {
     private repositoryOldMessage;
     private next;
     constructor();
+    getIfInauguration(): Promise<Messages[]>;
     getOldMessages(id: number): Promise<OldMessages[]>;
     createMessage(message: MessageDTO): Promise<Messages>;
     update(id: number, message: string): Promise<Messages>;

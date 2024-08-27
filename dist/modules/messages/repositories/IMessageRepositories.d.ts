@@ -5,6 +5,7 @@ import { Messages } from "../infra/typeorm/Entities/Messages";
 import { OldMessages } from "../infra/typeorm/Entities/OldMessages";
 interface IMessageRepository {
     createMessage(message: MessageDTO): Promise<Messages>;
+    getIfInauguration(): Promise<Messages[]>;
     update(id: number, message: string): Promise<Messages>;
     upldateSA(id: number): Promise<Messages>;
     delete(id: number): Promise<String>;

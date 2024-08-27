@@ -1,19 +1,18 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.storage = void 0;
-var _multer = _interopRequireDefault(require("multer"));
-var _path = _interopRequireDefault(require("path"));
-var _uuid = require("./util/uuid.generation");
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-const storage = exports.storage = _multer.default.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, _path.default.resolve("src", "tmp"));
-  },
-  filename: (req, file, callback) => {
-    const uuid = (0, _uuid.uuidGeneration)();
-    callback(null, `${uuid}_${file.originalname}`);
-  }
+var multer_1 = __importDefault(require("multer"));
+var path_1 = __importDefault(require("path"));
+var uuid_generation_1 = require("./util/uuid.generation");
+exports.storage = multer_1.default.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, path_1.default.resolve("src", "tmp"));
+    },
+    filename: function (req, file, callback) {
+        var uuid = (0, uuid_generation_1.uuidGeneration)();
+        callback(null, "".concat(uuid, "_").concat(file.originalname));
+    }
 });
