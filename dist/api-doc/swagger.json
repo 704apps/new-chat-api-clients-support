@@ -172,6 +172,7 @@
                         "bearerAuth": []
                     }
                 ],
+               
                 "responses": {
                     "400": {
                         "description": "User not found."
@@ -271,7 +272,7 @@
                                                 "createdAt": "2024-07-29T13:32:18.301Z",
                                                 "updatedAt": "2024-08-20T21:32:58.574Z"
                                             }
-                                        ]
+                                        ]     
                                     }
                                 }
                             }
@@ -322,7 +323,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value": "User deleted successfully"
+                                        "value":"User deleted successfully"
                                     }
                                 }
                             }
@@ -373,9 +374,11 @@
                                     "action": {
                                         "type": "boolean"
                                     }
+                                 
                                 },
                                 "required": [
                                     "action"
+                                  
                                 ]
                             }
                         }
@@ -391,7 +394,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value": "User successfully deactivated!"
+                                        "value":"User successfully deactivated!"
                                     }
                                 }
                             }
@@ -433,7 +436,7 @@
                                     }
                                 },
                                 "required": [
-                                    "name", "email"
+                                    "name","email"
                                 ]
                             }
                         }
@@ -453,6 +456,7 @@
                         "bearerAuth": []
                     }
                 ],
+              
                 "responses": {
                     "400": {
                         "description": "User not found."
@@ -463,7 +467,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value": {
+                                        "value":{
                                             "id": "224e7dc1-261c-4edb-8985-ce27d7d96b77",
                                             "name": "Jonshon",
                                             "role": "SUBMASTER",
@@ -539,7 +543,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value": {
+                                        "value":{
                                             "id": "224e7dc1-261c-4edb-8985-ce27d7d96b77",
                                             "name": "Jonshon",
                                             "role": "SUBMASTER",
@@ -616,7 +620,7 @@
                                 "examples": {
                                     "example-1": {
                                         "summary": "Example response",
-                                        "value": "Password change successfully"
+                                        "value":"Password change successfully"
                                     }
                                 }
                             }
@@ -632,6 +636,7 @@
                 "tags": [
                     "Rotas de Autenticação"
                 ],
+                
                 "components": {
                     "securitySchemes": {
                         "bearerAuth": {
@@ -751,6 +756,7 @@
                 "tags": [
                     "Rotas de Autenticação"
                 ],
+                
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1314,6 +1320,7 @@
                         "description": "Bad Request"
                     },
                     "200": {
+
                         "content": {
                             "application/json": {
                                 "schemas": {
@@ -1869,6 +1876,7 @@
                             "type": "http",
                             "scheme": "bearer",
                             "bearerFormat": "JWT"
+                           
                         }
                     }
                 },
