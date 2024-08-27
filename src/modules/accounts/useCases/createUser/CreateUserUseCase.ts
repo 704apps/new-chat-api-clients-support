@@ -17,7 +17,7 @@ class CreateUserUseCase {
 
     async execute({ name, email, password, role }: ICreateUserDTO) {
         try {
-
+            
             const passwordHash = await hash(password, 8)
             // console.log('veio no antes de ver email'+passwordHash)
 

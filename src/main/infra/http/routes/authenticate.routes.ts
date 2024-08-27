@@ -48,7 +48,7 @@ const uploadAvatarController = new UploadAvatarController();
 
 
 
-autheticateRoutes.post("/create_user",ensureAuthenticated,ensureAdmin,createUserController.handle)
+autheticateRoutes.post("/create_user",createUserController.handle)
 
 autheticateRoutes.post("/sessions", authenticateUserController.handle)
 
