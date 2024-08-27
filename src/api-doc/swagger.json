@@ -1283,7 +1283,7 @@
                 }
             }
         },
-        "/search_project/?projectId={projectId}": {
+        "/search_project/": {
             "get": {
                 "summary": "Pesquisa de mensagens de um cliente",
                 "description": "Traz um cliente",
