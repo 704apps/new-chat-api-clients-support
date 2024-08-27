@@ -1,9 +1,9 @@
 import "reflect-metadata";
 
 import { inject, injectable } from "tsyringe";
-import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
+import { IUserRepository } from "../../repositories/IUsersRepository"
 import { AppError } from "../../../../error/AppError";
-import { alterNameForSupporId } from "../../../accounts/util/alterNameForSupporId";
+import { alterNameForSupporId } from "../../util/alterNameForSupporId";
 
 @injectable()
 class GetOneUserByEmailUseCase {
