@@ -1,16 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,37 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetFilterToStatusSidebarUseCase = void 0;
-var AppError_1 = require("../../../../error/AppError");
+exports.GetIfInaugurationController = void 0;
+var GetIfInaugurationUseCase_1 = require("./GetIfInaugurationUseCase");
 var tsyringe_1 = require("tsyringe");
-var GetFilterToStatusSidebarUseCase = /** @class */ (function () {
-    function GetFilterToStatusSidebarUseCase(messageRepository) {
-        this.messageRepository = messageRepository;
+var GetIfInaugurationController = /** @class */ (function () {
+    function GetIfInaugurationController() {
     }
-    GetFilterToStatusSidebarUseCase.prototype.getFilterToStatusSidebar = function (statusAttention) {
+    GetIfInaugurationController.prototype.handle = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var newMessage, error_1;
+            var idMessage, getIfInaugurationUseCase, messages, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.messageRepository.getFilterToStatusSidebar(statusAttention)];
+                        idMessage = request.params.id;
+                        getIfInaugurationUseCase = tsyringe_1.container.resolve(GetIfInaugurationUseCase_1.GetIfInaugurationUseCase);
+                        return [4 /*yield*/, getIfInaugurationUseCase.getIfInauguration()];
                     case 1:
-                        newMessage = _a.sent();
-                        return [2 /*return*/, newMessage];
+                        messages = _a.sent();
+                        return [2 /*return*/, response.status(200).json(messages)];
                     case 2:
                         error_1 = _a.sent();
-                        throw new AppError_1.AppError('Unexpected error', 400, { error: error_1 });
+                        return [2 /*return*/, response.status(400).json({ error: error_1 })];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    GetFilterToStatusSidebarUseCase = __decorate([
-        (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("MessageRepository")),
-        __metadata("design:paramtypes", [Object])
-    ], GetFilterToStatusSidebarUseCase);
-    return GetFilterToStatusSidebarUseCase;
+    return GetIfInaugurationController;
 }());
-exports.GetFilterToStatusSidebarUseCase = GetFilterToStatusSidebarUseCase;
+exports.GetIfInaugurationController = GetIfInaugurationController;
