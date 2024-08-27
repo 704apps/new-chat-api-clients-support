@@ -21,6 +21,7 @@ import {ensureAdmin,ensureAdminAndSubadmin} from '../middlewares/ensureAdmin'
 
 
 import { upload } from '../../upload';
+import { GetIfInaugurationController } from '../../../../modules/messages/useCases/getIfInauguration/GetIfInaugurationController'
 
 
 
@@ -34,6 +35,8 @@ const getNewMessagesController = new GetNewMessagesController();
 const getChatsRespondingToSupportController = new GetChatsRespondingToSupportController();
 const getSearchProjectController = new GetSearchProjectController();
 const getOneMessagesClientController = new GetOneMessagesClientController();
+const getIfInaugurationController = new GetIfInaugurationController();
+
 const getOldMessagesController = new GetOldMessagesController();
 
 
