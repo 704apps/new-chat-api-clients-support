@@ -1,0 +1,48 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OldMessages = void 0;
+var Messages_1 = require("./Messages");
+var typeorm_1 = require("typeorm");
+var OldMessages = /** @class */ (function () {
+    function OldMessages() {
+    }
+    __decorate([
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], OldMessages.prototype, "id", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Messages_1.Messages; }, function (message) { return message.id; }, { onDelete: "CASCADE" }),
+        (0, typeorm_1.JoinColumn)({ name: 'idMessage' }),
+        __metadata("design:type", Messages_1.Messages)
+    ], OldMessages.prototype, "idMessage", void 0);
+    __decorate([
+        (0, typeorm_1.Column)('varchar'),
+        __metadata("design:type", String)
+    ], OldMessages.prototype, "oldMessage", void 0);
+    __decorate([
+        (0, typeorm_1.Column)('varchar', { nullable: true }),
+        __metadata("design:type", String)
+    ], OldMessages.prototype, "supportId", void 0);
+    __decorate([
+        (0, typeorm_1.CreateDateColumn)(),
+        __metadata("design:type", Date)
+    ], OldMessages.prototype, "createdAt", void 0);
+    __decorate([
+        (0, typeorm_1.UpdateDateColumn)(),
+        __metadata("design:type", Date)
+    ], OldMessages.prototype, "updatedAt", void 0);
+    OldMessages = __decorate([
+        (0, typeorm_1.Entity)({ name: 'oldMessage' })
+    ], OldMessages);
+    return OldMessages;
+}());
+exports.OldMessages = OldMessages;
