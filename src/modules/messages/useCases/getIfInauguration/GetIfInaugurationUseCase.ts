@@ -13,7 +13,7 @@ class GetIfInaugurationUseCase {
         private messageRepository: IMessageRepository
     ){}
 
-    public async getIfInauguration(): Promise<Messages[]> {
+    public async getIfInauguration(): Promise<Boolean> {
         try {
             
             const newMessage = await this.messageRepository.getIfInauguration()

@@ -27,7 +27,10 @@ class MessageRepository {
   }
   async getIfInauguration() {
     const message = await this.repositoryMessage.find();
-    return message;
+    if (message.length === 0) {
+      return false;
+    }
+    return true;
   }
   async getOldMessages(id) {
     const message = await this.repositoryOldMessage.find({

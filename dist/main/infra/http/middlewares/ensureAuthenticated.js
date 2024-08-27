@@ -57,7 +57,7 @@ async function ensureAuthenticated(request, response, next) {
         const getIfInaugurationUseCase = _tsyringe.container.resolve(_GetIfInaugurationUseCase.GetIfInaugurationUseCase);
         const ifInauguration = await getIfInaugurationUseCase.getIfInauguration();
         console.log('veio aqui');
-        if (ifInauguration.length === 0) {
+        if (!ifInauguration) {
           console.log('veio aqui2');
           return next();
         }

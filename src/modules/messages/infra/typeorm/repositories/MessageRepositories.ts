@@ -28,10 +28,12 @@ class MessageRepository implements IMessageRepository {
         this.repositoryContacts = myDataSource.getRepository(Contacts)
 
     }
-    async getIfInauguration(): Promise<Messages[]> {
+    async getIfInauguration(): Promise<Boolean> {
         const message = await this.repositoryMessage.find()
-       
-        return message
+        if(message.length===0){
+            return false
+        }
+        return true
     }
     async getOldMessages(id: number): Promise<OldMessages[]> {
         const message = await this.repositoryOldMessage.find({
