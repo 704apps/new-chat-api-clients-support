@@ -1,23 +1,28 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.noteRouter = void 0;
-var express_1 = require("express");
-var GetCreateNoteController_1 = require("../../../../modules/notes/useCases/getCreateNote/GetCreateNoteController");
-var GetUpdateNoteController_1 = require("../../../../modules/notes/useCases/getUpdateNote/GetUpdateNoteController");
-var DeleteNoteController_1 = require("../../../../modules/notes/useCases/deleteNote/DeleteNoteController");
-var GetOneNoteController_1 = require("../../../../modules/notes/useCases/getOneNote/GetOneNoteController");
-var ensureAuthenticated_1 = require("../middlewares/ensureAuthenticated");
-var GetAllNoteChatController_1 = require("../../../../modules/notes/useCases/getAllNoteChat/GetAllNoteChatController");
-var noteRouter = (0, express_1.Router)();
-exports.noteRouter = noteRouter;
-var getCreateNoteController = new GetCreateNoteController_1.GetCreateNoteController();
-var getUpdateNoteController = new GetUpdateNoteController_1.GetUpdateNoteController();
-var deleteNoteController = new DeleteNoteController_1.DeleteNoteController();
-var getOneNoteController = new GetOneNoteController_1.GetOneNoteController();
-var getAllNoteChatController = new GetAllNoteChatController_1.GetAllNoteChatController();
+var _express = require("express");
+var _GetCreateNoteController = require("../../../../modules/notes/useCases/getCreateNote/GetCreateNoteController");
+var _GetUpdateNoteController = require("../../../../modules/notes/useCases/getUpdateNote/GetUpdateNoteController");
+var _DeleteNoteController = require("../../../../modules/notes/useCases/deleteNote/DeleteNoteController");
+var _GetOneNoteController = require("../../../../modules/notes/useCases/getOneNote/GetOneNoteController");
+var _ensureAuthenticated = require("../middlewares/ensureAuthenticated");
+var _GetAllNoteChatController = require("../../../../modules/notes/useCases/getAllNoteChat/GetAllNoteChatController");
+const noteRouter = exports.noteRouter = (0, _express.Router)();
+const getCreateNoteController = new _GetCreateNoteController.GetCreateNoteController();
+const getUpdateNoteController = new _GetUpdateNoteController.GetUpdateNoteController();
+const deleteNoteController = new _DeleteNoteController.DeleteNoteController();
+const getOneNoteController = new _GetOneNoteController.GetOneNoteController();
+const getAllNoteChatController = new _GetAllNoteChatController.GetAllNoteChatController();
+
 //chatRouter.use(ensureAuthenticated)
-noteRouter.post('/create_note/', ensureAuthenticated_1.ensureAuthenticated, getCreateNoteController.handle);
-noteRouter.get('/get_note/:id', ensureAuthenticated_1.ensureAuthenticated, getOneNoteController.handle);
-noteRouter.patch('/edit_note/:id', ensureAuthenticated_1.ensureAuthenticated, getUpdateNoteController.handle);
-noteRouter.delete('/delete_note/:id', ensureAuthenticated_1.ensureAuthenticated, deleteNoteController.handle);
-noteRouter.get('/notes/:id', ensureAuthenticated_1.ensureAuthenticated, getAllNoteChatController.handle);
+noteRouter.post('/create_note/', _ensureAuthenticated.ensureAuthenticated, getCreateNoteController.handle);
+noteRouter.get('/get_note/:id', _ensureAuthenticated.ensureAuthenticated, getOneNoteController.handle);
+noteRouter.patch('/edit_note/:id', _ensureAuthenticated.ensureAuthenticated, getUpdateNoteController.handle);
+noteRouter.delete('/delete_note/:id', _ensureAuthenticated.ensureAuthenticated, deleteNoteController.handle);
+noteRouter.get('/notes/:id', _ensureAuthenticated.ensureAuthenticated, getAllNoteChatController.handle);
+
+// chatRouter.patch('/update_statusAttention/:id',(req,res)=>chatController.getUpdateStatusAttention(req,res))
