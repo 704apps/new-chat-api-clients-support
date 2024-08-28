@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.GetOneUserByEmailController = void 0;
 require("reflect-metadata");
 var _tsyringe = require("tsyringe");
-var _GetOneUserByEmailUseCase = require("./GetOneUserByEmailUseCase");
+var _getOneUserByEmailUseCase = require("./getOneUserByEmailUseCase");
 class GetOneUserByEmailController {
   async handle(request, response) {
     try {
@@ -18,7 +18,7 @@ class GetOneUserByEmailController {
           error: "Missing required fields"
         });
       }
-      const getOneUserByEmailUseCase = await _tsyringe.container.resolve(_GetOneUserByEmailUseCase.GetOneUserByEmailUseCase);
+      const getOneUserByEmailUseCase = await _tsyringe.container.resolve(_getOneUserByEmailUseCase.GetOneUserByEmailUseCase);
       const user = await getOneUserByEmailUseCase.getOneUserByEmail(String(email));
       //  console.log(user)
       return response.status(200).json({
