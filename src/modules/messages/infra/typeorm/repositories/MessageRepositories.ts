@@ -142,11 +142,12 @@ class MessageRepository implements IMessageRepository {
                 chatId,
                 messages,
                 origin,
-                msgEdt:false,
+                msgEdit:false,
                 projectId,
                 supportId,
                 userType,
-                urlImage
+                urlImage,
+                oldMessages: '[]'
             });
 
             return await this.repositoryMessage.save(newMessage);
@@ -173,7 +174,7 @@ class MessageRepository implements IMessageRepository {
 
         const oldMessage = getMessage.messages
         getMessage.messages = message;
-        getMessage.msgEdt = true;
+        getMessage.msgEdit = true;
         const supportId = getMessage.supportId
         await this.repositoryMessage.save(getMessage);
         const idMessage = getMessage.id
@@ -247,7 +248,7 @@ class MessageRepository implements IMessageRepository {
         if (!project) {
             throw new AppError("ProjectId not found");
         }
-        project.msgEdt = false;
+        project.msgEdit = false;
         await this.repositoryMessage.save(project);
         return project;
     }

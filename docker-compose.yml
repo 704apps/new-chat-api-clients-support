@@ -1,0 +1,49 @@
+services:
+  api:
+    container_name: ${APP_NAME}-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3300" 
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=development
+    networks:
+      - suporte704-network
+
+  db:
+    image: mysql:8.2
+    container_name: ${APP_NAME}-db
+    command: [
+      'mysqld',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-authentication-plugin=mysql_native_password',
+      '--wait_timeout=28800',
+      '--sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION',
+      '--log_bin_trust_function_creators=1',
+      '--sort_buffer_size=10485760', #10MB
+      '--bind-address=0.0.0.0'
+    ]
+    restart: always
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      - TZ='São_Paulo'
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - ./.docker/data:/var/lib/mysql
+      - ./.docker/dumps:/var/dumps
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - suporte704-network
+      
+      
+networks:
+  suporte704-network:
+      driver: bridge
+

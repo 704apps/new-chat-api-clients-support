@@ -8,7 +8,7 @@ require("reflect-metadata");
 var _tsyringe = require("tsyringe");
 var _IUsersRepository = require("../../../../modules/accounts/repositories/IUsersRepository");
 var _jsonwebtoken = require("jsonwebtoken");
-var _bcrypt = require("bcrypt");
+var _bcrypt = require("bcryptjs");
 var _AppError = require("../../../../error/AppError");
 var _GenerateRefreshToken = require("../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken");
 var _DeleteRefreshToken = require("../../../../modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken");

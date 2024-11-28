@@ -17,10 +17,14 @@ function setupSocketIO() {
         //Cliente envia mensagem
         socket.on("clientMessage", async (data) => {
             try {
-
                 const msg: MessageDTO = (await saveMessageController.saveMessage(
                     data
                 )) as MessageDTO;
+
+                console.log('=================')
+
+                console.log(msg)
+                console.log('=================')
 
                 const socketUser = data.supportId;
                 const dataClient = {
@@ -45,13 +49,18 @@ function setupSocketIO() {
                 // }
 
             } catch (error) {
+                console.log('error: ' + error)
                 throw new AppError('Unexpected error', 400, { error })
             }
         });
         socket.on("answerCall", (data) => {
-            const socketId = data.projectId;
-            if (socketId) {
-              io.to(socketId).emit("returnCall", data.signal);
+            try {
+                const socketId = data.projectId;
+                if (socketId) {
+                  io.to(socketId).emit("returnCall", data.signal);
+                }
+            } catch (err) {
+                console.log(err)
             }
         });
 

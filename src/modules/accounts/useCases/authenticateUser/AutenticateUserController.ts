@@ -18,6 +18,7 @@ class AuthenticateUserController {
             return response.status(200).json({ token, refreshToken ,user });
 
         } catch (error) {
+            console.log(error)
             return response.status(401).json({error});
 
         }

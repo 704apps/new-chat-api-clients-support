@@ -7,7 +7,7 @@ interface MessageDTO {
     projectId: string;
     supportId: string;
     messageType: string;
-    msgEdt?: boolean;
+    msgEdit?: boolean;
     urlImage?: string;
     statusAttention?: string;
     messages: string;

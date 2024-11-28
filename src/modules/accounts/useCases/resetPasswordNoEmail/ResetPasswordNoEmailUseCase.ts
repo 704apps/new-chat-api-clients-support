@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 import { ICreateUserDTO } from "../../../../modules/accounts/DTOs/ICreateUserDTOS";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository"
-import { hash } from 'bcrypt'
+import { hash } from "bcryptjs"
 import { AppError } from "../../../../error/AppError";
 
 @injectable()

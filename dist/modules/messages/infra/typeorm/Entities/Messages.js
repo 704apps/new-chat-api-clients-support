@@ -37,7 +37,7 @@ let Messages = exports.Messages = (_dec = (0, _typeorm.Entity)({
     _initializerDefineProperty(this, "messages", _descriptor8, this);
     _initializerDefineProperty(this, "message", _descriptor9, this);
     _initializerDefineProperty(this, "oldMessages", _descriptor10, this);
-    _initializerDefineProperty(this, "msgEdt", _descriptor11, this);
+    _initializerDefineProperty(this, "msgEdit", _descriptor11, this);
     _initializerDefineProperty(this, "origin", _descriptor12, this);
     _initializerDefineProperty(this, "createdAt", _descriptor13, this);
     _initializerDefineProperty(this, "updatedAt", _descriptor14, this);
@@ -92,7 +92,7 @@ let Messages = exports.Messages = (_dec = (0, _typeorm.Entity)({
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "msgEdt", [_dec22, _dec23], {
+}), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "msgEdit", [_dec22, _dec23], {
   configurable: true,
   enumerable: true,
   writable: true,

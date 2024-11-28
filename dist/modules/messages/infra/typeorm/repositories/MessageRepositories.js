@@ -147,7 +147,7 @@ class MessageRepository {
         chatId,
         messages,
         origin,
-        msgEdt: false,
+        msgEdit: false,
         projectId,
         supportId,
         userType,
@@ -171,7 +171,7 @@ class MessageRepository {
     }
     const oldMessage = getMessage.messages;
     getMessage.messages = message;
-    getMessage.msgEdt = true;
+    getMessage.msgEdit = true;
     const supportId = getMessage.supportId;
     await this.repositoryMessage.save(getMessage);
     const idMessage = getMessage.id;
@@ -222,7 +222,7 @@ class MessageRepository {
     if (!project) {
       throw new _AppError.AppError("ProjectId not found");
     }
-    project.msgEdt = false;
+    project.msgEdit = false;
     await this.repositoryMessage.save(project);
     return project;
   }

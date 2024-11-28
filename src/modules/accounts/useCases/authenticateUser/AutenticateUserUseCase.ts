@@ -2,7 +2,7 @@ import "reflect-metadata"
 import { injectable, inject } from "tsyringe";
 import { IUserRepository } from "../../../../modules/accounts/repositories/IUsersRepository";
 import { sign } from "jsonwebtoken"
-import { compare } from "bcrypt"
+import { compare } from "bcryptjs"
 
 import { AppError } from "../../../../error/AppError";
 import { GenerateRefreshToken } from '../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken'
@@ -46,6 +46,8 @@ class AutenticateUserUseCase {
         //     console.log('veio aqui 1')
 
         const passwordMath = await compare(password, userVerify.password)
+
+        console.log(passwordMath)
 
         if (!passwordMath) {
             //  console.log('veio aqui 2')

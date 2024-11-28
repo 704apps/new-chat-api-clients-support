@@ -1,8 +1,10 @@
-
+.docker/
 .vscode/
 
 .env
 tmp
 node_modules
+
+dist
 
 tsconfig.tsbuildinfo

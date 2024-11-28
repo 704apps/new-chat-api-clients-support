@@ -6,10 +6,11 @@ import { router } from "./routes";
 import { Server as SocketIOServer } from "socket.io";
 import { errorHandler } from "./middlewares/errorHandler";
 import swaggerUi from "swagger-ui-express";
-import cors from "cors";
 import swaggerDocs from "../../../api-doc/swagger.json";
 import path from "path";
 import "../../container/index";
+
+const cors = require('cors');
 
 const app: Application = express();
 export const server: HTTPServer = http.createServer(app);

@@ -958,7 +958,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "Olá estou com um problema",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "",
                                                 "createdAt": "2024-07-03T19:31:24.870Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
@@ -970,7 +970,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "Boa tarde meu nome é João, em que posso ajudar",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "",
                                                 "createdAt": "2024-07-03T19:31:27.108Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
@@ -1119,7 +1119,7 @@
                                             "supportId": "Joao",
                                             "messageType": "message",
                                             "messages": "mensagem atualizada",
-                                            "msgEdt": true,
+                                            "msgEdit": true,
                                             "origin": "support",
                                             "createdAt": "2024-07-08T16:06:52.966Z",
                                             "updatedAt": "2024-07-12T18:23:57.000Z"
@@ -1337,7 +1337,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "monitor",
                                                 "createdAt": "2024-07-01T21:26:09.590Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
@@ -1837,7 +1837,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "monitor",
                                                 "createdAt": "2024-07-01T21:26:09.590Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
@@ -1849,7 +1849,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "po",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "suporte",
                                                 "createdAt": "2024-07-08T16:07:52.632Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
@@ -1927,7 +1927,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "monitor",
                                                 "createdAt": "2024-07-01T21:26:09.590Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"
@@ -1939,7 +1939,7 @@
                                                 "supportId": "Joao",
                                                 "messageType": "message",
                                                 "messages": "po",
-                                                "msgEdt": false,
+                                                "msgEdit": false,
                                                 "origin": "suporte",
                                                 "createdAt": "2024-07-08T16:07:52.632Z",
                                                 "updatedAt": "2024-07-11T22:29:18.073Z"

@@ -26,6 +26,8 @@ class SaveMessageUseCase {
             return project
 
         } catch (error) {
+          console.log(error)
+
             this.next(error)
           //  throw new AppError('Error when saving message!', 400, { error })
 

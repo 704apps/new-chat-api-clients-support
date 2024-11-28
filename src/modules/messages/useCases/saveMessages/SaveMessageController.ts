@@ -9,7 +9,6 @@ class SaveMessageController {
     public async saveMessage(message: MessageDTO) {
         try {
 
-
             const saveMessageUseCase = container.resolve(SaveMessageUseCase)
             const newMessage = saveMessageUseCase.createMessage(message)
           
@@ -17,7 +16,7 @@ class SaveMessageController {
             return  newMessage
 
         } catch (error) {
-          
+          console.log('erro 2: ' + error)
 
             this.next(error)
            
