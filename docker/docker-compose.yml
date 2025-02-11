@@ -1,0 +1,27 @@
+services:
+  suporte704-api:
+    container_name: suporte704-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:3300" 
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    networks:
+      - suporte704-network
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.checkout-suporte704-api.rule=Host(`suporte704.com.br`)
+      - traefik.http.routers.checkout-suporte704-api.entrypoints=web
+      - traefik.http.services.checkout-suporte704-api.loadbalancer.server.port=3300     
+      
+networks:
+  suporte704-network:
+      driver: bridge
+  dokploy-network:
+    external: true
+
