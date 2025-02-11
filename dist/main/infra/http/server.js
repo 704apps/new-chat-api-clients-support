@@ -12,11 +12,11 @@ var _routes = require("./routes");
 var _socket = require("socket.io");
 var _errorHandler = require("./middlewares/errorHandler");
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
-var _cors = _interopRequireDefault(require("cors"));
 var _swagger = _interopRequireDefault(require("../../../api-doc/swagger.json"));
 var _path = _interopRequireDefault(require("path"));
 require("../../container/index");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+const cors = require('cors');
 const app = (0, _express.default)();
 const server = exports.server = _http.default.createServer(app);
 
@@ -32,7 +32,7 @@ const io = exports.io = new _socket.Server(server, {
 app.use(_express.default.json());
 
 // Configuração de CORS para a API
-app.use((0, _cors.default)({
+app.use(cors({
   origin: "*",
   // Permite qualquer origem
   methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],

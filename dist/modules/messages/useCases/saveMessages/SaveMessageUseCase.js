@@ -24,6 +24,7 @@ let SaveMessageUseCase = exports.SaveMessageUseCase = (_dec = (0, _tsyringe.inje
       //console.log('MMMMMMMMMMMMMMMMMMM')
       return project;
     } catch (error) {
+      console.log(error);
       this.next(error);
       //  throw new AppError('Error when saving message!', 400, { error })
     }

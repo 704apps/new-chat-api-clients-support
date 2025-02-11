@@ -7,7 +7,7 @@ exports.CreateUserUseCase = void 0;
 require("reflect-metadata");
 var _tsyringe = require("tsyringe");
 var _IUsersRepository = require("../../../../modules/accounts/repositories/IUsersRepository");
-var _bcrypt = require("bcryptjs");
+var _bcryptjs = require("bcryptjs");
 var _AppError = require("../../../../error/AppError");
 var _alterNameForSupporId = require("../../util/alterNameForSupporId");
 var _dec, _dec2, _dec3, _dec4, _class;
@@ -24,7 +24,7 @@ let CreateUserUseCase = exports.CreateUserUseCase = (_dec = (0, _tsyringe.inject
     role
   }) {
     try {
-      const passwordHash = await (0, _bcrypt.hash)(password, 8);
+      const passwordHash = await (0, _bcryptjs.hash)(password, 8);
       // console.log('veio no antes de ver email'+passwordHash)
 
       const isuseralreadyExist = await this.userRepository.findByEmail(email);

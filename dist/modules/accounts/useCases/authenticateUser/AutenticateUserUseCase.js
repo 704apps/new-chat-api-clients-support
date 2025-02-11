@@ -8,7 +8,7 @@ require("reflect-metadata");
 var _tsyringe = require("tsyringe");
 var _IUsersRepository = require("../../../../modules/accounts/repositories/IUsersRepository");
 var _jsonwebtoken = require("jsonwebtoken");
-var _bcrypt = require("bcryptjs");
+var _bcryptjs = require("bcryptjs");
 var _AppError = require("../../../../error/AppError");
 var _GenerateRefreshToken = require("../../../../modules/refreshToken/useCases/genereRefreshToken/GenerateRefreshToken");
 var _DeleteRefreshToken = require("../../../../modules/refreshToken/useCases/deteteRefreshToken/DeleteRefreshToken");
@@ -33,7 +33,8 @@ let AutenticateUserUseCase = exports.AutenticateUserUseCase = (_dec = (0, _tsyri
     }
     //     console.log('veio aqui 1')
 
-    const passwordMath = await (0, _bcrypt.compare)(password, userVerify.password);
+    const passwordMath = await (0, _bcryptjs.compare)(password, userVerify.password);
+    console.log(passwordMath);
     if (!passwordMath) {
       //  console.log('veio aqui 2')
       throw new _AppError.AppError("Email or password incorrect!");

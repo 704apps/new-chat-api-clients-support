@@ -151,7 +151,8 @@ class MessageRepository {
         projectId,
         supportId,
         userType,
-        urlImage
+        urlImage,
+        oldMessages: '[]'
       });
       return await this.repositoryMessage.save(newMessage);
     } catch (error) {

@@ -15,7 +15,7 @@ services:
       - dokploy-network
     labels:
       - traefik.enable=true
-      - traefik.http.routers.checkout-suporte704-api.rule=Host(`suporte704.com.br`)
+      - traefik.http.routers.checkout-suporte704-api.rule=Host(`api.suporte704.com.br`)
       - traefik.http.routers.checkout-suporte704-api.entrypoints=web
       - traefik.http.services.checkout-suporte704-api.loadbalancer.server.port=3300     
       

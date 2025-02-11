@@ -16,6 +16,7 @@ class SaveMessageController {
       const newMessage = saveMessageUseCase.createMessage(message);
       return newMessage;
     } catch (error) {
+      console.log('erro 2: ' + error);
       this.next(error);
     }
   }

@@ -17,6 +17,9 @@ function setupSocketIO() {
     socket.on("clientMessage", async data => {
       try {
         const msg = await saveMessageController.saveMessage(data);
+        console.log('=================');
+        console.log(msg);
+        console.log('=================');
         const socketUser = data.supportId;
         const dataClient = {
           id: msg.id,
@@ -38,15 +41,20 @@ function setupSocketIO() {
 
         // }
       } catch (error) {
+        console.log('error: ' + error);
         throw new _AppError.AppError('Unexpected error', 400, {
           error
         });
       }
     });
     socket.on("answerCall", data => {
-      const socketId = data.projectId;
-      if (socketId) {
-        _server.io.to(socketId).emit("returnCall", data.signal);
+      try {
+        const socketId = data.projectId;
+        if (socketId) {
+          _server.io.to(socketId).emit("returnCall", data.signal);
+        }
+      } catch (err) {
+        console.log(err);
       }
     });
     socket.on("callUserClient", async data => {

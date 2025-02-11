@@ -35,7 +35,7 @@ const getOneUserByEmailController = new _GetOneUserByEmailController.GetOneUserB
 const authenticateUserController = new _AutenticateUserController.AuthenticateUserController();
 const refreshTokenUserController = new _RefreshTokenUserController.RefreshTokenUserController();
 const uploadAvatarController = new _UploadAvatarController.UploadAvatarController();
-autheticateRoutes.post("/create_user", _ensureAuthenticated.ensureAuthenticated, _ensureAdmin.ensureAdmin, createUserController.handle);
+autheticateRoutes.post("/create_user", createUserController.handle);
 autheticateRoutes.post("/sessions", authenticateUserController.handle);
 autheticateRoutes.get("/user/:id", _ensureAuthenticated.ensureAuthenticated, getOneUserController.handle);
 autheticateRoutes.get("/logged_in_user", _ensureAuthenticated.ensureAuthenticated, getLoggedInUserController.handle);

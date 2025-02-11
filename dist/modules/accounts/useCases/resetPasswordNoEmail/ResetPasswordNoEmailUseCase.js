@@ -7,7 +7,7 @@ exports.ResetPasswordNoEmailUseCase = void 0;
 require("reflect-metadata");
 var _tsyringe = require("tsyringe");
 var _IUsersRepository = require("../../../../modules/accounts/repositories/IUsersRepository");
-var _bcrypt = require("bcryptjs");
+var _bcryptjs = require("bcryptjs");
 var _AppError = require("../../../../error/AppError");
 var _dec, _dec2, _dec3, _dec4, _class;
 let ResetPasswordNoEmailUseCase = exports.ResetPasswordNoEmailUseCase = (_dec = (0, _tsyringe.injectable)(), _dec2 = function (target, key) {
@@ -18,7 +18,7 @@ let ResetPasswordNoEmailUseCase = exports.ResetPasswordNoEmailUseCase = (_dec = 
   }
   async resetPassword(id, password) {
     try {
-      const passwordHash = await (0, _bcrypt.hash)(password, 8);
+      const passwordHash = await (0, _bcryptjs.hash)(password, 8);
       const passwordChange = await this.userRepository.resetPasswordNoEmail(id, passwordHash);
       if (!passwordChange) {
         throw new _AppError.AppError("User already exists");
