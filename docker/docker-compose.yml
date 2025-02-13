@@ -1,13 +1,12 @@
 services:
   suporte704-api:
     container_name: suporte704-api
+    restart: always
     build:
       context: ..
       dockerfile: docker/Dockerfile
     ports:
       - "${PORT}:3300" 
-    volumes:
-      - ../:/usr/src/app
     environment:
       - NODE_ENV=${NODE_ENV}
     networks:
