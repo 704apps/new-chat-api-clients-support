@@ -1,26 +1,3 @@
-# FROM node:22.10.0
-
-# WORKDIR /usr/src/app
-
-# RUN ls -la
-
-# COPY package*.json ./
-
-# RUN npm install
-
-# COPY . .
-
-# EXPOSE 3300
-
-# RUN npm run generate-jwt
-
-# RUN npm run build
-
-# RUN rm -rf node_modules
-
-# CMD ["node", "dist/main/infra/http/server.js"]
-
-
 # Etapa 1: Construção da aplicação
 FROM node:22.10.0 AS builder
 
@@ -40,15 +17,17 @@ RUN ls -la
 # Construir a aplicação (se necessário)
 RUN npm run build  # ou o comando equivalente para sua aplicação
 
-# Etapa 2: Imagem de produção (menor)
-FROM node:22.10.0-slim
+COPY docker/.env .env
 
-WORKDIR /usr/src/app
+# # Etapa 2: Imagem de produção (menor)
+# FROM node:22.10.0-slim
 
-# Copiar apenas os arquivos necessários da etapa anterior (dist/ e node_modules)
-COPY --from=builder /usr/src/app/dist /usr/src/app/dist
-COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
-COPY --from=builder /usr/src/app/docker/.env /usr/src/app/.env
+# WORKDIR /usr/src/app
+
+# # Copiar apenas os arquivos necessários da etapa anterior (dist/ e node_modules)
+# COPY --from=builder /usr/src/app/dist /usr/src/app/dist
+# COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
+# COPY --from=builder /usr/src/app/docker/.env /usr/src/app/.env
 
 # Definir o comando de execução do contêiner
 CMD ["node", "dist/main/infra/http/server.js"]
