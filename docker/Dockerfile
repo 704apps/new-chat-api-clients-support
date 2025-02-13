@@ -14,10 +14,10 @@ COPY . .
 
 RUN ls -la
 
+COPY docker/.env .env
+
 # Construir a aplicação (se necessário)
 RUN npm run build  # ou o comando equivalente para sua aplicação
-
-COPY docker/.env .env
 
 # # Etapa 2: Imagem de produção (menor)
 # FROM node:22.10.0-slim
