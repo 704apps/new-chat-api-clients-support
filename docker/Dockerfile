@@ -37,6 +37,8 @@ COPY . .
 
 RUN ls -la
 
+RUN ls -la docker/
+
 # Construir a aplicação (se necessário)
 RUN npm run build  # ou o comando equivalente para sua aplicação
 
