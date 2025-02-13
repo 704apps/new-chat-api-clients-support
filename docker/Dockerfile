@@ -47,8 +47,5 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/dist /usr/src/app/dist
 COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
 
-# Copiar arquivos específicos, como .env ou outros configs necessários
-COPY .env .env
-
 # Definir o comando de execução do contêiner
 CMD ["node", "dist/main/infra/http/server.js"]
