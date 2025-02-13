@@ -11,7 +11,7 @@ services:
       - NODE_ENV=${NODE_ENV}
     networks:
       - suporte704-network
-      # - dokploy-network
+      - dokploy-network
     labels:
       - traefik.enable=true
       - traefik.http.routers.checkout-suporte704-api.rule=Host(`api.suporte704.com.br`)
