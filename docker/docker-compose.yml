@@ -14,6 +14,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.suporte704-api.rule=Host(`api.suporte704.com.br`)
+      - traefik.http.routers.suporte704-api.rule=Host(`teste.suporte704.com.br`)
       - traefik.http.routers.suporte704-api.entrypoints=web
       - traefik.http.services.suporte704-api.loadbalancer.server.port=3300     
       
