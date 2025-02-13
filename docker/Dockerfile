@@ -35,6 +35,8 @@ RUN npm install
 # Copiar o código-fonte para o container
 COPY . .
 
+RUN ls -la
+
 # Construir a aplicação (se necessário)
 RUN npm run build  # ou o comando equivalente para sua aplicação
 
