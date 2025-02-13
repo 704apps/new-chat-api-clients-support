@@ -2,7 +2,6 @@ services:
   suporte704-api:
     container_name: suporte704-api
     restart: always
-    command: 'ls -la'
     build:
       context: ..
       dockerfile: docker/Dockerfile
@@ -12,7 +11,7 @@ services:
       - NODE_ENV=${NODE_ENV}
     networks:
       - suporte704-network
-      - dokploy-network
+      # - dokploy-network
     labels:
       - traefik.enable=true
       - traefik.http.routers.checkout-suporte704-api.rule=Host(`api.suporte704.com.br`)
