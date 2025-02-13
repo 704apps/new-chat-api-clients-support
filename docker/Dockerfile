@@ -1,10 +1,12 @@
 FROM node:22.10.0
 
+
+RUN ls -la 
+
 WORKDIR /usr/src/app
 
 COPY ../package*.json ./
 
-RUN ls -la ../
 
 RUN npm install
 

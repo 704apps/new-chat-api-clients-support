@@ -7,7 +7,7 @@ services:
     ports:
       - "${PORT}:3300" 
     volumes:
-      - ./../:/usr/src/app
+      - ../:/usr/src/app
     environment:
       - NODE_ENV=${NODE_ENV}
     networks:
