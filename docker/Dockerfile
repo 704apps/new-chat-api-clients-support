@@ -37,8 +37,6 @@ COPY . .
 
 RUN ls -la
 
-RUN ls -la docker/
-
 # Construir a aplicação (se necessário)
 RUN npm run build  # ou o comando equivalente para sua aplicação
 
@@ -50,6 +48,7 @@ WORKDIR /usr/src/app
 # Copiar apenas os arquivos necessários da etapa anterior (dist/ e node_modules)
 COPY --from=builder /usr/src/app/dist /usr/src/app/dist
 COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
+COPY --from=builder /usr/src/app/docker/.env /usr/src/app/.env
 
 # Definir o comando de execução do contêiner
 CMD ["node", "dist/main/infra/http/server.js"]
