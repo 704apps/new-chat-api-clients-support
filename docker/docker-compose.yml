@@ -2,6 +2,7 @@ services:
   suporte704-api:
     container_name: suporte704-api
     restart: always
+    command: 'ls -la'
     build:
       context: ..
       dockerfile: docker/Dockerfile
